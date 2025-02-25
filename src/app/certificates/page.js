@@ -1,0 +1,316 @@
+// src/app/certificates/page.js
+import Link from "next/link";
+import Image from "next/image";
+import { database } from "../../lib/firebase"; // Adjust path as per your structure
+import { ref, get } from "firebase/database";
+import ClientMobileMenu from "../../components/ClientMobileMenu"; // Adjust path as needed
+
+// Fetch data from Firebase
+async function fetchFirebaseData(path) {
+  try {
+    const dataRef = ref(database, path);
+    const snapshot = await get(dataRef);
+    return snapshot.val() || {};
+  } catch (error) {
+    console.error(`Error fetching ${path}:`, error.message);
+    return {};
+  }
+}
+
+// Function to generate a slug from a string
+function generateSlug(text) {
+  return text
+    .toLowerCase()
+    .replace(/[^a-z0-9\s-]/g, "") // Remove special characters except spaces and hyphens
+    .trim() // Remove leading/trailing whitespace
+    .replace(/\s+/g, "-") // Replace spaces with hyphens
+    .replace(/-+/g, "-"); // Collapse multiple hyphens
+}
+
+// Generate structured data for SEO
+function generateStructuredData(certificatesList) {
+  return {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "CollectionPage",
+        url: "https://codeverb.in/certificates", // Replace with your actual domain
+        name: "Pankaj Singh - Certifications",
+        description: "A collection of certifications earned by Pankaj Singh, showcasing expertise in mobile app development and related fields.",
+        mainEntity: {
+          "@type": "ItemList",
+          itemListElement: certificatesList.map((cert, index) => ({
+            "@type": "ListItem",
+            position: index + 1,
+            item: {
+              "@type": "EducationalOccupationalCredential",
+              name: cert.hero?.title || "Certificate",
+              description: cert.hero?.description || "A certificate earned by Pankaj Singh.",
+              url: `https://codeverb.in/certificate/${generateSlug(cert.hero?.title || "certificate")}/${index}`, // Replace with your actual domain
+              image: cert.details?.imageLink || "/demo_4.webp",
+              issuer: {
+                "@type": "Organization",
+                name: cert.hero?.issuedBy || "Issuer",
+              },
+            },
+          })),
+        },
+      },
+      {
+        "@type": "Person",
+        name: "Pankaj Singh",
+        jobTitle: "Mobile App Developer",
+        url: "https://codeverb.in", // Replace with your actual domain
+        sameAs: [
+          "https://instagram.com/pankaj_rawat_991",
+          "https://linkedin.com/in/pankajsingh1work",
+          "https://github.com/PankajSingh1work",
+        ],
+      },
+    ],
+  };
+}
+
+export default async function Certificates() {
+  // Fetch the entire certificatespage data
+  const certificatesPageData = await fetchFirebaseData("certificatespage");
+  
+  // Extract hero data specifically for the Hero section
+  const heroData = certificatesPageData.hero || {};
+  
+  // Extract certificates list
+  const certificatesListRaw = certificatesPageData.certificates_list || [];
+  const certificatesList = Array.isArray(certificatesListRaw) ? certificatesListRaw : [];
+
+  const structuredData = generateStructuredData(certificatesList);
+
+  return (
+    <div className="bg-[#121212] min-h-screen scroll-smooth">
+      {/* Inject Structured Data */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+      />
+
+      {/* Navbar */}
+      <header>
+        <nav
+          className="fixed top-0 left-0 w-full bg-[#181818] bg-opacity-80 shadow-md p-4 z-50"
+          aria-label="Main Navigation"
+        >
+          <div className="max-w-7xl mx-auto flex items-center justify-between">
+            <div className="flex items-center space-x-4">
+              <Link href="/" aria-label="Home">
+                <Image
+                  src="/Logo_1024w_white.svg"
+                  alt="Pankaj Singh Logo"
+                  width={32}
+                  height={32}
+                  className="h-8 w-8"
+                  priority
+                />
+              </Link>
+              <span className="text-2xl font-semibold text-[#FFFFFF]">Pankaj Singh</span>
+            </div>
+            <div className="hidden md:flex space-x-6">
+              <Link href="/#home" className="text-[#E0E0E0] hover:text-[#F0F0F0] text-base">
+                Home
+              </Link>
+              <Link href="/#about" className="text-[#E0E0E0] hover:text-[#F0F0F0] text-base">
+                About Me
+              </Link>
+              <Link href="/#services" className="text-[#E0E0E0] hover:text-[#F0F0F0] text-base">
+                Services
+              </Link>
+              <Link href="/#projects" className="text-[#E0E0E0] hover:text-[#F0F0F0] text-base">
+                Projects
+              </Link>
+              <Link href="/#achiements" className="text-[#E0E0E0] hover:text-[#F0F0F0] text-base">
+                Achievements
+              </Link>
+              <Link href="/#contact" className="text-[#E0E0E0] hover:text-[#F0F0F0] text-base">
+                Contact Me
+              </Link>
+            </div>
+            <ClientMobileMenu />
+          </div>
+        </nav>
+      </header>
+
+      {/* Hero Section */}
+      <main>
+        <section
+          id="home"
+          className="h-max w-full mx-auto bg-cover bg-center bg-no-repeat pb-10 md:py-[120px] lg:py-40 pt-[calc(4rem+30px)]"
+          style={{ backgroundImage: `url(${heroData.backgroundImageLink || "/hero_bg.png"})` }}
+        >
+          <div className="flex items-center justify-center">
+            <div className="w-full max-w-7xl px-6 space-y-6">
+              <h1 className="text-[#FFFFFF] text-2xl md:text-3xl lg:text-4xl font-bold text-center md:text-left">
+                {heroData.title || "Certifications of Excellence"}
+              </h1>
+              <p className="text-[#E0E0E0] text-base lg:text-lg leading-relaxed max-w-xl md:max-w-2xl text-center md:text-left">
+                {heroData.description || "Highlighting achievements and certifications earned through dedication, continuous learning, and a commitment to excellence across diverse fields."}
+              </p>
+              <div className="flex gap-4 justify-center md:justify-start">
+                <Link
+                  href={heroData.primaryButtonLink || "/#projects"}
+                  className="bg-[#222222] text-[#E0E0E0] hover:bg-[#333333] text-sm md:text-base py-2 px-6 rounded-lg transition w-max"
+                  aria-label="View Pankaj Singh's Projects"
+                >
+                  {heroData.primaryButtonText || "View Projects"}
+                </Link>
+                <Link
+                  href={heroData.secondaryButtonLink || "/#contact"}
+                  className="bg-[#222222] text-[#E0E0E0] hover:bg-[#333333] text-sm md:text-base py-2 px-6 rounded-lg transition w-max"
+                  aria-label="Contact Pankaj Singh"
+                >
+                  {heroData.secondaryButtonText || "Contact Me"}
+                </Link>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Certificate List Section */}
+        <section id="certificates" className="py-16 bg-[#121212] relative overflow-hidden">
+          <div className="max-w-7xl mx-auto px-4">
+            <header className="text-center mb-12">
+              <h2 className="text-[#FFFFFF] text-2xl md:text-3xl lg:text-4xl font-bold">
+                My Achievements
+              </h2>
+              <p className="text-[#E0E0E0] text-base lg:text-lg leading-relaxed mt-4 max-w-3xl mx-auto">
+                A showcase of my certifications from renowned platforms and the skills I’ve mastered along the way.
+              </p>
+            </header>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
+              {certificatesList.map((cert, index) => (
+                <article
+                  key={index}
+                  className="group relative rounded-lg overflow-hidden shadow-xl transform transition duration-300 hover:scale-105"
+                >
+                  <Image
+                    src={cert.details?.imageLink || "/demo_4.webp"}
+                    alt={`${cert.hero?.title || "Certificate"} by Pankaj Singh`}
+                    width={400}
+                    height={288}
+                    className="w-full h-72 object-cover opacity-80 group-hover:opacity-100 transition-opacity duration-300"
+                    loading="lazy"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-100 md:opacity-60 group-hover:opacity-100 transition-opacity duration-300"></div>
+                  <div className="absolute bottom-4 left-4">
+                    <h3 className="text-lg font-semibold text-[#FFFFFF]">
+                      {cert.hero?.title || "Certificate Title"}
+                    </h3>
+                    <p className="text-sm mt-1 text-[#E0E0E0]">
+                      Issued by: {cert.hero?.issuedBy || "Issuer"}
+                    </p>
+                    <p className="text-sm mt-1 text-[#E0E0E0]">
+                      Skills: {cert.skillsGained?.skills?.[0]?.skillTitle || "Skill"}
+                    </p>
+                    <Link
+                      href={`/certificate/${generateSlug(cert.hero?.title || "certificate")}/${index}`}
+                      className="mt-4 inline-block text-sm font-semibold text-[#e2cd2d] hover:underline"
+                      aria-label={`View details of ${cert.hero?.title || "Certificate"}`}
+                    >
+                      View Certificate →
+                    </Link>
+                  </div>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
+      </main>
+
+      {/* Footer */}
+      <footer className="bg-[#101010] py-8 px-6">
+        <div className="max-w-6xl mx-auto flex flex-col sm:flex-row justify-between items-center">
+          <div className="text-center sm:text-left mb-6 sm:mb-0">
+            <div className="flex items-center justify-center sm:justify-start space-x-4">
+              <Image
+                src="/Logo_1024w_white.svg"
+                alt="Pankaj Singh Logo"
+                width={40}
+                height={40}
+                className="w-10 h-10 rounded-none"
+                loading="lazy"
+              />
+              <div>
+                <p className="text-[#FFFFFF] text-lg font-bold">Pankaj Singh</p>
+                <p className="text-[#E0E0E0] text-sm">
+                  <a href="mailto:rawatpanku991@gmail.com" aria-label="Email Pankaj Singh">
+                    rawatpanku991@gmail.com
+                  </a>
+                </p>
+              </div>
+            </div>
+          </div>
+          <nav className="flex space-x-6 justify-center" aria-label="Social Media Links">
+            <Link
+              href="https://instagram.com/pankaj_rawat_991"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-[#E0E0E0] hover:text-[#F0F0F0] transition"
+              aria-label="Pankaj Singh on Instagram"
+            >
+              <i className="fa-brands fa-instagram text-2xl"></i>
+            </Link>
+            <Link
+              href="https://linkedin.com/in/pankajsingh1work"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-[#E0E0E0] hover:text-[#F0F0F0] transition"
+              aria-label="Pankaj Singh on LinkedIn"
+            >
+              <i className="fa-brands fa-linkedin text-2xl"></i>
+            </Link>
+            <Link
+              href="https://github.com/PankajSingh1work"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-[#E0E0E0] hover:text-[#F0F0F0] transition"
+              aria-label="Pankaj Singh on GitHub"
+            >
+              <i className="fa-brands fa-github text-2xl"></i>
+            </Link>
+          </nav>
+          <div className="text-center sm:text-right mt-6 sm:mt-0 text-[#E0E0E0] text-sm">
+            <p>© {new Date().getFullYear()} Pankaj Singh. All rights reserved.</p>
+          </div>
+        </div>
+      </footer>
+    </div>
+  );
+}
+
+// Define metadata for SEO
+export const metadata = {
+  title: "Pankaj Singh - Certifications and Achievements",
+  description: "Explore Pankaj Singh's certifications, showcasing expertise in mobile app development, UI/UX, and more from renowned platforms.",
+  keywords: "Pankaj Singh, certifications, achievements, mobile app development, UI/UX, skills",
+  openGraph: {
+    title: "Pankaj Singh - Certifications and Achievements",
+    description: "A showcase of certifications earned by Pankaj Singh, highlighting skills in mobile app development and beyond.",
+    url: "https://codeverb.in/certificates", // Replace with your actual domain
+    type: "website",
+    images: [
+      {
+        url: "/demo_4.webp", // Replace with a relevant image
+        width: 400,
+        height: 288,
+        alt: "Pankaj Singh Certifications",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Pankaj Singh - Certifications and Achievements",
+    description: "Explore Pankaj Singh's certifications and achievements in mobile app development and related fields.",
+    image: "/demo_4.webp", // Replace with a relevant image
+  },
+  alternates: {
+    canonical: "https://codeverb.in/certificates", // Replace with your actual domain
+  },
+};
