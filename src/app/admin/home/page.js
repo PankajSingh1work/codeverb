@@ -2,15 +2,14 @@
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { auth } from "../../../lib/firebase"; // Adjust path as needed
+import { auth } from "../../../lib/firebase";
 import { onAuthStateChanged } from "firebase/auth";
-import { database } from "../../../lib/firebase"; // Ensure database is exported
+import { database } from "../../../lib/firebase";
 import { ref, set, onValue } from "firebase/database";
 
 export default function HomeControl() {
   const router = useRouter();
 
-  // State for Hero Section
   const [heroData, setHeroData] = useState({
     imageLink: "",
     title: "",
@@ -22,7 +21,6 @@ export default function HomeControl() {
     secondaryButtonLink: "",
   });
 
-  // State for About Section
   const [aboutData, setAboutData] = useState({
     title: "",
     imageLink: "",
@@ -31,14 +29,12 @@ export default function HomeControl() {
     buttonLink: "",
   });
 
-  // State for Services Section
   const [servicesData, setServicesData] = useState({
     title: "",
     subtitle: "",
     cards: [{ iconLink: "", title: "", description: "" }],
   });
 
-  // State for Projects Section
   const [projectsData, setProjectsData] = useState({
     title: "",
     subtitle: "",
@@ -46,7 +42,6 @@ export default function HomeControl() {
     buttonLink: "",
   });
 
-  // State for Achievements Section
   const [achievementsData, setAchievementsData] = useState({
     title: "",
     subtitle: "",
@@ -54,13 +49,11 @@ export default function HomeControl() {
     buttonLink: "",
   });
 
-  // State for Contact Section
   const [contactData, setContactData] = useState({
     title: "",
     subtitle: "",
   });
 
-  // Authentication check
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (!user) {
@@ -70,7 +63,6 @@ export default function HomeControl() {
     return () => unsubscribe();
   }, [router]);
 
-  // Fetch data from Firebase for all sections
   useEffect(() => {
     const sections = [
       { ref: "homepage/hero", setter: setHeroData },
@@ -90,25 +82,21 @@ export default function HomeControl() {
     });
   }, []);
 
-  // Handle input changes for Hero Section
   const handleHeroChange = (e) => {
     const { name, value } = e.target;
     setHeroData((prev) => ({ ...prev, [name]: value }));
   };
 
-  // Handle input changes for About Section
   const handleAboutChange = (e) => {
     const { name, value } = e.target;
     setAboutData((prev) => ({ ...prev, [name]: value }));
   };
 
-  // Handle input changes for Services Section (title and subtitle)
   const handleServicesChange = (e) => {
     const { name, value } = e.target;
     setServicesData((prev) => ({ ...prev, [name]: value }));
   };
 
-  // Handle input changes for Service Cards
   const handleCardChange = (index, field, value) => {
     setServicesData((prev) => {
       const newCards = [...prev.cards];
@@ -117,7 +105,6 @@ export default function HomeControl() {
     });
   };
 
-  // Add a new card
   const addCard = () => {
     setServicesData((prev) => ({
       ...prev,
@@ -125,7 +112,6 @@ export default function HomeControl() {
     }));
   };
 
-  // Remove a card
   const removeCard = (index) => {
     setServicesData((prev) => {
       const newCards = prev.cards.filter((_, i) => i !== index);
@@ -133,25 +119,21 @@ export default function HomeControl() {
     });
   };
 
-  // Handle input changes for Projects Section
   const handleProjectsChange = (e) => {
     const { name, value } = e.target;
     setProjectsData((prev) => ({ ...prev, [name]: value }));
   };
 
-  // Handle input changes for Achievements Section
   const handleAchievementsChange = (e) => {
     const { name, value } = e.target;
     setAchievementsData((prev) => ({ ...prev, [name]: value }));
   };
 
-  // Handle input changes for Contact Section
   const handleContactChange = (e) => {
     const { name, value } = e.target;
     setContactData((prev) => ({ ...prev, [name]: value }));
   };
 
-  // Save Hero Section to Firebase
   const handleHeroUpdate = () => {
     const heroRef = ref(database, "homepage/hero");
     set(heroRef, heroData)
@@ -159,7 +141,6 @@ export default function HomeControl() {
       .catch((error) => alert("Error updating hero section: " + error.message));
   };
 
-  // Save About Section to Firebase
   const handleAboutUpdate = () => {
     const aboutRef = ref(database, "homepage/about");
     set(aboutRef, aboutData)
@@ -167,7 +148,6 @@ export default function HomeControl() {
       .catch((error) => alert("Error updating about section: " + error.message));
   };
 
-  // Save Services Section to Firebase
   const handleServicesUpdate = () => {
     const servicesRef = ref(database, "homepage/services");
     set(servicesRef, servicesData)
@@ -175,7 +155,6 @@ export default function HomeControl() {
       .catch((error) => alert("Error updating services section: " + error.message));
   };
 
-  // Save Projects Section to Firebase
   const handleProjectsUpdate = () => {
     const projectsRef = ref(database, "homepage/projects");
     set(projectsRef, projectsData)
@@ -183,7 +162,6 @@ export default function HomeControl() {
       .catch((error) => alert("Error updating projects section: " + error.message));
   };
 
-  // Save Achievements Section to Firebase
   const handleAchievementsUpdate = () => {
     const achievementsRef = ref(database, "homepage/achievements");
     set(achievementsRef, achievementsData)
@@ -191,7 +169,6 @@ export default function HomeControl() {
       .catch((error) => alert("Error updating achievements section: " + error.message));
   };
 
-  // Save Contact Section to Firebase
   const handleContactUpdate = () => {
     const contactRef = ref(database, "homepage/contact");
     set(contactRef, contactData)
@@ -215,7 +192,7 @@ export default function HomeControl() {
               name="imageLink"
               value={heroData.imageLink}
               onChange={handleHeroChange}
-              className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
               placeholder="e.g., /profile_HeroSection.png"
             />
           </div>
@@ -227,7 +204,7 @@ export default function HomeControl() {
               name="title"
               value={heroData.title}
               onChange={handleHeroChange}
-              className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
               placeholder="e.g., Hi, I’m Pankaj Singh"
             />
           </div>
@@ -239,7 +216,7 @@ export default function HomeControl() {
               name="subtitle"
               value={heroData.subtitle}
               onChange={handleHeroChange}
-              className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
               placeholder="e.g., Crafting the Future of Mobile Experiences"
             />
           </div>
@@ -250,7 +227,7 @@ export default function HomeControl() {
               name="description"
               value={heroData.description}
               onChange={handleHeroChange}
-              className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
               rows="4"
               placeholder="e.g., An aspiring mobile app developer with a passion..."
             />
@@ -263,7 +240,7 @@ export default function HomeControl() {
               name="primaryButtonText"
               value={heroData.primaryButtonText}
               onChange={handleHeroChange}
-              className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
               placeholder="e.g., Get Resume"
             />
           </div>
@@ -275,7 +252,7 @@ export default function HomeControl() {
               name="primaryButtonLink"
               value={heroData.primaryButtonLink}
               onChange={handleHeroChange}
-              className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
               placeholder="e.g., /resume.pdf"
             />
           </div>
@@ -287,7 +264,7 @@ export default function HomeControl() {
               name="secondaryButtonText"
               value={heroData.secondaryButtonText}
               onChange={handleHeroChange}
-              className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
               placeholder="e.g., Projects"
             />
           </div>
@@ -299,7 +276,7 @@ export default function HomeControl() {
               name="secondaryButtonLink"
               value={heroData.secondaryButtonLink}
               onChange={handleHeroChange}
-              className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
               placeholder="e.g., #projects"
             />
           </div>
@@ -324,7 +301,7 @@ export default function HomeControl() {
               name="title"
               value={aboutData.title}
               onChange={handleAboutChange}
-              className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
               placeholder="e.g., About Me"
             />
           </div>
@@ -336,7 +313,7 @@ export default function HomeControl() {
               name="imageLink"
               value={aboutData.imageLink}
               onChange={handleAboutChange}
-              className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
               placeholder="e.g., /profile_about_me.png"
             />
           </div>
@@ -347,7 +324,7 @@ export default function HomeControl() {
               name="description"
               value={aboutData.description}
               onChange={handleAboutChange}
-              className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
               rows="4"
               placeholder="e.g., I’m Pankaj Singh, a passionate mobile app developer..."
             />
@@ -360,7 +337,7 @@ export default function HomeControl() {
               name="buttonText"
               value={aboutData.buttonText}
               onChange={handleAboutChange}
-              className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
               placeholder="e.g., Know More"
             />
           </div>
@@ -372,7 +349,7 @@ export default function HomeControl() {
               name="buttonLink"
               value={aboutData.buttonLink}
               onChange={handleAboutChange}
-              className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
               placeholder="e.g., /about"
             />
           </div>
@@ -397,7 +374,7 @@ export default function HomeControl() {
               name="title"
               value={servicesData.title}
               onChange={handleServicesChange}
-              className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
               placeholder="e.g., Services"
             />
           </div>
@@ -409,7 +386,7 @@ export default function HomeControl() {
               name="subtitle"
               value={servicesData.subtitle}
               onChange={handleServicesChange}
-              className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
               placeholder="e.g., What I Offer"
             />
           </div>
@@ -424,7 +401,7 @@ export default function HomeControl() {
                     id={`iconLink-${index}`}
                     value={card.iconLink}
                     onChange={(e) => handleCardChange(index, "iconLink", e.target.value)}
-                    className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
                     placeholder="e.g., fa-brands fa-android"
                   />
                 </div>
@@ -435,7 +412,7 @@ export default function HomeControl() {
                     id={`cardTitle-${index}`}
                     value={card.title}
                     onChange={(e) => handleCardChange(index, "title", e.target.value)}
-                    className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
                     placeholder="e.g., Android App Development"
                   />
                 </div>
@@ -445,7 +422,7 @@ export default function HomeControl() {
                     id={`cardDescription-${index}`}
                     value={card.description}
                     onChange={(e) => handleCardChange(index, "description", e.target.value)}
-                    className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
                     rows="3"
                     placeholder="e.g., Building seamless and intuitive Android applications..."
                   />
@@ -488,7 +465,7 @@ export default function HomeControl() {
               name="title"
               value={projectsData.title}
               onChange={handleProjectsChange}
-              className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
               placeholder="e.g., My Projects"
             />
           </div>
@@ -500,7 +477,7 @@ export default function HomeControl() {
               name="subtitle"
               value={projectsData.subtitle}
               onChange={handleProjectsChange}
-              className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
               placeholder="e.g., Some of My Work"
             />
           </div>
@@ -512,7 +489,7 @@ export default function HomeControl() {
               name="buttonText"
               value={projectsData.buttonText}
               onChange={handleProjectsChange}
-              className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
               placeholder="e.g., Show All Projects"
             />
           </div>
@@ -524,7 +501,7 @@ export default function HomeControl() {
               name="buttonLink"
               value={projectsData.buttonLink}
               onChange={handleProjectsChange}
-              className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
               placeholder="e.g., #projects"
             />
           </div>
@@ -549,7 +526,7 @@ export default function HomeControl() {
               name="title"
               value={achievementsData.title}
               onChange={handleAchievementsChange}
-              className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
               placeholder="e.g., My Achievements"
             />
           </div>
@@ -561,7 +538,7 @@ export default function HomeControl() {
               name="subtitle"
               value={achievementsData.subtitle}
               onChange={handleAchievementsChange}
-              className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
               placeholder="e.g., A showcase of my skills..."
             />
           </div>
@@ -573,7 +550,7 @@ export default function HomeControl() {
               name="buttonText"
               value={achievementsData.buttonText}
               onChange={handleAchievementsChange}
-              className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
               placeholder="e.g., Show All Certificates"
             />
           </div>
@@ -585,7 +562,7 @@ export default function HomeControl() {
               name="buttonLink"
               value={achievementsData.buttonLink}
               onChange={handleAchievementsChange}
-              className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
               placeholder="e.g., /certificates-page"
             />
           </div>
@@ -610,7 +587,7 @@ export default function HomeControl() {
               name="title"
               value={contactData.title}
               onChange={handleContactChange}
-              className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
               placeholder="e.g., Get in Touch"
             />
           </div>
@@ -622,7 +599,7 @@ export default function HomeControl() {
               name="subtitle"
               value={contactData.subtitle}
               onChange={handleContactChange}
-              className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
               placeholder="e.g., Whether you're looking for a commissioned service..."
             />
           </div>
@@ -637,4 +614,3 @@ export default function HomeControl() {
     </div>
   );
 }
-

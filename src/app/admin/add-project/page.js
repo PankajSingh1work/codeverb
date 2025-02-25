@@ -2,15 +2,14 @@
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { auth } from "../../../lib/firebase"; // Adjust path as needed
+import { auth } from "../../../lib/firebase";
 import { onAuthStateChanged } from "firebase/auth";
-import { database } from "../../../lib/firebase"; // Ensure database is exported
+import { database } from "../../../lib/firebase";
 import { ref, set, onValue } from "firebase/database";
 
 export default function AddProjectControl() {
   const router = useRouter();
 
-  // State for all projects
   const [projects, setProjects] = useState([
     {
       hero: {
@@ -39,7 +38,6 @@ export default function AddProjectControl() {
     },
   ]);
 
-  // Authentication check
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (!user) {
@@ -49,7 +47,6 @@ export default function AddProjectControl() {
     return () => unsubscribe();
   }, [router]);
 
-  // Fetch data from Firebase
   useEffect(() => {
     const projectsRef = ref(database, "projectspage/projects_list");
     onValue(projectsRef, (snapshot) => {
@@ -58,7 +55,6 @@ export default function AddProjectControl() {
     });
   }, []);
 
-  // Handle input changes for a project section
   const handleChange = (projIndex, section, field, value) => {
     setProjects((prev) => {
       const newProjects = [...prev];
@@ -70,7 +66,6 @@ export default function AddProjectControl() {
     });
   };
 
-  // Handle input changes for array-based sections (buttons, details, techStack, challenges, features)
   const handleArrayChange = (projIndex, section, itemIndex, field, value) => {
     setProjects((prev) => {
       const newProjects = [...prev];
@@ -90,7 +85,6 @@ export default function AddProjectControl() {
     });
   };
 
-  // Add a new item to an array-based section
   const addItem = (projIndex, section) => {
     setProjects((prev) => {
       const newProjects = [...prev];
@@ -109,7 +103,6 @@ export default function AddProjectControl() {
     });
   };
 
-  // Remove an item from an array-based section
   const removeItem = (projIndex, section, itemIndex) => {
     setProjects((prev) => {
       const newProjects = [...prev];
@@ -139,7 +132,6 @@ export default function AddProjectControl() {
     });
   };
 
-  // Add a new project
   const addProject = () => {
     setProjects((prev) => [
       ...prev,
@@ -171,7 +163,6 @@ export default function AddProjectControl() {
     ]);
   };
 
-  // Remove a project
   const removeProject = (index) => {
     setProjects((prev) => {
       const newProjects = prev.filter((_, i) => i !== index);
@@ -207,7 +198,6 @@ export default function AddProjectControl() {
     });
   };
 
-  // Save all projects to Firebase
   const handleUpdate = () => {
     const projectsRef = ref(database, "projectspage/projects_list");
     set(projectsRef, projects)
@@ -236,7 +226,7 @@ export default function AddProjectControl() {
                 name="backgroundImageLink"
                 value={proj.hero.backgroundImageLink}
                 onChange={(e) => handleChange(projIndex, "hero", "backgroundImageLink", e.target.value)}
-                className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
                 placeholder="e.g., /demo_land.jpg"
               />
             </div>
@@ -248,7 +238,7 @@ export default function AddProjectControl() {
                 name="title"
                 value={proj.hero.title}
                 onChange={(e) => handleChange(projIndex, "hero", "title", e.target.value)}
-                className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
                 placeholder="e.g., Smart Home Automation"
               />
             </div>
@@ -261,7 +251,7 @@ export default function AddProjectControl() {
                 name="description"
                 value={proj.hero.description}
                 onChange={(e) => handleChange(projIndex, "hero", "description", e.target.value)}
-                className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
                 rows="4"
                 placeholder="e.g., Transform your living space with our innovative..."
               />
@@ -284,7 +274,7 @@ export default function AddProjectControl() {
                         id={`buttonText-${projIndex}-${btnIndex}`}
                         value={button.buttonText}
                         onChange={(e) => handleArrayChange(projIndex, "hero", btnIndex, "buttonText", e.target.value)}
-                        className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
                         placeholder="e.g., View on GitHub"
                       />
                     </div>
@@ -300,7 +290,7 @@ export default function AddProjectControl() {
                         id={`iconLink-${projIndex}-${btnIndex}`}
                         value={button.iconLink}
                         onChange={(e) => handleArrayChange(projIndex, "hero", btnIndex, "iconLink", e.target.value)}
-                        className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
                         placeholder="e.g., fab fa-github"
                       />
                     </div>
@@ -316,7 +306,7 @@ export default function AddProjectControl() {
                         id={`buttonLink-${projIndex}-${btnIndex}`}
                         value={button.buttonLink}
                         onChange={(e) => handleArrayChange(projIndex, "hero", btnIndex, "buttonLink", e.target.value)}
-                        className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
                         placeholder="e.g., https://github.com/demo/smart-home-automation"
                       />
                     </div>
@@ -359,7 +349,7 @@ export default function AddProjectControl() {
                       id={`detailImage-${projIndex}-${detailIndex}`}
                       value={detail.image}
                       onChange={(e) => handleArrayChange(projIndex, "details", detailIndex, "image", e.target.value)}
-                      className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
                       placeholder="e.g., /demo_5.webp"
                     />
                   </div>
@@ -374,7 +364,7 @@ export default function AddProjectControl() {
                       id={`description1-${projIndex}-${detailIndex}`}
                       value={detail.description1}
                       onChange={(e) => handleArrayChange(projIndex, "details", detailIndex, "description1", e.target.value)}
-                      className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
                       rows="4"
                       placeholder="e.g., This Smart Home Automation project allows..."
                     />
@@ -390,7 +380,7 @@ export default function AddProjectControl() {
                       id={`description2-${projIndex}-${detailIndex}`}
                       value={detail.description2}
                       onChange={(e) => handleArrayChange(projIndex, "details", detailIndex, "description2", e.target.value)}
-                      className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
                       rows="4"
                       placeholder="e.g., The system leverages IoT devices..."
                     />
@@ -406,7 +396,7 @@ export default function AddProjectControl() {
                       id={`description3-${projIndex}-${detailIndex}`}
                       value={detail.description3}
                       onChange={(e) => handleArrayChange(projIndex, "details", detailIndex, "description3", e.target.value)}
-                      className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
                       rows="4"
                       placeholder="e.g., The project is built with modern technologies..."
                     />
@@ -449,7 +439,7 @@ export default function AddProjectControl() {
                       id={`techIconLink-${projIndex}-${itemIndex}`}
                       value={item.techIconLink}
                       onChange={(e) => handleArrayChange(projIndex, "techStack", itemIndex, "techIconLink", e.target.value)}
-                      className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
                       placeholder="e.g., fab fa-react"
                     />
                   </div>
@@ -465,7 +455,7 @@ export default function AddProjectControl() {
                       id={`techName-${projIndex}-${itemIndex}`}
                       value={item.techName}
                       onChange={(e) => handleArrayChange(projIndex, "techStack", itemIndex, "techName", e.target.value)}
-                      className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
                       placeholder="e.g., React"
                     />
                   </div>
@@ -507,7 +497,7 @@ export default function AddProjectControl() {
                       id={`challengeIconLink-${projIndex}-${cardIndex}`}
                       value={card.iconLink}
                       onChange={(e) => handleArrayChange(projIndex, "challenges", cardIndex, "iconLink", e.target.value)}
-                      className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
                       placeholder="e.g., fas fa-code"
                     />
                   </div>
@@ -523,7 +513,7 @@ export default function AddProjectControl() {
                       id={`challengeTitle-${projIndex}-${cardIndex}`}
                       value={card.title}
                       onChange={(e) => handleArrayChange(projIndex, "challenges", cardIndex, "title", e.target.value)}
-                      className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
                       placeholder="e.g., Integration Issues"
                     />
                   </div>
@@ -538,7 +528,7 @@ export default function AddProjectControl() {
                       id={`challengeDescription-${projIndex}-${cardIndex}`}
                       value={card.description}
                       onChange={(e) => handleArrayChange(projIndex, "challenges", cardIndex, "description", e.target.value)}
-                      className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
                       rows="3"
                       placeholder="e.g., Ensuring seamless communication between..."
                     />
@@ -581,7 +571,7 @@ export default function AddProjectControl() {
                       id={`featureIconLink-${projIndex}-${cardIndex}`}
                       value={card.iconLink}
                       onChange={(e) => handleArrayChange(projIndex, "features", cardIndex, "iconLink", e.target.value)}
-                      className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
                       placeholder="e.g., fas fa-bolt"
                     />
                   </div>
@@ -597,7 +587,7 @@ export default function AddProjectControl() {
                       id={`featureTitle-${projIndex}-${cardIndex}`}
                       value={card.title}
                       onChange={(e) => handleArrayChange(projIndex, "features", cardIndex, "title", e.target.value)}
-                      className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
                       placeholder="e.g., Instant Control"
                     />
                   </div>
@@ -612,7 +602,7 @@ export default function AddProjectControl() {
                       id={`featureDescription-${projIndex}-${cardIndex}`}
                       value={card.description}
                       onChange={(e) => handleArrayChange(projIndex, "features", cardIndex, "description", e.target.value)}
-                      className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
                       rows="3"
                       placeholder="e.g., Manage your devices with a single tap..."
                     />
@@ -648,7 +638,6 @@ export default function AddProjectControl() {
         </div>
       ))}
 
-      {/* Add New Project Button */}
       <button
         onClick={addProject}
         className="w-full max-w-2xl py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition flex items-center justify-center mb-8"
@@ -656,7 +645,6 @@ export default function AddProjectControl() {
         <i className="fa-solid fa-plus mr-2"></i> Add New Project
       </button>
 
-      {/* Update All Projects Button */}
       <button
         onClick={handleUpdate}
         className="w-full max-w-2xl py-2 bg-green-600 text-white rounded-md hover:bg-green-700 transition"

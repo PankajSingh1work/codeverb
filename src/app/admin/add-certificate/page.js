@@ -2,15 +2,14 @@
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { auth } from "../../../lib/firebase"; // Adjust path as needed
+import { auth } from "../../../lib/firebase";
 import { onAuthStateChanged } from "firebase/auth";
-import { database } from "../../../lib/firebase"; // Ensure database is exported
+import { database } from "../../../lib/firebase";
 import { ref, set, onValue } from "firebase/database";
 
 export default function AddCertificateControl() {
   const router = useRouter();
 
-  // State for all certificates
   const [certificates, setCertificates] = useState([
     {
       hero: {
@@ -34,7 +33,6 @@ export default function AddCertificateControl() {
     },
   ]);
 
-  // Authentication check
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (!user) {
@@ -44,7 +42,6 @@ export default function AddCertificateControl() {
     return () => unsubscribe();
   }, [router]);
 
-  // Fetch data from Firebase
   useEffect(() => {
     const certificatesRef = ref(database, "certificatespage/certificates_list");
     onValue(certificatesRef, (snapshot) => {
@@ -53,7 +50,6 @@ export default function AddCertificateControl() {
     });
   }, []);
 
-  // Handle input changes for a certificate section
   const handleChange = (index, section, field, value) => {
     setCertificates((prev) => {
       const newCertificates = [...prev];
@@ -65,7 +61,6 @@ export default function AddCertificateControl() {
     });
   };
 
-  // Handle skill input changes
   const handleSkillChange = (certIndex, skillIndex, field, value) => {
     setCertificates((prev) => {
       const newCertificates = [...prev];
@@ -76,7 +71,6 @@ export default function AddCertificateControl() {
     });
   };
 
-  // Add a new skill to a certificate
   const addSkill = (certIndex) => {
     setCertificates((prev) => {
       const newCertificates = [...prev];
@@ -88,7 +82,6 @@ export default function AddCertificateControl() {
     });
   };
 
-  // Remove a skill from a certificate
   const removeSkill = (certIndex, skillIndex) => {
     setCertificates((prev) => {
       const newCertificates = [...prev];
@@ -99,7 +92,6 @@ export default function AddCertificateControl() {
     });
   };
 
-  // Add a new certificate
   const addCertificate = () => {
     setCertificates((prev) => [
       ...prev,
@@ -126,7 +118,6 @@ export default function AddCertificateControl() {
     ]);
   };
 
-  // Remove a certificate
   const removeCertificate = (index) => {
     setCertificates((prev) => {
       const newCertificates = prev.filter((_, i) => i !== index);
@@ -157,7 +148,6 @@ export default function AddCertificateControl() {
     });
   };
 
-  // Save all certificates to Firebase
   const handleUpdate = () => {
     const certificatesRef = ref(database, "certificatespage/certificates_list");
     set(certificatesRef, certificates)
@@ -186,7 +176,7 @@ export default function AddCertificateControl() {
                 name="backgroundImageLink"
                 value={cert.hero.backgroundImageLink}
                 onChange={(e) => handleChange(index, "hero", "backgroundImageLink", e.target.value)}
-                className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
                 placeholder="e.g., /android.jpg"
               />
             </div>
@@ -198,7 +188,7 @@ export default function AddCertificateControl() {
                 name="title"
                 value={cert.hero.title}
                 onChange={(e) => handleChange(index, "hero", "title", e.target.value)}
-                className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
                 placeholder="e.g., Android Development Certificate"
               />
             </div>
@@ -211,7 +201,7 @@ export default function AddCertificateControl() {
                 name="description"
                 value={cert.hero.description}
                 onChange={(e) => handleChange(index, "hero", "description", e.target.value)}
-                className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
                 rows="4"
                 placeholder="e.g., A deep dive into Android Development..."
               />
@@ -224,7 +214,7 @@ export default function AddCertificateControl() {
                 name="issuedBy"
                 value={cert.hero.issuedBy}
                 onChange={(e) => handleChange(index, "hero", "issuedBy", e.target.value)}
-                className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
                 placeholder="e.g., Coursera"
               />
             </div>
@@ -238,7 +228,7 @@ export default function AddCertificateControl() {
                 name="certificateLink"
                 value={cert.hero.certificateLink}
                 onChange={(e) => handleChange(index, "hero", "certificateLink", e.target.value)}
-                className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
                 placeholder="e.g., https://drive.google.com/certificate-link"
               />
             </div>
@@ -255,7 +245,7 @@ export default function AddCertificateControl() {
                 name="title"
                 value={cert.details.title}
                 onChange={(e) => handleChange(index, "details", "title", e.target.value)}
-                className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
                 placeholder="e.g., Certificate Details"
               />
             </div>
@@ -267,7 +257,7 @@ export default function AddCertificateControl() {
                 name="imageLink"
                 value={cert.details.imageLink}
                 onChange={(e) => handleChange(index, "details", "imageLink", e.target.value)}
-                className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
                 placeholder="e.g., /demo_5.webp"
               />
             </div>
@@ -280,7 +270,7 @@ export default function AddCertificateControl() {
                 name="description1"
                 value={cert.details.description1}
                 onChange={(e) => handleChange(index, "details", "description1", e.target.value)}
-                className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
                 rows="4"
                 placeholder="e.g., This certificate recognizes the successful completion..."
               />
@@ -294,7 +284,7 @@ export default function AddCertificateControl() {
                 name="description2"
                 value={cert.details.description2}
                 onChange={(e) => handleChange(index, "details", "description2", e.target.value)}
-                className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
                 rows="4"
                 placeholder="e.g., Participants will gain the knowledge required..."
               />
@@ -308,7 +298,7 @@ export default function AddCertificateControl() {
                 name="description3"
                 value={cert.details.description3}
                 onChange={(e) => handleChange(index, "details", "description3", e.target.value)}
-                className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
                 rows="4"
                 placeholder="e.g., By completing this course, participants demonstrate..."
               />
@@ -326,7 +316,7 @@ export default function AddCertificateControl() {
                 name="title"
                 value={cert.skillsGained.title}
                 onChange={(e) => handleChange(index, "skillsGained", "title", e.target.value)}
-                className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
                 placeholder="e.g., Skills Gained"
               />
             </div>
@@ -346,7 +336,7 @@ export default function AddCertificateControl() {
                       id={`iconLink-${index}-${skillIndex}`}
                       value={skill.iconLink}
                       onChange={(e) => handleSkillChange(index, skillIndex, "iconLink", e.target.value)}
-                      className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
                       placeholder="e.g., fas fa-cogs"
                     />
                   </div>
@@ -362,7 +352,7 @@ export default function AddCertificateControl() {
                       id={`skillTitle-${index}-${skillIndex}`}
                       value={skill.skillTitle}
                       onChange={(e) => handleSkillChange(index, skillIndex, "skillTitle", e.target.value)}
-                      className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
                       placeholder="e.g., Problem Solving"
                     />
                   </div>
@@ -377,7 +367,7 @@ export default function AddCertificateControl() {
                       id={`skillDescription-${index}-${skillIndex}`}
                       value={skill.skillDescription}
                       onChange={(e) => handleSkillChange(index, skillIndex, "skillDescription", e.target.value)}
-                      className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
                       rows="3"
                       placeholder="e.g., Developed problem-solving skills by..."
                     />
@@ -413,7 +403,6 @@ export default function AddCertificateControl() {
         </div>
       ))}
 
-      {/* Add New Certificate Button */}
       <button
         onClick={addCertificate}
         className="w-full max-w-2xl py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition flex items-center justify-center mb-8"
@@ -421,7 +410,6 @@ export default function AddCertificateControl() {
         <i className="fa-solid fa-plus mr-2"></i> Add New Certificate
       </button>
 
-      {/* Update All Certificates Button */}
       <button
         onClick={handleUpdate}
         className="w-full max-w-2xl py-2 bg-green-600 text-white rounded-md hover:bg-green-700 transition"

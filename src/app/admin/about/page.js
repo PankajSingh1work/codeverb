@@ -215,7 +215,7 @@ export default function AboutControl() {
               name="backgroundImageLink"
               value={heroData.backgroundImageLink}
               onChange={handleHeroChange}
-              className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
               placeholder="e.g., /back.jpg"
             />
           </div>
@@ -227,7 +227,7 @@ export default function AboutControl() {
               name="title"
               value={heroData.title}
               onChange={handleHeroChange}
-              className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
               placeholder="e.g., Get to Know Me Better"
             />
           </div>
@@ -238,7 +238,7 @@ export default function AboutControl() {
               name="description"
               value={heroData.description}
               onChange={handleHeroChange}
-              className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
               rows="4"
               placeholder="e.g., I'm a passionate developer with a love for..."
             />
@@ -251,7 +251,7 @@ export default function AboutControl() {
               name="primaryButtonText"
               value={heroData.primaryButtonText}
               onChange={handleHeroChange}
-              className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
               placeholder="e.g., View Projects"
             />
           </div>
@@ -263,7 +263,7 @@ export default function AboutControl() {
               name="primaryButtonLink"
               value={heroData.primaryButtonLink}
               onChange={handleHeroChange}
-              className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
               placeholder="e.g., #projects"
             />
           </div>
@@ -275,7 +275,7 @@ export default function AboutControl() {
               name="secondaryButtonText"
               value={heroData.secondaryButtonText}
               onChange={handleHeroChange}
-              className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
               placeholder="e.g., Contact Me"
             />
           </div>
@@ -287,7 +287,7 @@ export default function AboutControl() {
               name="secondaryButtonLink"
               value={heroData.secondaryButtonLink}
               onChange={handleHeroChange}
-              className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
               placeholder="e.g., #contact"
             />
           </div>
@@ -312,7 +312,7 @@ export default function AboutControl() {
               name="title"
               value={aboutData.title}
               onChange={handleAboutChange}
-              className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
               placeholder="e.g., Hi I'm Pankaj Singh !"
             />
           </div>
@@ -324,7 +324,7 @@ export default function AboutControl() {
               name="imageLink"
               value={aboutData.imageLink}
               onChange={handleAboutChange}
-              className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
               placeholder="e.g., /profile_about_me.png"
             />
           </div>
@@ -335,7 +335,7 @@ export default function AboutControl() {
               name="description1"
               value={aboutData.description1}
               onChange={handleAboutChange}
-              className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
               rows="4"
               placeholder="e.g., I am currently pursuing a Bachelor's degree..."
             />
@@ -347,7 +347,7 @@ export default function AboutControl() {
               name="description2"
               value={aboutData.description2}
               onChange={handleAboutChange}
-              className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
               rows="4"
               placeholder="e.g., My motivation stems from my creative mind..."
             />
@@ -359,7 +359,7 @@ export default function AboutControl() {
               name="description3"
               value={aboutData.description3}
               onChange={handleAboutChange}
-              className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
               rows="4"
               placeholder="e.g., I enjoy engaging with people..."
             />
@@ -371,7 +371,7 @@ export default function AboutControl() {
               name="description4"
               value={aboutData.description4}
               onChange={handleAboutChange}
-              className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
               rows="4"
               placeholder="e.g., I am driven by a love for technology..."
             />
@@ -397,7 +397,7 @@ export default function AboutControl() {
               name="title"
               value={educationData.title}
               onChange={handleEducationChange}
-              className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
               placeholder="e.g., Education"
             />
           </div>
@@ -412,7 +412,7 @@ export default function AboutControl() {
                     id={`year-${index}`}
                     value={card.year}
                     onChange={(e) => handleEducationCardChange(index, "year", e.target.value)}
-                    className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
                     placeholder="e.g., 2026"
                   />
                 </div>
@@ -423,7 +423,7 @@ export default function AboutControl() {
                     id={`courseName-${index}`}
                     value={card.courseName}
                     onChange={(e) => handleEducationCardChange(index, "courseName", e.target.value)}
-                    className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
                     placeholder="e.g., B.Tech in Computer Science & Engineering"
                   />
                 </div>
@@ -434,7 +434,7 @@ export default function AboutControl() {
                     id={`instituteName-${index}`}
                     value={card.instituteName}
                     onChange={(e) => handleEducationCardChange(index, "instituteName", e.target.value)}
-                    className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
                     placeholder="e.g., Shivalik College of Engineering"
                   />
                 </div>
@@ -445,7 +445,7 @@ export default function AboutControl() {
                     id={`periodOrPassout-${index}`}
                     value={card.periodOrPassout}
                     onChange={(e) => handleEducationCardChange(index, "periodOrPassout", e.target.value)}
-                    className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
                     placeholder="e.g., 2023 - 2026 (Present)"
                   />
                 </div>
@@ -455,7 +455,7 @@ export default function AboutControl() {
                     id={`description-${index}`}
                     value={card.description}
                     onChange={(e) => handleEducationCardChange(index, "description", e.target.value)}
-                    className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
                     rows="3"
                     placeholder="e.g., Currently pursuing my Bachelor's degree..."
                   />
@@ -498,7 +498,7 @@ export default function AboutControl() {
               name="title"
               value={skillsData.title}
               onChange={handleSkillsChange}
-              className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
               placeholder="e.g., Skills"
             />
           </div>
@@ -510,7 +510,7 @@ export default function AboutControl() {
               name="subtitle"
               value={skillsData.subtitle}
               onChange={handleSkillsChange}
-              className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
               placeholder="e.g., Here are the tools and technologies..."
             />
           </div>
@@ -524,7 +524,7 @@ export default function AboutControl() {
                       type="text"
                       value={skill.skillText}
                       onChange={(e) => handleSkillChange(rowIndex, skillIndex, e.target.value)}
-                      className="w-full p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      className="w-full p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
                       placeholder="e.g., Java"
                     />
                     {row.length > 1 && (

@@ -2,15 +2,14 @@
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { auth } from "../../../lib/firebase"; // Adjust path as needed
+import { auth } from "../../../lib/firebase";
 import { onAuthStateChanged } from "firebase/auth";
-import { database } from "../../../lib/firebase"; // Ensure database is exported
+import { database } from "../../../lib/firebase";
 import { ref, set, onValue } from "firebase/database";
 
 export default function CertificatesControl() {
   const router = useRouter();
 
-  // State for Hero Section
   const [heroData, setHeroData] = useState({
     backgroundImageLink: "",
     title: "",
@@ -21,13 +20,11 @@ export default function CertificatesControl() {
     secondaryButtonLink: "",
   });
 
-  // State for Certificates Section
   const [certificatesData, setCertificatesData] = useState({
     title: "",
     description: "",
   });
 
-  // Authentication check
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (!user) {
@@ -37,7 +34,6 @@ export default function CertificatesControl() {
     return () => unsubscribe();
   }, [router]);
 
-  // Fetch data from Firebase for all sections
   useEffect(() => {
     const sections = [
       { ref: "certificatespage/hero", setter: setHeroData },
@@ -53,19 +49,16 @@ export default function CertificatesControl() {
     });
   }, []);
 
-  // Handle input changes for Hero Section
   const handleHeroChange = (e) => {
     const { name, value } = e.target;
     setHeroData((prev) => ({ ...prev, [name]: value }));
   };
 
-  // Handle input changes for Certificates Section
   const handleCertificatesChange = (e) => {
     const { name, value } = e.target;
     setCertificatesData((prev) => ({ ...prev, [name]: value }));
   };
 
-  // Save Hero Section to Firebase
   const handleHeroUpdate = () => {
     const heroRef = ref(database, "certificatespage/hero");
     set(heroRef, heroData)
@@ -73,7 +66,6 @@ export default function CertificatesControl() {
       .catch((error) => alert("Error updating hero section: " + error.message));
   };
 
-  // Save Certificates Section to Firebase
   const handleCertificatesUpdate = () => {
     const certificatesRef = ref(database, "certificatespage/certificates");
     set(certificatesRef, certificatesData)
@@ -97,7 +89,7 @@ export default function CertificatesControl() {
               name="backgroundImageLink"
               value={heroData.backgroundImageLink}
               onChange={handleHeroChange}
-              className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
               placeholder="e.g., /back.jpg"
             />
           </div>
@@ -109,7 +101,7 @@ export default function CertificatesControl() {
               name="title"
               value={heroData.title}
               onChange={handleHeroChange}
-              className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
               placeholder="e.g., Certifications of Excellence"
             />
           </div>
@@ -120,7 +112,7 @@ export default function CertificatesControl() {
               name="description"
               value={heroData.description}
               onChange={handleHeroChange}
-              className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
               rows="4"
               placeholder="e.g., Highlighting achievements and certifications earned..."
             />
@@ -133,7 +125,7 @@ export default function CertificatesControl() {
               name="primaryButtonText"
               value={heroData.primaryButtonText}
               onChange={handleHeroChange}
-              className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
               placeholder="e.g., View Projects"
             />
           </div>
@@ -145,7 +137,7 @@ export default function CertificatesControl() {
               name="primaryButtonLink"
               value={heroData.primaryButtonLink}
               onChange={handleHeroChange}
-              className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
               placeholder="e.g., #projects"
             />
           </div>
@@ -157,7 +149,7 @@ export default function CertificatesControl() {
               name="secondaryButtonText"
               value={heroData.secondaryButtonText}
               onChange={handleHeroChange}
-              className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
               placeholder="e.g., Contact Me"
             />
           </div>
@@ -169,7 +161,7 @@ export default function CertificatesControl() {
               name="secondaryButtonLink"
               value={heroData.secondaryButtonLink}
               onChange={handleHeroChange}
-              className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
               placeholder="e.g., #contact"
             />
           </div>
@@ -194,7 +186,7 @@ export default function CertificatesControl() {
               name="title"
               value={certificatesData.title}
               onChange={handleCertificatesChange}
-              className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
               placeholder="e.g., My Achievements"
             />
           </div>
@@ -205,7 +197,7 @@ export default function CertificatesControl() {
               name="description"
               value={certificatesData.description}
               onChange={handleCertificatesChange}
-              className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
               rows="4"
               placeholder="e.g., A showcase of my certifications from renowned platforms..."
             />
