@@ -1,10 +1,10 @@
 // src/lib/sitemapUtils.js
 import { getDatabase, ref, get } from 'firebase/database';
 import { initializeApp } from 'firebase/app';
-import { firebaseConfig } from './firebase'; // Adjust the import path to your lib/firebase.js
+import { firebaseConfigExport } from './firebase'; // Import the exported config
 
 // Initialize Firebase app
-initializeApp(firebaseConfig);
+initializeApp(firebaseConfigExport);
 
 export async function fetchProjects() {
   const db = getDatabase();

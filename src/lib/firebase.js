@@ -8,3 +8,4 @@ const firebaseConfig = JSON.parse(process.env.FIREBASE_CONFIG || '{}');
 const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
 export const database = getDatabase(app);
+export const firebaseConfigExport = firebaseConfig; // Export firebaseConfig with a different name to avoid naming conflicts
