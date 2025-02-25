@@ -2,9 +2,9 @@
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { auth } from "../../../../lib/firebase"; // Adjust path as needed
+import { auth } from "../../../lib/firebase"; // Adjust path as needed
 import { onAuthStateChanged } from "firebase/auth";
-import { database } from "../../../../lib/firebase"; // Ensure database is exported
+import { database } from "../../../lib/firebase"; // Ensure database is exported
 import { ref, set, onValue } from "firebase/database";
 
 export default function AddCertificateControl() {
