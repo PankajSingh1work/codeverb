@@ -460,64 +460,79 @@ export default async function Home() {
       </main>
 
       {/* Footer */}
-      <footer className="bg-[#101010] py-6 sm:py-8 px-4 sm:px-6">
-        <div className="max-w-6xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-6 sm:gap-0">
-          <div className="text-center sm:text-left">
-            <div className="flex items-center justify-center sm:justify-start space-x-4">
-              <Image
-                src="/Logo_1024w_white.svg"
-                alt="Pankaj Singh Logo"
-                width={36}
-                height={36}
-                className="rounded-none sm:w-10 sm:h-10"
-                loading="lazy"
-              />
-              <div>
-                <p className="text-[#FFFFFF] text-base sm:text-lg font-bold">
-                  Pankaj Singh
-                </p>
-                <p className="text-[#E0E0E0] text-xs sm:text-sm">
-                  <a href="mailto:rawatpanku991@gmail.com" aria-label="Email Pankaj Singh">
-                    rawatpanku991@gmail.com
-                  </a>
-                </p>
-              </div>
-            </div>
-          </div>
-          <nav className="flex space-x-4 sm:space-x-6" aria-label="Social Media Links">
-            <Link
-              href="https://instagram.com/pankaj_rawat_991"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-[#E0E0E0] hover:text-[#F0F0F0] transition"
-              aria-label="Pankaj Singh on Instagram"
-            >
-              <i className="fa-brands fa-instagram text-xl sm:text-2xl"></i>
-            </Link>
-            <Link
-              href="https://github.com/PankajSingh1work"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-[#E0E0E0] hover:text-[#F0F0F0] transition"
-              aria-label="Pankaj Singh on GitHub"
-            >
-              <i className="fa-brands fa-github text-xl sm:text-2xl"></i>
-            </Link>
-            <Link
-              href="https://www.linkedin.com/in/pankajsingh1work/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-[#E0E0E0] hover:text-[#F0F0F0] transition"
-              aria-label="Pankaj Singh on LinkedIn"
-            >
-              <i className="fa-brands fa-linkedin text-xl sm:text-2xl"></i>
-            </Link>
-          </nav>
-          <div className="text-center sm:text-right text-[#E0E0E0] text-xs sm:text-sm">
-            <p>© {new Date().getFullYear()} Pankaj Singh. All rights reserved.</p>
-          </div>
+      <footer className="bg-[#101010] py-6 sm:py-8 px-4 sm:px-6" itemScope itemType="https://schema.org/WPFooter">
+  <div className="max-w-6xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-6 sm:gap-0">
+    <div className="text-center sm:text-left" itemScope itemType="https://schema.org/Person">
+      <div className="flex items-center justify-center sm:justify-start space-x-4">
+        <Image
+          src="/Logo_1024w_white.svg"
+          alt="Codeverb Logo - Pankaj Singh's Portfolio"
+          width={36}
+          height={36}
+          className="rounded-none sm:w-10 sm:h-10"
+          loading="lazy"
+        />
+        <div>
+          <p className="text-[#FFFFFF] text-base sm:text-lg font-bold" itemProp="name">
+            Pankaj Singh
+          </p>
+          <p className="text-[#E0E0E0] text-xs sm:text-sm">
+            <a href="mailto:rawatpanku991@gmail.com" aria-label="Email Pankaj Singh - Codeverb" itemProp="email">
+              rawatpanku991@gmail.com
+            </a>
+          </p>
         </div>
-      </footer>
+      </div>
+    </div>
+    <nav className="flex space-x-4 sm:space-x-6" aria-label="Social Media Links" itemScope itemType="https://schema.org/SocialMediaPosting">
+      <Link
+        href="https://www.instagram.com/codeverb.in/"
+        target="_blank"
+        rel="noopener noreferrer nofollow"
+        className="text-[#E0E0E0] hover:text-[#F0F0F0] transition"
+        aria-label="Codeverb on Instagram - Web Development Content"
+        title="Follow Codeverb on Instagram"
+      >
+        <i className="fa-brands fa-instagram text-xl sm:text-2xl"></i>
+      </Link>
+      <Link
+        href="https://www.youtube.com/@codeverb-in"
+        target="_blank"
+        rel="noopener noreferrer nofollow"
+        className="text-[#E0E0E0] hover:text-[#F0F0F0] transition"
+        aria-label="Codeverb on YouTube - Coding Tutorials"
+        title="Subscribe to Codeverb on YouTube"
+      >
+        <i className="fa-brands fa-youtube text-xl sm:text-2xl"></i>
+      </Link>
+      <Link
+        href="https://github.com/PankajSingh1work"
+        target="_blank"
+        rel="noopener noreferrer nofollow"
+        className="text-[#E0E0E0] hover:text-[#F0F0F0] transition"
+        aria-label="Pankaj Singh on GitHub - Open Source Projects"
+        title="View Pankaj Singh's GitHub Repositories"
+      >
+        <i className="fa-brands fa-github text-xl sm:text-2xl"></i>
+      </Link>
+      <Link
+        href="https://www.linkedin.com/in/pankajsingh1work/"
+        target="_blank"
+        rel="noopener noreferrer nofollow"
+        className="text-[#E0E0E0] hover:text-[#F0F0F0] transition"
+        aria-label="Pankaj Singh on LinkedIn - Professional Profile"
+        title="Connect with Pankaj Singh on LinkedIn"
+      >
+        <i className="fa-brands fa-linkedin text-xl sm:text-2xl"></i>
+      </Link>
+    </nav>
+    <div className="text-center sm:text-right text-[#E0E0E0] text-xs sm:text-sm" itemScope itemType="https://schema.org/CreativeWork">
+      <p itemProp="copyrightNotice">
+        © {new Date().getFullYear()} Pankaj Singh. All rights reserved.
+      </p>
+    </div>
+  </div>
+</footer>
     </div>
   );
 }
