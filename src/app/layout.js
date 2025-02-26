@@ -7,7 +7,7 @@ export const metadata = {
     template: "%s | Pankaj Singh",
   },
   description: "Portfolio of Pankaj Singh, a mobile app developer specializing in Android, iOS, UI/UX design, and innovative tech solutions.",
-  keywords: "Pankaj Singh, mobile app developer, Android, iOS, UI/UX, portfolio, technology, developer , Pankaj Singh Rawat , Pankaj Singh Dehradun , Pankaj Singh Kashipur , Pankaj Singh Mobile Application Developer , Software Engineer , Shivalik College of Engineering , Government Polytechnic Kashipur , Codeverb by Pankaj Singh , Codeverb , Full Stack Developer in India, Web Developer Portfolio, Mobile App Developer in India, Next.js Developer Portfolio, Freelance Web Developer in India, UI/UX Designer & Developer, Best Web Developer in Uttarakhand, Full Stack App Developer in Dehradun, Professional Web Development Services, Hire a Freelance Web Developer, React.js Developer Portfolio, Next.js SEO Optimization Services, Firebase Database Integration, Web App Development Expert, CodeVerb Web Development, UI/UX Designer for Hire, Affordable Website Development India, Frontend Developer in Uttarakhand, Custom Website Development Services, Expert in Mobile App UI/UX, Pankaj Singh Rawat Developer Portfolio, CodeVerb Web & App Development, Hire Pankaj Singh for Web Projects, Best Freelancer Developer in Dehradun, CodeVerb Freelance Services, Pankaj Singh Rawat Full Stack Developer, CodeVerb YouTube Channel, Instagram Web Developer Codever.in, Hire CodeVerb for Custom Web Apps, Dehradun Based App Developer, Web Developer from Shivalik College of Engineering, Dehradun Web & App Development, Uttarakhand Full Stack Developer, Kashipur Website Development Services, Best Developer in Shivalik College, Web & App Solutions in Uttarakhand, Freelancer App Developer Kashipur, Mobile App UI/UX in Uttarakhand, CodeVerb India – Custom Development, Affordable Web Development in Dehradun ",
+  keywords: "Pankaj Singh, mobile app developer, Android, iOS, UI/UX, portfolio, technology, developer , Pankaj Singh Rawat , Pankaj Singh Dehradun , Pankaj Singh Kashipur , Pankaj Singh Mobile Application Developer , Software Engineer , Shivalik College of Engineering , Government Polytechnic Kashipur , Codeverb by Pankaj Singh , Codeverb , Full Stack Developer in India, Web Developer Portfolio, Mobile App Developer in India, Next.js Developer Portfolio, Freelance Web Developer in India, UI/UX Designer & Developer, Best Web Developer in Uttarakhand, Full Stack App Developer in Dehradun, Professional Web Development Services, Hire a Freelance Web Developer, React.js Developer Portfolio, Next.js SEO Optimization Services, Firebase Database Integration, Web App Development Expert, CodeVerb Web Development, UI/UX Designer for Hire, Affordable Website Development India, Frontend Developer in Uttarakhand, Custom Website Development Services, Expert in Mobile App UI/UX, Pankaj Singh Rawat Developer Portfolio, CodeVerb Web & App Development, Hire Pankaj Singh for Web Projects, Best Freelancer Developer in Dehradun, CodeVerb Freelance Services, Pankaj Singh Rawat Full Stack Developer, CodeVerb YouTube Channel, Instagram Web Developer Codever.in, Hire CodeVerb for Custom Web Apps, Dehradun Based App Developer, Web Developer from Shivalik College of Engineering, Dehradun Web & App Development, Uttarakhand Full Stack Developer, Kashipur Website Development Services, Best Developer in Shivalik College, Web & App Solutions in Uttarakhand, Freelancer App Developer Kashipur, Mobile App UI/UX in Uttarakhand, CodeVerb India – Custom Development, Affordable Web Development in Dehradun ,  Home page of CODEVERB.IN codeverb.in , landing page codeverb.in , pankaj singh website home page , sections of codeverb.in services achievments projects contact rawatpanku991@gmail.com pankajsingh1work@gmail.com, know more about pankaj singh , youtube @codeberb-in , instgram @pankaj_rawat_991 , instagram @codeverb.in linkedin @pankajsingh1work , github @PankajSingh1work , codeverb.in",
   creator: "Pankaj Singh",
   publisher: "Pankaj Singh",
   robots: "index, follow",
@@ -80,7 +80,7 @@ export default function RootLayout({ children }) {
         <meta charSet="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         
-        {/* Base Title (overridden by page-specific metadata) */}
+        {/* Base Title */}
         <title>{metadata.title.default}</title>
         
         {/* Font Awesome for Icons */}
@@ -92,8 +92,15 @@ export default function RootLayout({ children }) {
           referrerPolicy="no-referrer"
         />
 
-        {/* Favicon */}
+        {/* Favicon and Icon Links */}
         <link rel="icon" href="/favicon.ico" type="image/x-icon" />
+        <link rel="icon" href="/favicon-16x16.png" sizes="16x16" type="image/png" />
+        <link rel="icon" href="/favicon-32x32.png" sizes="32x32" type="image/png" />
+        <link rel="apple-touch-icon" href="/apple-touch-icon.png" /> {/* Typically 180x180 */}
+        <link rel="manifest" href="/site.webmanifest" />
+
+        {/* Optional: Preload critical icons */}
+        <link rel="preload" href="/favicon.ico" as="image" />
         
         {/* Preconnect to External Resources */}
         <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossOrigin="anonymous" />
