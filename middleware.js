@@ -3,7 +3,7 @@ const { NextResponse } = require('next/server');
 
 function middleware(request) {
   const url = request.nextUrl.pathname;
-  // Match any .xml file and robots.txt
+  // Match any .xml file (sitemaps) and robots.txt
   if (url.endsWith('.xml') || url === '/robots.txt') {
     const response = NextResponse.next();
     response.headers.set('X-Robots-Tag', 'noindex');
@@ -15,6 +15,6 @@ function middleware(request) {
 module.exports = {
   middleware,
   config: {
-    matcher: ['/:path*.xml', '/robots.txt'], // Match all *.xml and robots.txt
+    matcher: ['/:path*.xml', '/robots.txt'], // Matches sitemap.xml, sitemap-0.xml, server-sitemap.xml, etc.
   },
 };

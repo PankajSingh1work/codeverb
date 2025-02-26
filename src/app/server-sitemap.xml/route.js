@@ -4,8 +4,8 @@ import { fetchProjects, fetchCertificates } from '../../lib/sitemapUtils';
 
 export async function GET(request) {
   try {
-    const projects = await fetchProjects(); // Returns array of projects
-    const certificates = await fetchCertificates(); // Returns array of certificates
+    const projects = await fetchProjects();
+    const certificates = await fetchCertificates();
 
     const projectFields = projects.map((project, index) => ({
       loc: `https://codeverb.in/project/${project.hero.title.toLowerCase().replace(/\s+/g, '-')}/${index}`,
@@ -25,7 +25,7 @@ export async function GET(request) {
 
     return getServerSideSitemap(fields, {
       headers: {
-        'X-Robots-Tag': 'noindex', // Prevent indexing of this sitemap
+        'X-Robots-Tag': 'noindex', // Prevent indexing
       },
     });
   } catch (error) {
