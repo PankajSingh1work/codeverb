@@ -1,21 +1,21 @@
 // app/server-sitemap.xml/route.ts
 import { getServerSideSitemap } from 'next-sitemap';
-import { fetchProjects, fetchCertificates } from '../../lib/sitemapUtils'; // Adjust the import path
+import { fetchProjects, fetchCertificates } from '../../lib/sitemapUtils';
 
 export async function GET(request) {
   try {
-    const projects = await fetchProjects(); // Fetch all project data from Firebase
-    const certificates = await fetchCertificates(); // Fetch all certificate data from Firebase
+    const projects = await fetchProjects(); // Returns array of projects
+    const certificates = await fetchCertificates(); // Returns array of certificates
 
-    const projectFields = Object.values(projects).map((project) => ({
-      loc: `https://codeverb.in/project/${project.hero.title.toLowerCase().replace(/\s+/g, '-')}/index`,
+    const projectFields = projects.map((project, index) => ({
+      loc: `https://codeverb.in/project/${project.hero.title.toLowerCase().replace(/\s+/g, '-')}/${index}`,
       lastmod: new Date().toISOString(),
       changefreq: 'weekly',
       priority: '0.7',
     }));
 
-    const certificateFields = Object.values(certificates).map((certificate) => ({
-      loc: `https://codeverb.in/certificate/${certificate.hero.title.toLowerCase().replace(/\s+/g, '-')}/index`,
+    const certificateFields = certificates.map((certificate, index) => ({
+      loc: `https://codeverb.in/certificate/${certificate.hero.title.toLowerCase().replace(/\s+/g, '-')}/${index}`,
       lastmod: new Date().toISOString(),
       changefreq: 'weekly',
       priority: '0.7',
@@ -29,4 +29,3 @@ export async function GET(request) {
     throw new Error('Failed to generate sitemap');
   }
 }
-
