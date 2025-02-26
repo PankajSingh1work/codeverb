@@ -9,21 +9,25 @@ export async function GET(request) {
 
     const projectFields = projects.map((project, index) => ({
       loc: `https://codeverb.in/project/${project.hero.title.toLowerCase().replace(/\s+/g, '-')}/${index}`,
-      lastmod: new Date().toISOString(),
+      lastmod: project.lastUpdated ? new Date(project.lastUpdated).toISOString() : new Date().toISOString(),
       changefreq: 'weekly',
       priority: '0.7',
     }));
 
     const certificateFields = certificates.map((certificate, index) => ({
       loc: `https://codeverb.in/certificate/${certificate.hero.title.toLowerCase().replace(/\s+/g, '-')}/${index}`,
-      lastmod: new Date().toISOString(),
+      lastmod: certificate.lastUpdated ? new Date(certificate.lastUpdated).toISOString() : new Date().toISOString(),
       changefreq: 'weekly',
       priority: '0.7',
     }));
 
     const fields = [...projectFields, ...certificateFields];
 
-    return getServerSideSitemap(fields);
+    return getServerSideSitemap(fields, {
+      headers: {
+        'X-Robots-Tag': 'noindex', // Prevent indexing of this sitemap
+      },
+    });
   } catch (error) {
     console.error('Error generating sitemap:', error);
     throw new Error('Failed to generate sitemap');
