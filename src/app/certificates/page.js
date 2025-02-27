@@ -74,7 +74,7 @@ function generateStructuredData(certificatesList) {
 export default async function Certificates() {
   // Fetch the entire certificatespage data
   const certificatesPageData = await fetchData("certificatespage");
-  console.log('Runtime Certificates Page Data:', certificatesPageData);
+  // console.log('Runtime Certificates Page Data:', certificatesPageData);
 
   // Extract hero data for the Hero section
   const heroData = certificatesPageData.hero || {};

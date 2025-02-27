@@ -75,7 +75,7 @@ function generateStructuredData(projectsList) {
 export default async function Projects() {
   // Fetch the entire projectspage data
   const projectsPageData = await fetchData("projectspage");
-  console.log('Projects Page Data:', projectsPageData);
+  // console.log('Projects Page Data:', projectsPageData);
 
   // Extract hero data for the Hero section
   const heroData = projectsPageData.hero || {};
