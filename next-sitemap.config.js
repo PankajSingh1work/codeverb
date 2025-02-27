@@ -3,9 +3,8 @@ module.exports = {
   siteUrl: 'https://codeverb.in',
   generateRobotsTxt: true,
   exclude: ['/admin/**', '/404', '/server-sitemap.xml'],
-  sitemapSize: 7000, // Plenty for your static pages
+  sitemapSize: 7000,
 
-  // Transform for static pages
   transform: async (config, path) => {
     if (path.startsWith('/admin') || path === '/server-sitemap.xml') {
       return null;
@@ -26,11 +25,8 @@ module.exports = {
         disallow: '/admin/',
       },
     ],
-    additionalSitemaps: [
-      'https://codeverb.in/server-sitemap.xml', // Dynamic sitemap
-    ],
+    additionalSitemaps: ['https://codeverb.in/server-sitemap.xml'],
   },
 
-  // Ensure single sitemap file for static pages
-  generateIndexSitemap: false, // Prevent sitemapindex unless needed
+  generateIndexSitemap: false,
 };

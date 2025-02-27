@@ -1,19 +1,19 @@
 // src/app/certificates/page.js
 import Link from "next/link";
 import Image from "next/image";
-import { database } from "../../lib/firebase"; // Adjust path as per your structure
-import { ref, get } from "firebase/database";
-import ClientMobileMenu from "../../components/ClientMobileMenu"; // Adjust path as needed
+import ClientMobileMenu from "../../components/ClientMobileMenu";
 
-// Fetch data from Firebase
-async function fetchFirebaseData(path) {
+// Fetch data from API route with ISR
+async function fetchData(path) {
   try {
-    const dataRef = ref(database, path);
-    const snapshot = await get(dataRef);
-    return snapshot.val() || {};
+    const res = await fetch(`http://localhost:3000/api/fetchData?path=${encodeURIComponent(path)}`, {
+      next: { revalidate: 10 },
+    });
+    if (!res.ok) throw new Error(`Failed to fetch ${path}`);
+    return await res.json();
   } catch (error) {
     console.error(`Error fetching ${path}:`, error.message);
-    return {};
+    return path.includes('projects_list') || path.includes('certificates_list') ? [] : {};
   }
 }
 
@@ -21,10 +21,10 @@ async function fetchFirebaseData(path) {
 function generateSlug(text) {
   return text
     .toLowerCase()
-    .replace(/[^a-z0-9\s-]/g, "") // Remove special characters except spaces and hyphens
-    .trim() // Remove leading/trailing whitespace
-    .replace(/\s+/g, "-") // Replace spaces with hyphens
-    .replace(/-+/g, "-"); // Collapse multiple hyphens
+    .replace(/[^a-z0-9\s-]/g, "")
+    .trim()
+    .replace(/\s+/g, "-")
+    .replace(/-+/g, "-");
 }
 
 // Generate structured data for SEO
@@ -34,7 +34,7 @@ function generateStructuredData(certificatesList) {
     "@graph": [
       {
         "@type": "CollectionPage",
-        url: "https://codeverb.in/certificates", // Replace with your actual domain
+        url: "https://codeverb.in/certificates",
         name: "Pankaj Singh - Certifications",
         description: "A collection of certifications earned by Pankaj Singh, showcasing expertise in mobile app development and related fields.",
         mainEntity: {
@@ -46,7 +46,7 @@ function generateStructuredData(certificatesList) {
               "@type": "EducationalOccupationalCredential",
               name: cert.hero?.title || "Certificate",
               description: cert.hero?.description || "A certificate earned by Pankaj Singh.",
-              url: `https://codeverb.in/certificate/${generateSlug(cert.hero?.title || "certificate")}/${index}`, // Replace with your actual domain
+              url: `https://codeverb.in/certificate/${generateSlug(cert.hero?.title || "certificate")}/${index}`,
               image: cert.details?.imageLink || "/demo_4.webp",
               issuer: {
                 "@type": "Organization",
@@ -60,7 +60,7 @@ function generateStructuredData(certificatesList) {
         "@type": "Person",
         name: "Pankaj Singh",
         jobTitle: "Mobile App Developer",
-        url: "https://codeverb.in", // Replace with your actual domain
+        url: "https://codeverb.in",
         sameAs: [
           "https://instagram.com/pankaj_rawat_991",
           "https://linkedin.com/in/pankajsingh1work",
@@ -73,14 +73,17 @@ function generateStructuredData(certificatesList) {
 
 export default async function Certificates() {
   // Fetch the entire certificatespage data
-  const certificatesPageData = await fetchFirebaseData("certificatespage");
-  
-  // Extract hero data specifically for the Hero section
+  const certificatesPageData = await fetchData("certificatespage");
+  console.log('Runtime Certificates Page Data:', certificatesPageData);
+
+  // Extract hero data for the Hero section
   const heroData = certificatesPageData.hero || {};
-  
-  // Extract certificates list
+
+  // Extract certificates data for the Certificates section
+  const certificatesData = certificatesPageData.certificates || {};
   const certificatesListRaw = certificatesPageData.certificates_list || [];
   const certificatesList = Array.isArray(certificatesListRaw) ? certificatesListRaw : [];
+  console.log('Certificates List:', certificatesList);
 
   const structuredData = generateStructuredData(certificatesList);
 
@@ -125,7 +128,7 @@ export default async function Certificates() {
               <Link href="/#projects" className="text-[#E0E0E0] hover:text-[#F0F0F0] text-base">
                 Projects
               </Link>
-              <Link href="/#achiements" className="text-[#E0E0E0] hover:text-[#F0F0F0] text-base">
+              <Link href="/#achievements" className="text-[#E0E0E0] hover:text-[#F0F0F0] text-base">
                 Achievements
               </Link>
               <Link href="/#contact" className="text-[#E0E0E0] hover:text-[#F0F0F0] text-base">
@@ -177,10 +180,10 @@ export default async function Certificates() {
           <div className="max-w-7xl mx-auto px-4">
             <header className="text-center mb-12">
               <h2 className="text-[#FFFFFF] text-2xl md:text-3xl lg:text-4xl font-bold">
-                My Achievements
+                {certificatesData.title || "My Achievements"}
               </h2>
               <p className="text-[#E0E0E0] text-base lg:text-lg leading-relaxed mt-4 max-w-3xl mx-auto">
-                A showcase of my certifications from renowned platforms and the skills I’ve mastered along the way.
+                {certificatesData.description || "A showcase of my certifications from renowned platforms and the skills I’ve mastered along the way."}
               </p>
             </header>
 
@@ -226,78 +229,78 @@ export default async function Certificates() {
 
       {/* Footer */}
       <footer className="bg-[#101010] py-6 sm:py-8 px-4 sm:px-6" itemScope itemType="https://schema.org/WPFooter">
-  <div className="max-w-6xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-6 sm:gap-0">
-    <div className="text-center sm:text-left" itemScope itemType="https://schema.org/Person">
-      <div className="flex items-center justify-center sm:justify-start space-x-4">
-        <Image
-          src="/Logo_1024w_white.svg"
-          alt="Codeverb Logo - Pankaj Singh's Portfolio"
-          width={36}
-          height={36}
-          className="rounded-none sm:w-10 sm:h-10"
-          loading="lazy"
-        />
-        <div>
-          <p className="text-[#FFFFFF] text-base sm:text-lg font-bold" itemProp="name">
-            Pankaj Singh
-          </p>
-          <p className="text-[#E0E0E0] text-xs sm:text-sm">
-            <a href="mailto:rawatpanku991@gmail.com" aria-label="Email Pankaj Singh - Codeverb" itemProp="email">
-              rawatpanku991@gmail.com
-            </a>
-          </p>
+        <div className="max-w-6xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-6 sm:gap-0">
+          <div className="text-center sm:text-left" itemScope itemType="https://schema.org/Person">
+            <div className="flex items-center justify-center sm:justify-start space-x-4">
+              <Image
+                src="/Logo_1024w_white.svg"
+                alt="Codeverb Logo - Pankaj Singh's Portfolio"
+                width={36}
+                height={36}
+                className="rounded-none sm:w-10 sm:h-10"
+                loading="lazy"
+              />
+              <div>
+                <p className="text-[#FFFFFF] text-base sm:text-lg font-bold" itemProp="name">
+                  Pankaj Singh
+                </p>
+                <p className="text-[#E0E0E0] text-xs sm:text-sm">
+                  <a href="mailto:rawatpanku991@gmail.com" aria-label="Email Pankaj Singh - Codeverb" itemProp="email">
+                    rawatpanku991@gmail.com
+                  </a>
+                </p>
+              </div>
+            </div>
+          </div>
+          <nav className="flex space-x-4 sm:space-x-6" aria-label="Social Media Links" itemScope itemType="https://schema.org/SocialMediaPosting">
+            <Link
+              href="https://www.instagram.com/codeverb.in/"
+              target="_blank"
+              rel="noopener noreferrer nofollow"
+              className="text-[#E0E0E0] hover:text-[#F0F0F0] transition"
+              aria-label="Codeverb on Instagram - Web Development Content"
+              title="Follow Codeverb on Instagram"
+            >
+              <i className="fa-brands fa-instagram text-xl sm:text-2xl"></i>
+            </Link>
+            <Link
+              href="https://www.youtube.com/@codeverb-in"
+              target="_blank"
+              rel="noopener noreferrer nofollow"
+              className="text-[#E0E0E0] hover:text-[#F0F0F0] transition"
+              aria-label="Codeverb on YouTube - Coding Tutorials"
+              title="Subscribe to Codeverb on YouTube"
+            >
+              <i className="fa-brands fa-youtube text-xl sm:text-2xl"></i>
+            </Link>
+            <Link
+              href="https://github.com/PankajSingh1work"
+              target="_blank"
+              rel="noopener noreferrer nofollow"
+              className="text-[#E0E0E0] hover:text-[#F0F0F0] transition"
+              aria-label="Pankaj Singh on GitHub - Open Source Projects"
+              title="View Pankaj Singh's GitHub Repositories"
+            >
+              <i className="fa-brands fa-github text-xl sm:text-2xl"></i>
+            </Link>
+            <Link
+              href="https://www.linkedin.com/in/pankajsingh1work/"
+              target="_blank"
+              rel="noopener noreferrer nofollow"
+              className="text-[#E0E0E0] hover:text-[#F0F0F0] transition"
+              aria-label="Pankaj Singh on LinkedIn - Professional Profile"
+              title="Connect with Pankaj Singh on LinkedIn"
+            >
+              <i className="fa-brands fa-linkedin text-xl sm:text-2xl"></i>
+            </Link>
+          </nav>
+          <div className="text-center sm:text-right text-[#E0E0E0] text-xs sm:text-sm" itemScope itemType="https://schema.org/CreativeWork">
+            <p itemProp="copyrightNotice">
+              © {new Date().getFullYear()} Pankaj Singh. All rights reserved.
+            </p>
+          </div>
         </div>
-      </div>
-    </div>
-    <nav className="flex space-x-4 sm:space-x-6" aria-label="Social Media Links" itemScope itemType="https://schema.org/SocialMediaPosting">
-      <Link
-        href="https://www.instagram.com/codeverb.in/"
-        target="_blank"
-        rel="noopener noreferrer nofollow"
-        className="text-[#E0E0E0] hover:text-[#F0F0F0] transition"
-        aria-label="Codeverb on Instagram - Web Development Content"
-        title="Follow Codeverb on Instagram"
-      >
-        <i className="fa-brands fa-instagram text-xl sm:text-2xl"></i>
-      </Link>
-      <Link
-        href="https://www.youtube.com/@codeverb-in"
-        target="_blank"
-        rel="noopener noreferrer nofollow"
-        className="text-[#E0E0E0] hover:text-[#F0F0F0] transition"
-        aria-label="Codeverb on YouTube - Coding Tutorials"
-        title="Subscribe to Codeverb on YouTube"
-      >
-        <i className="fa-brands fa-youtube text-xl sm:text-2xl"></i>
-      </Link>
-      <Link
-        href="https://github.com/PankajSingh1work"
-        target="_blank"
-        rel="noopener noreferrer nofollow"
-        className="text-[#E0E0E0] hover:text-[#F0F0F0] transition"
-        aria-label="Pankaj Singh on GitHub - Open Source Projects"
-        title="View Pankaj Singh's GitHub Repositories"
-      >
-        <i className="fa-brands fa-github text-xl sm:text-2xl"></i>
-      </Link>
-      <Link
-        href="https://www.linkedin.com/in/pankajsingh1work/"
-        target="_blank"
-        rel="noopener noreferrer nofollow"
-        className="text-[#E0E0E0] hover:text-[#F0F0F0] transition"
-        aria-label="Pankaj Singh on LinkedIn - Professional Profile"
-        title="Connect with Pankaj Singh on LinkedIn"
-      >
-        <i className="fa-brands fa-linkedin text-xl sm:text-2xl"></i>
-      </Link>
-    </nav>
-    <div className="text-center sm:text-right text-[#E0E0E0] text-xs sm:text-sm" itemScope itemType="https://schema.org/CreativeWork">
-      <p itemProp="copyrightNotice">
-        © {new Date().getFullYear()} Pankaj Singh. All rights reserved.
-      </p>
-    </div>
-  </div>
-</footer>
+      </footer>
     </div>
   );
 }
@@ -306,15 +309,15 @@ export default async function Certificates() {
 export const metadata = {
   title: "Pankaj Singh - Certifications and Achievements",
   description: "Explore Pankaj Singh's certifications, showcasing expertise in mobile app development, UI/UX, and more from renowned platforms.",
-  keywords: "Pankaj Singh, certifications, achievements, mobile app development, UI/UX, skills , Pankaj Singh, mobile app developer, portfolio, app development, projects, services, achievements , Pankaj Singh Rawat , Pankaj Singh Dehradun , Pankaj Singh Kashipur , Pankaj Singh Mobile Application Developer , Software Engineer , Shivalik College of Engineering , Government Polytechnic Kashipur , Codeverb by Pankaj Singh , Codeverb , Full Stack Developer in India, Web Developer Portfolio, Mobile App Developer in India, Next.js Developer Portfolio, Freelance Web Developer in India, UI/UX Designer & Developer, Best Web Developer in Uttarakhand, Full Stack App Developer in Dehradun, Professional Web Development Services, Hire a Freelance Web Developer, React.js Developer Portfolio, Next.js SEO Optimization Services, Firebase Database Integration, Web App Development Expert, CodeVerb Web Development, UI/UX Designer for Hire, Affordable Website Development India, Frontend Developer in Uttarakhand, Custom Website Development Services, Expert in Mobile App UI/UX, Pankaj Singh Rawat Developer Portfolio, CodeVerb Web & App Development, Hire Pankaj Singh for Web Projects, Best Freelancer Developer in Dehradun, CodeVerb Freelance Services, Pankaj Singh Rawat Full Stack Developer, CodeVerb YouTube Channel, Instagram Web Developer Codever.in, Hire CodeVerb for Custom Web Apps, Dehradun Based App Developer, Web Developer from Shivalik College of Engineering, Dehradun Web & App Development, Uttarakhand Full Stack Developer, Kashipur Website Development Services, Best Developer in Shivalik College, Web & App Solutions in Uttarakhand, Freelancer App Developer Kashipur, Mobile App UI/UX in Uttarakhand, CodeVerb India – Custom Development, Affordable Web Development in Dehradun ,  certificates page of CODEVERB.IN codeverb.in , certificates landing page codeverb.in , pankaj singh website certificates listing page , sections of codeverb.in services achievments projects contact rawatpanku991@gmail.com pankajsingh1work@gmail.com , know all certifications of pankaj singh codeverb.in , youtube @codeberb-in , instgram @pankaj_rawat_991 , instagram @codeverb.in linkedin @pankajsingh1work , github @PankajSingh1work , codeverb.in",
+  keywords: "Pankaj Singh, certifications, achievements, mobile app development, UI/UX, skills , Pankaj Singh, mobile app developer, portfolio, app development, projects, services, achievements , Pankaj Singh Rawat , Pankaj Singh Dehradun , Pankaj Singh Kashipur , Pankaj Singh Mobile Application Developer , Software Engineer , Shivalik College of Engineering , Government Polytechnic Kashipur , Codeverb by Pankaj Singh , Codeverb , Full Stack Developer in India, Web Developer Portfolio, Mobile App Developer in India, Next.js Developer Portfolio, Freelance Web Developer in India, UI/UX Designer & Developer, Best Web Developer in Uttarakhand, Full Stack App Developer in Dehradun, Professional Web Development Services, Hire a Freelance Web Developer, React.js Developer Portfolio, Next.js SEO Optimization Services, Firebase Database Integration, Web App Development Expert, CodeVerb Web Development, UI/UX Designer for Hire, Affordable Website Development India, Frontend Developer in Uttarakhand, Custom Website Development Services, Expert in Mobile App UI/UX, Pankaj Singh Rawat Developer Portfolio, CodeVerb Web & App Development, Hire Pankaj Singh for Web Projects, Best Freelancer Developer in Dehradun, CodeVerb Freelance Services, Pankaj Singh Rawat Full Stack Developer, CodeVerb YouTube Channel, Instagram Web Developer Codever.in, Hire CodeVerb for Custom Web Apps, Dehradun Based App Developer, Web Developer from Shivalik College of Engineering, Dehradun Web & App Development, Uttarakhand Full Stack Developer, Kashipur Website Development Services, Best Developer in Shivalik College, Web & App Solutions in Uttarakhand, Freelancer App Developer Kashipur, Mobile App UI/UX in Uttarakhand, CodeVerb India – Custom Development, Affordable Web Development in Dehradun , certificates page of CODEVERB.IN codeverb.in , certificates landing page codeverb.in , pankaj singh website certificates listing page , sections of codeverb.in services achievments projects contact rawatpanku991@gmail.com pankajsingh1work@gmail.com , know all certifications of pankaj singh codeverb.in , youtube @codeberb-in , instgram @pankaj_rawat_991 , instagram @codeverb.in linkedin @pankajsingh1work , github @PankajSingh1work , codeverb.in",
   openGraph: {
     title: "Pankaj Singh - Certifications and Achievements",
     description: "A showcase of certifications earned by Pankaj Singh, highlighting skills in mobile app development and beyond.",
-    url: "https://codeverb.in/certificates", // Replace with your actual domain
+    url: "https://codeverb.in/certificates",
     type: "website",
     images: [
       {
-        url: "/demo_4.webp", // Replace with a relevant image
+        url: "/demo_4.webp",
         width: 400,
         height: 288,
         alt: "Pankaj Singh Certifications",
@@ -325,9 +328,9 @@ export const metadata = {
     card: "summary_large_image",
     title: "Pankaj Singh - Certifications and Achievements",
     description: "Explore Pankaj Singh's certifications and achievements in mobile app development and related fields.",
-    image: "/demo_4.webp", // Replace with a relevant image
+    image: "/demo_4.webp",
   },
   alternates: {
-    canonical: "https://codeverb.in/certificates", // Replace with your actual domain
+    canonical: "https://codeverb.in/certificates",
   },
 };

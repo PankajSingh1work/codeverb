@@ -1,17 +1,18 @@
-"use client"; // Mark as client-side component
-import { useState, useEffect } from "react";
+"use client";
+
+import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 
 export default function ClientMobileMenu() {
   const [isOpen, setIsOpen] = useState(false);
+  const menuRef = useRef(null);
 
-  // Close menu on route change or when clicking outside
   useEffect(() => {
     const handleRouteChange = () => setIsOpen(false);
     window.addEventListener("popstate", handleRouteChange);
 
     const handleOutsideClick = (e) => {
-      if (isOpen && !e.target.closest(".mobile-menu")) {
+      if (isOpen && menuRef.current && !menuRef.current.contains(e.target)) {
         setIsOpen(false);
       }
     };
@@ -23,20 +24,26 @@ export default function ClientMobileMenu() {
     };
   }, [isOpen]);
 
-  // Prevent body scroll when menu is open
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = "hidden";
+      menuRef.current.querySelector("a").focus(); // Focus first link when opened
     } else {
       document.body.style.overflow = "";
     }
   }, [isOpen]);
 
+  const handleKeyDown = (e) => {
+    if (e.key === "Escape" && isOpen) {
+      setIsOpen(false);
+    }
+  };
+
   return (
     <>
       <button
         onClick={() => setIsOpen(true)}
-        className="md:hidden text-[#E0E0E0] hover:text-[#F0F0F0] focus:outline-none focus:ring-2 focus:ring-[#F0F0F0] rounded"
+        className="md:hidden text-[#E0E0E0] hover:text-[#e2cd2d] focus:outline-none focus:ring-2 focus:ring-[#e2cd2d] rounded p-1"
         aria-label="Open mobile navigation menu"
         aria-expanded={isOpen}
         aria-controls="mobile-menu"
@@ -49,16 +56,12 @@ export default function ClientMobileMenu() {
           stroke="currentColor"
           aria-hidden="true"
         >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth="2"
-            d="M4 6h16M4 12h16M4 18h16"
-          />
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
         </svg>
       </button>
 
       <div
+        ref={menuRef}
         className={`fixed top-0 right-0 w-[75%] h-full bg-[#181818] backdrop-blur-md transform ${
           isOpen ? "translate-x-0" : "translate-x-full"
         } transition-transform duration-300 shadow-lg p-6 flex flex-col space-y-6 md:hidden z-50 mobile-menu`}
@@ -67,6 +70,7 @@ export default function ClientMobileMenu() {
         aria-modal={isOpen}
         aria-hidden={!isOpen}
         aria-labelledby="mobile-menu-title"
+        onKeyDown={handleKeyDown}
       >
         <div className="flex justify-between items-center">
           <h2 id="mobile-menu-title" className="text-[#E0E0E0] text-lg font-semibold sr-only">
@@ -74,7 +78,7 @@ export default function ClientMobileMenu() {
           </h2>
           <button
             onClick={() => setIsOpen(false)}
-            className="text-[#E0E0E0] hover:text-[#F0F0F0] focus:outline-none focus:ring-2 focus:ring-[#F0F0F0] rounded"
+            className="text-[#E0E0E0] hover:text-[#e2cd2d] focus:outline-none focus:ring-2 focus:ring-[#e2cd2d] rounded p-1"
             aria-label="Close mobile navigation menu"
           >
             <svg
@@ -85,12 +89,7 @@ export default function ClientMobileMenu() {
               stroke="currentColor"
               aria-hidden="true"
             >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M6 18L18 6M6 6l12 12"
-              />
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
             </svg>
           </button>
         </div>
@@ -98,15 +97,15 @@ export default function ClientMobileMenu() {
         <nav className="flex flex-col space-y-6" aria-label="Mobile Navigation">
           <Link
             href="/#home"
-            className="text-[#E0E0E0] hover:text-[#F0F0F0] text-base focus:outline-none rounded"
+            className="text-[#E0E0E0] hover:text-[#e2cd2d] text-base focus:outline-none focus:ring-2 focus:ring-[#e2cd2d] rounded"
             onClick={() => setIsOpen(false)}
-            prefetch={true} // Enable prefetching for faster navigation
+            prefetch={true}
           >
             Home
           </Link>
           <Link
             href="/#about"
-            className="text-[#E0E0E0] hover:text-[#F0F0F0] text-base focus:outline-none rounded"
+            className="text-[#E0E0E0] hover:text-[#e2cd2d] text-base focus:outline-none focus:ring-2 focus:ring-[#e2cd2d] rounded"
             onClick={() => setIsOpen(false)}
             prefetch={true}
           >
@@ -114,7 +113,7 @@ export default function ClientMobileMenu() {
           </Link>
           <Link
             href="/#services"
-            className="text-[#E0E0E0] hover:text-[#F0F0F0] text-base focus:outline-none rounded"
+            className="text-[#E0E0E0] hover:text-[#e2cd2d] text-base focus:outline-none focus:ring-2 focus:ring-[#e2cd2d] rounded"
             onClick={() => setIsOpen(false)}
             prefetch={true}
           >
@@ -122,7 +121,7 @@ export default function ClientMobileMenu() {
           </Link>
           <Link
             href="/#projects"
-            className="text-[#E0E0E0] hover:text-[#F0F0F0] text-base focus:outline-none rounded"
+            className="text-[#E0E0E0] hover:text-[#e2cd2d] text-base focus:outline-none focus:ring-2 focus:ring-[#e2cd2d] rounded"
             onClick={() => setIsOpen(false)}
             prefetch={true}
           >
@@ -130,7 +129,7 @@ export default function ClientMobileMenu() {
           </Link>
           <Link
             href="/#achievements"
-            className="text-[#E0E0E0] hover:text-[#F0F0F0] text-base focus:outline-none rounded"
+            className="text-[#E0E0E0] hover:text-[#e2cd2d] text-base focus:outline-none focus:ring-2 focus:ring-[#e2cd2d] rounded"
             onClick={() => setIsOpen(false)}
             prefetch={true}
           >
@@ -138,7 +137,7 @@ export default function ClientMobileMenu() {
           </Link>
           <Link
             href="/#contact"
-            className="text-[#E0E0E0] hover:text-[#F0F0F0] text-base focus:outline-none rounded"
+            className="text-[#E0E0E0] hover:text-[#e2cd2d] text-base focus:outline-none focus:ring-2 focus:ring-[#e2cd2d] rounded"
             onClick={() => setIsOpen(false)}
             prefetch={true}
           >

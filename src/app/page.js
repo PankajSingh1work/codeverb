@@ -1,10 +1,9 @@
 // src/app/page.js
 import Link from "next/link";
 import Image from "next/image";
-import { database } from "../lib/firebase";
-import { ref, get } from "firebase/database";
 import ClientMobileMenu from "../components/ClientMobileMenu";
 import ContactForm from "../components/ContactForm";
+
 
 // Define metadata for SEO (removed unnecessary type annotation)
 export const metadata = {
@@ -36,15 +35,18 @@ export const metadata = {
   },
 };
 
-// Fetch data from Firebase
-async function fetchFirebaseData(path) {
+
+// Fetch data from the API route
+async function fetchData(path) {
   try {
-    const dataRef = ref(database, path);
-    const snapshot = await get(dataRef);
-    return snapshot.val() || {};
+    const res = await fetch(`http://localhost:3000/api/fetchData?path=${encodeURIComponent(path)}`, {
+      next: { revalidate: 10 },
+    });
+    if (!res.ok) throw new Error(`Failed to fetch ${path}`);
+    return await res.json();
   } catch (error) {
     console.error(`Error fetching ${path}:`, error.message);
-    return {};
+    return path.includes('projects_list') || path.includes('certificates_list') ? [] : {};
   }
 }
 
@@ -108,14 +110,15 @@ function generateStructuredData(heroData, aboutData, projectsList, certificatesL
 }
 
 export default async function Home() {
-  const heroData = await fetchFirebaseData("homepage/hero");
-  const aboutData = await fetchFirebaseData("homepage/about");
-  const servicesData = await fetchFirebaseData("homepage/services");
-  const projectsData = await fetchFirebaseData("homepage/projects");
-  const achievementsData = await fetchFirebaseData("homepage/achievements");
-  const contactData = await fetchFirebaseData("homepage/contact");
-  const projectsListRaw = await fetchFirebaseData("projectspage/projects_list");
-  const certificatesListRaw = await fetchFirebaseData("certificatespage/certificates_list");
+  // Fetch data using the API route
+  const heroData = await fetchData("homepage/hero");
+  const aboutData = await fetchData("homepage/about");
+  const servicesData = await fetchData("homepage/services");
+  const projectsData = await fetchData("homepage/projects");
+  const achievementsData = await fetchData("homepage/achievements");
+  const contactData = await fetchData("homepage/contact");
+  const projectsListRaw = await fetchData("projectspage/projects_list");
+  const certificatesListRaw = await fetchData("certificatespage/certificates_list");
 
   const projectsList = Array.isArray(projectsListRaw) ? projectsListRaw.slice(0, 4) : [];
   const certificatesList = Array.isArray(certificatesListRaw) ? certificatesListRaw.slice(0, 3) : [];

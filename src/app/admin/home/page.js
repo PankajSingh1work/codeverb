@@ -2,13 +2,21 @@
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { auth } from "../../../lib/firebase";
+import { auth, database } from "../../../lib/firebase";
 import { onAuthStateChanged } from "firebase/auth";
-import { database } from "../../../lib/firebase";
 import { ref, set, onValue } from "firebase/database";
+import Link from "next/link";
+
+// export const metadata = {
+//   title: "Control Home Page - Pankaj Singh Admin",
+//   description: "Admin panel to manage content for Pankaj Singh's portfolio homepage.",
+//   robots: "noindex, nofollow", // Prevent indexing by search engines
+// };
 
 export default function HomeControl() {
   const router = useRouter();
+  const [loading, setLoading] = useState(true);
+  const [saving, setSaving] = useState({});
 
   const [heroData, setHeroData] = useState({
     imageLink: "",
@@ -58,43 +66,39 @@ export default function HomeControl() {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (!user) {
         router.push("/admin/login");
+      } else {
+        setLoading(false);
       }
     });
     return () => unsubscribe();
   }, [router]);
 
   useEffect(() => {
+    if (loading) return;
+
     const sections = [
-      { ref: "homepage/hero", setter: setHeroData },
-      { ref: "homepage/about", setter: setAboutData },
-      { ref: "homepage/services", setter: setServicesData },
-      { ref: "homepage/projects", setter: setProjectsData },
-      { ref: "homepage/achievements", setter: setAchievementsData },
-      { ref: "homepage/contact", setter: setContactData },
+      { path: "homepage/hero", setter: setHeroData },
+      { path: "homepage/about", setter: setAboutData },
+      { path: "homepage/services", setter: setServicesData },
+      { path: "homepage/projects", setter: setProjectsData },
+      { path: "homepage/achievements", setter: setAchievementsData },
+      { path: "homepage/contact", setter: setContactData },
     ];
 
-    sections.forEach(({ ref: path, setter }) => {
+    sections.forEach(({ path, setter }) => {
       const dataRef = ref(database, path);
       onValue(dataRef, (snapshot) => {
-        const data = snapshot.val();
-        if (data) setter(data);
+        const data = snapshot.val() || {};
+        setter(data);
+      }, (error) => {
+        console.error(`Error fetching ${path}:`, error);
       });
     });
-  }, []);
+  }, [loading]);
 
-  const handleHeroChange = (e) => {
+  const handleChange = (setter) => (e) => {
     const { name, value } = e.target;
-    setHeroData((prev) => ({ ...prev, [name]: value }));
-  };
-
-  const handleAboutChange = (e) => {
-    const { name, value } = e.target;
-    setAboutData((prev) => ({ ...prev, [name]: value }));
-  };
-
-  const handleServicesChange = (e) => {
-    const { name, value } = e.target;
-    setServicesData((prev) => ({ ...prev, [name]: value }));
+    setter((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleCardChange = (index, field, value) => {
@@ -119,319 +123,308 @@ export default function HomeControl() {
     });
   };
 
-  const handleProjectsChange = (e) => {
-    const { name, value } = e.target;
-    setProjectsData((prev) => ({ ...prev, [name]: value }));
+  const updateSection = (path, data, sectionName) => async () => {
+    setSaving((prev) => ({ ...prev, [sectionName]: true }));
+    try {
+      const dataRef = ref(database, path);
+      await set(dataRef, data);
+      alert(`${sectionName} section updated successfully!`);
+    } catch (error) {
+      alert(`Error updating ${sectionName.toLowerCase()} section: ${error.message}`);
+      console.error(`Error updating ${path}:`, error);
+    } finally {
+      setSaving((prev) => ({ ...prev, [sectionName]: false }));
+    }
   };
 
-  const handleAchievementsChange = (e) => {
-    const { name, value } = e.target;
-    setAchievementsData((prev) => ({ ...prev, [name]: value }));
-  };
-
-  const handleContactChange = (e) => {
-    const { name, value } = e.target;
-    setContactData((prev) => ({ ...prev, [name]: value }));
-  };
-
-  const handleHeroUpdate = () => {
-    const heroRef = ref(database, "homepage/hero");
-    set(heroRef, heroData)
-      .then(() => alert("Hero section updated successfully!"))
-      .catch((error) => alert("Error updating hero section: " + error.message));
-  };
-
-  const handleAboutUpdate = () => {
-    const aboutRef = ref(database, "homepage/about");
-    set(aboutRef, aboutData)
-      .then(() => alert("About section updated successfully!"))
-      .catch((error) => alert("Error updating about section: " + error.message));
-  };
-
-  const handleServicesUpdate = () => {
-    const servicesRef = ref(database, "homepage/services");
-    set(servicesRef, servicesData)
-      .then(() => alert("Services section updated successfully!"))
-      .catch((error) => alert("Error updating services section: " + error.message));
-  };
-
-  const handleProjectsUpdate = () => {
-    const projectsRef = ref(database, "homepage/projects");
-    set(projectsRef, projectsData)
-      .then(() => alert("Projects section updated successfully!"))
-      .catch((error) => alert("Error updating projects section: " + error.message));
-  };
-
-  const handleAchievementsUpdate = () => {
-    const achievementsRef = ref(database, "homepage/achievements");
-    set(achievementsRef, achievementsData)
-      .then(() => alert("Achievements section updated successfully!"))
-      .catch((error) => alert("Error updating achievements section: " + error.message));
-  };
-
-  const handleContactUpdate = () => {
-    const contactRef = ref(database, "homepage/contact");
-    set(contactRef, contactData)
-      .then(() => alert("Contact section updated successfully!"))
-      .catch((error) => alert("Error updating contact section: " + error.message));
-  };
+  if (loading) {
+    return (
+      <div className="flex min-h-screen items-center justify-center bg-[#121212]">
+        <p className="text-[#E0E0E0] text-lg">Loading control panel...</p>
+      </div>
+    );
+  }
 
   return (
-    <div className="flex min-h-screen flex-col items-center bg-gray-100 p-6">
-      <h1 className="text-4xl font-bold text-blue-600 mb-8">Control Home Page</h1>
+    <div className="flex min-h-screen flex-col items-center bg-[#121212] p-6">
+      <h1 className="text-4xl font-bold text-[#e2cd2d] mb-8">Control Home Page</h1>
+      <Link href="/admin/dashboard" className="mb-6 text-[#e2cd2d] hover:underline">
+        Back to Dashboard
+      </Link>
 
       {/* Hero Section */}
-      <div className="w-full max-w-2xl bg-white p-6 rounded-lg shadow-md mb-8">
-        <h2 className="text-2xl font-semibold text-gray-800 mb-4">Hero Section</h2>
+      <div className="w-full max-w-2xl bg-[#1E1E1E] p-6 rounded-lg shadow-md mb-8">
+        <h2 className="text-2xl font-semibold text-[#FFFFFF] mb-4">Hero Section</h2>
         <div className="space-y-4">
           <div>
-            <label htmlFor="heroImageLink" className="block text-sm font-medium text-gray-700">Image Link</label>
+            <label htmlFor="heroImageLink" className="block text-sm font-medium text-[#E0E0E0]">Image Link</label>
             <input
               type="text"
               id="heroImageLink"
               name="imageLink"
               value={heroData.imageLink}
-              onChange={handleHeroChange}
-              className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
+              onChange={handleChange(setHeroData)}
+              className="w-full p-2 mt-1 bg-[#2E2E2E] text-[#E0E0E0] border border-[#444444] rounded-md focus:outline-none focus:ring-2 focus:ring-[#e2cd2d] disabled:opacity-50"
               placeholder="e.g., /profile_HeroSection.png"
+              disabled={saving["Hero"]}
             />
           </div>
           <div>
-            <label htmlFor="heroTitle" className="block text-sm font-medium text-gray-700">Title</label>
+            <label htmlFor="heroTitle" className="block text-sm font-medium text-[#E0E0E0]">Title</label>
             <input
               type="text"
               id="heroTitle"
               name="title"
               value={heroData.title}
-              onChange={handleHeroChange}
-              className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
+              onChange={handleChange(setHeroData)}
+              className="w-full p-2 mt-1 bg-[#2E2E2E] text-[#E0E0E0] border border-[#444444] rounded-md focus:outline-none focus:ring-2 focus:ring-[#e2cd2d] disabled:opacity-50"
               placeholder="e.g., Hi, I’m Pankaj Singh"
+              disabled={saving["Hero"]}
             />
           </div>
           <div>
-            <label htmlFor="heroSubtitle" className="block text-sm font-medium text-gray-700">Subtitle</label>
+            <label htmlFor="heroSubtitle" className="block text-sm font-medium text-[#E0E0E0]">Subtitle</label>
             <input
               type="text"
               id="heroSubtitle"
               name="subtitle"
               value={heroData.subtitle}
-              onChange={handleHeroChange}
-              className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
+              onChange={handleChange(setHeroData)}
+              className="w-full p-2 mt-1 bg-[#2E2E2E] text-[#E0E0E0] border border-[#444444] rounded-md focus:outline-none focus:ring-2 focus:ring-[#e2cd2d] disabled:opacity-50"
               placeholder="e.g., Crafting the Future of Mobile Experiences"
+              disabled={saving["Hero"]}
             />
           </div>
           <div>
-            <label htmlFor="heroDescription" className="block text-sm font-medium text-gray-700">Description</label>
+            <label htmlFor="heroDescription" className="block text-sm font-medium text-[#E0E0E0]">Description</label>
             <textarea
               id="heroDescription"
               name="description"
               value={heroData.description}
-              onChange={handleHeroChange}
-              className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
+              onChange={handleChange(setHeroData)}
+              className="w-full p-2 mt-1 bg-[#2E2E2E] text-[#E0E0E0] border border-[#444444] rounded-md focus:outline-none focus:ring-2 focus:ring-[#e2cd2d] disabled:opacity-50"
               rows="4"
               placeholder="e.g., An aspiring mobile app developer with a passion..."
+              disabled={saving["Hero"]}
             />
           </div>
           <div>
-            <label htmlFor="heroPrimaryButtonText" className="block text-sm font-medium text-gray-700">Primary Button Text</label>
+            <label htmlFor="heroPrimaryButtonText" className="block text-sm font-medium text-[#E0E0E0]">Primary Button Text</label>
             <input
               type="text"
               id="heroPrimaryButtonText"
               name="primaryButtonText"
               value={heroData.primaryButtonText}
-              onChange={handleHeroChange}
-              className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
+              onChange={handleChange(setHeroData)}
+              className="w-full p-2 mt-1 bg-[#2E2E2E] text-[#E0E0E0] border border-[#444444] rounded-md focus:outline-none focus:ring-2 focus:ring-[#e2cd2d] disabled:opacity-50"
               placeholder="e.g., Get Resume"
+              disabled={saving["Hero"]}
             />
           </div>
           <div>
-            <label htmlFor="heroPrimaryButtonLink" className="block text-sm font-medium text-gray-700">Primary Button Link</label>
+            <label htmlFor="heroPrimaryButtonLink" className="block text-sm font-medium text-[#E0E0E0]">Primary Button Link</label>
             <input
               type="text"
               id="heroPrimaryButtonLink"
               name="primaryButtonLink"
               value={heroData.primaryButtonLink}
-              onChange={handleHeroChange}
-              className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
+              onChange={handleChange(setHeroData)}
+              className="w-full p-2 mt-1 bg-[#2E2E2E] text-[#E0E0E0] border border-[#444444] rounded-md focus:outline-none focus:ring-2 focus:ring-[#e2cd2d] disabled:opacity-50"
               placeholder="e.g., /resume.pdf"
+              disabled={saving["Hero"]}
             />
           </div>
           <div>
-            <label htmlFor="heroSecondaryButtonText" className="block text-sm font-medium text-gray-700">Secondary Button Text</label>
+            <label htmlFor="heroSecondaryButtonText" className="block text-sm font-medium text-[#E0E0E0]">Secondary Button Text</label>
             <input
               type="text"
               id="heroSecondaryButtonText"
               name="secondaryButtonText"
               value={heroData.secondaryButtonText}
-              onChange={handleHeroChange}
-              className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
+              onChange={handleChange(setHeroData)}
+              className="w-full p-2 mt-1 bg-[#2E2E2E] text-[#E0E0E0] border border-[#444444] rounded-md focus:outline-none focus:ring-2 focus:ring-[#e2cd2d] disabled:opacity-50"
               placeholder="e.g., Projects"
+              disabled={saving["Hero"]}
             />
           </div>
           <div>
-            <label htmlFor="heroSecondaryButtonLink" className="block text-sm font-medium text-gray-700">Secondary Button Link</label>
+            <label htmlFor="heroSecondaryButtonLink" className="block text-sm font-medium text-[#E0E0E0]">Secondary Button Link</label>
             <input
               type="text"
               id="heroSecondaryButtonLink"
               name="secondaryButtonLink"
               value={heroData.secondaryButtonLink}
-              onChange={handleHeroChange}
-              className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
+              onChange={handleChange(setHeroData)}
+              className="w-full p-2 mt-1 bg-[#2E2E2E] text-[#E0E0E0] border border-[#444444] rounded-md focus:outline-none focus:ring-2 focus:ring-[#e2cd2d] disabled:opacity-50"
               placeholder="e.g., #projects"
+              disabled={saving["Hero"]}
             />
           </div>
           <button
-            onClick={handleHeroUpdate}
-            className="w-full py-2 bg-green-600 text-white rounded-md hover:bg-green-700 transition mt-6"
+            onClick={updateSection("homepage/hero", heroData, "Hero")}
+            className="w-full py-2 bg-[#e2cd2d] text-[#121212] font-semibold rounded-md hover:bg-[#d1bc29] transition mt-6 disabled:bg-[#666666] disabled:cursor-not-allowed"
+            disabled={saving["Hero"]}
           >
-            Update Hero
+            {saving["Hero"] ? "Updating..." : "Update Hero"}
           </button>
         </div>
       </div>
 
       {/* About Section */}
-      <div className="w-full max-w-2xl bg-white p-6 rounded-lg shadow-md mb-8">
-        <h2 className="text-2xl font-semibold text-gray-800 mb-4">About Section</h2>
+      <div className="w-full max-w-2xl bg-[#1E1E1E] p-6 rounded-lg shadow-md mb-8">
+        <h2 className="text-2xl font-semibold text-[#FFFFFF] mb-4">About Section</h2>
         <div className="space-y-4">
           <div>
-            <label htmlFor="aboutTitle" className="block text-sm font-medium text-gray-700">Title</label>
+            <label htmlFor="aboutTitle" className="block text-sm font-medium text-[#E0E0E0]">Title</label>
             <input
               type="text"
               id="aboutTitle"
               name="title"
               value={aboutData.title}
-              onChange={handleAboutChange}
-              className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
+              onChange={handleChange(setAboutData)}
+              className="w-full p-2 mt-1 bg-[#2E2E2E] text-[#E0E0E0] border border-[#444444] rounded-md focus:outline-none focus:ring-2 focus:ring-[#e2cd2d] disabled:opacity-50"
               placeholder="e.g., About Me"
+              disabled={saving["About"]}
             />
           </div>
           <div>
-            <label htmlFor="aboutImageLink" className="block text-sm font-medium text-gray-700">Image Link</label>
+            <label htmlFor="aboutImageLink" className="block text-sm font-medium text-[#E0E0E0]">Image Link</label>
             <input
               type="text"
               id="aboutImageLink"
               name="imageLink"
               value={aboutData.imageLink}
-              onChange={handleAboutChange}
-              className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
+              onChange={handleChange(setAboutData)}
+              className="w-full p-2 mt-1 bg-[#2E2E2E] text-[#E0E0E0] border border-[#444444] rounded-md focus:outline-none focus:ring-2 focus:ring-[#e2cd2d] disabled:opacity-50"
               placeholder="e.g., /profile_about_me.png"
+              disabled={saving["About"]}
             />
           </div>
           <div>
-            <label htmlFor="aboutDescription" className="block text-sm font-medium text-gray-700">Description</label>
+            <label htmlFor="aboutDescription" className="block text-sm font-medium text-[#E0E0E0]">Description</label>
             <textarea
               id="aboutDescription"
               name="description"
               value={aboutData.description}
-              onChange={handleAboutChange}
-              className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
+              onChange={handleChange(setAboutData)}
+              className="w-full p-2 mt-1 bg-[#2E2E2E] text-[#E0E0E0] border border-[#444444] rounded-md focus:outline-none focus:ring-2 focus:ring-[#e2cd2d] disabled:opacity-50"
               rows="4"
               placeholder="e.g., I’m Pankaj Singh, a passionate mobile app developer..."
+              disabled={saving["About"]}
             />
           </div>
           <div>
-            <label htmlFor="aboutButtonText" className="block text-sm font-medium text-gray-700">Button Text</label>
+            <label htmlFor="aboutButtonText" className="block text-sm font-medium text-[#E0E0E0]">Button Text</label>
             <input
               type="text"
               id="aboutButtonText"
               name="buttonText"
               value={aboutData.buttonText}
-              onChange={handleAboutChange}
-              className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
+              onChange={handleChange(setAboutData)}
+              className="w-full p-2 mt-1 bg-[#2E2E2E] text-[#E0E0E0] border border-[#444444] rounded-md focus:outline-none focus:ring-2 focus:ring-[#e2cd2d] disabled:opacity-50"
               placeholder="e.g., Know More"
+              disabled={saving["About"]}
             />
           </div>
           <div>
-            <label htmlFor="aboutButtonLink" className="block text-sm font-medium text-gray-700">Button Link</label>
+            <label htmlFor="aboutButtonLink" className="block text-sm font-medium text-[#E0E0E0]">Button Link</label>
             <input
               type="text"
               id="aboutButtonLink"
               name="buttonLink"
               value={aboutData.buttonLink}
-              onChange={handleAboutChange}
-              className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
+              onChange={handleChange(setAboutData)}
+              className="w-full p-2 mt-1 bg-[#2E2E2E] text-[#E0E0E0] border border-[#444444] rounded-md focus:outline-none focus:ring-2 focus:ring-[#e2cd2d] disabled:opacity-50"
               placeholder="e.g., /about"
+              disabled={saving["About"]}
             />
           </div>
           <button
-            onClick={handleAboutUpdate}
-            className="w-full py-2 bg-green-600 text-white rounded-md hover:bg-green-700 transition mt-6"
+            onClick={updateSection("homepage/about", aboutData, "About")}
+            className="w-full py-2 bg-[#e2cd2d] text-[#121212] font-semibold rounded-md hover:bg-[#d1bc29] transition mt-6 disabled:bg-[#666666] disabled:cursor-not-allowed"
+            disabled={saving["About"]}
           >
-            Update About
+            {saving["About"] ? "Updating..." : "Update About"}
           </button>
         </div>
       </div>
 
       {/* Services Section */}
-      <div className="w-full max-w-2xl bg-white p-6 rounded-lg shadow-md mb-8">
-        <h2 className="text-2xl font-semibold text-gray-800 mb-4">Services Section</h2>
+      <div className="w-full max-w-2xl bg-[#1E1E1E] p-6 rounded-lg shadow-md mb-8">
+        <h2 className="text-2xl font-semibold text-[#FFFFFF] mb-4">Services Section</h2>
         <div className="space-y-4">
           <div>
-            <label htmlFor="servicesTitle" className="block text-sm font-medium text-gray-700">Title</label>
+            <label htmlFor="servicesTitle" className="block text-sm font-medium text-[#E0E0E0]">Title</label>
             <input
               type="text"
               id="servicesTitle"
               name="title"
               value={servicesData.title}
-              onChange={handleServicesChange}
-              className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
+              onChange={handleChange(setServicesData)}
+              className="w-full p-2 mt-1 bg-[#2E2E2E] text-[#E0E0E0] border border-[#444444] rounded-md focus:outline-none focus:ring-2 focus:ring-[#e2cd2d] disabled:opacity-50"
               placeholder="e.g., Services"
+              disabled={saving["Services"]}
             />
           </div>
           <div>
-            <label htmlFor="servicesSubtitle" className="block text-sm font-medium text-gray-700">Subtitle</label>
+            <label htmlFor="servicesSubtitle" className="block text-sm font-medium text-[#E0E0E0]">Subtitle</label>
             <input
               type="text"
               id="servicesSubtitle"
               name="subtitle"
               value={servicesData.subtitle}
-              onChange={handleServicesChange}
-              className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
+              onChange={handleChange(setServicesData)}
+              className="w-full p-2 mt-1 bg-[#2E2E2E] text-[#E0E0E0] border border-[#444444] rounded-md focus:outline-none focus:ring-2 focus:ring-[#e2cd2d] disabled:opacity-50"
               placeholder="e.g., What I Offer"
+              disabled={saving["Services"]}
             />
           </div>
           {servicesData.cards.map((card, index) => (
-            <div key={index} className="border-t pt-4 mt-4 relative">
-              <h3 className="text-lg font-medium text-gray-700 mb-2">Card {index + 1}</h3>
+            <div key={index} className="border-t border-[#444444] pt-4 mt-4 relative">
+              <h3 className="text-lg font-medium text-[#E0E0E0] mb-2">Card {index + 1}</h3>
               <div className="space-y-4">
                 <div>
-                  <label htmlFor={`iconLink-${index}`} className="block text-sm font-medium text-gray-700">Icon Link (Font Awesome Class)</label>
+                  <label htmlFor={`iconLink-${index}`} className="block text-sm font-medium text-[#E0E0E0]">Icon Link (Font Awesome Class)</label>
                   <input
                     type="text"
                     id={`iconLink-${index}`}
                     value={card.iconLink}
                     onChange={(e) => handleCardChange(index, "iconLink", e.target.value)}
-                    className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
+                    className="w-full p-2 mt-1 bg-[#2E2E2E] text-[#E0E0E0] border border-[#444444] rounded-md focus:outline-none focus:ring-2 focus:ring-[#e2cd2d] disabled:opacity-50"
                     placeholder="e.g., fa-brands fa-android"
+                    disabled={saving["Services"]}
                   />
                 </div>
                 <div>
-                  <label htmlFor={`cardTitle-${index}`} className="block text-sm font-medium text-gray-700">Card Title</label>
+                  <label htmlFor={`cardTitle-${index}`} className="block text-sm font-medium text-[#E0E0E0]">Card Title</label>
                   <input
                     type="text"
                     id={`cardTitle-${index}`}
                     value={card.title}
                     onChange={(e) => handleCardChange(index, "title", e.target.value)}
-                    className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
+                    className="w-full p-2 mt-1 bg-[#2E2E2E] text-[#E0E0E0] border border-[#444444] rounded-md focus:outline-none focus:ring-2 focus:ring-[#e2cd2d] disabled:opacity-50"
                     placeholder="e.g., Android App Development"
+                    disabled={saving["Services"]}
                   />
                 </div>
                 <div>
-                  <label htmlFor={`cardDescription-${index}`} className="block text-sm font-medium text-gray-700">Card Description</label>
+                  <label htmlFor={`cardDescription-${index}`} className="block text-sm font-medium text-[#E0E0E0]">Card Description</label>
                   <textarea
                     id={`cardDescription-${index}`}
                     value={card.description}
                     onChange={(e) => handleCardChange(index, "description", e.target.value)}
-                    className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
+                    className="w-full p-2 mt-1 bg-[#2E2E2E] text-[#E0E0E0] border border-[#444444] rounded-md focus:outline-none focus:ring-2 focus:ring-[#e2cd2d] disabled:opacity-50"
                     rows="3"
                     placeholder="e.g., Building seamless and intuitive Android applications..."
+                    disabled={saving["Services"]}
                   />
                 </div>
               </div>
               {servicesData.cards.length > 1 && (
                 <button
                   onClick={() => removeCard(index)}
-                  className="absolute top-4 right-4 bg-red-600 text-white p-2 rounded-full hover:bg-red-800 transition"
+                  className="absolute top-4 right-4 bg-[#DC2626] text-[#FFFFFF] p-2 rounded-full hover:bg-[#b91c1c] transition disabled:opacity-50"
+                  disabled={saving["Services"]}
                 >
                   <i className="fa-solid fa-trash text-lg"></i>
                 </button>
@@ -440,174 +433,189 @@ export default function HomeControl() {
           ))}
           <button
             onClick={addCard}
-            className="w-full py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition mt-4 flex items-center justify-center"
+            className="w-full py-2 bg-[#2563EB] text-[#FFFFFF] rounded-md hover:bg-[#1e4fc3] transition mt-4 flex items-center justify-center disabled:bg-[#666666] disabled:cursor-not-allowed"
+            disabled={saving["Services"]}
           >
             <i className="fa-solid fa-plus mr-2"></i> Add New Card
           </button>
           <button
-            onClick={handleServicesUpdate}
-            className="w-full py-2 bg-green-600 text-white rounded-md hover:bg-green-700 transition mt-6"
+            onClick={updateSection("homepage/services", servicesData, "Services")}
+            className="w-full py-2 bg-[#e2cd2d] text-[#121212] font-semibold rounded-md hover:bg-[#d1bc29] transition mt-6 disabled:bg-[#666666] disabled:cursor-not-allowed"
+            disabled={saving["Services"]}
           >
-            Update Services
+            {saving["Services"] ? "Updating..." : "Update Services"}
           </button>
         </div>
       </div>
 
       {/* Projects Section */}
-      <div className="w-full max-w-2xl bg-white p-6 rounded-lg shadow-md mb-8">
-        <h2 className="text-2xl font-semibold text-gray-800 mb-4">Projects Section</h2>
+      <div className="w-full max-w-2xl bg-[#1E1E1E] p-6 rounded-lg shadow-md mb-8">
+        <h2 className="text-2xl font-semibold text-[#FFFFFF] mb-4">Projects Section</h2>
         <div className="space-y-4">
           <div>
-            <label htmlFor="projectsTitle" className="block text-sm font-medium text-gray-700">Title</label>
+            <label htmlFor="projectsTitle" className="block text-sm font-medium text-[#E0E0E0]">Title</label>
             <input
               type="text"
               id="projectsTitle"
               name="title"
               value={projectsData.title}
-              onChange={handleProjectsChange}
-              className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
+              onChange={handleChange(setProjectsData)}
+              className="w-full p-2 mt-1 bg-[#2E2E2E] text-[#E0E0E0] border border-[#444444] rounded-md focus:outline-none focus:ring-2 focus:ring-[#e2cd2d] disabled:opacity-50"
               placeholder="e.g., My Projects"
+              disabled={saving["Projects"]}
             />
           </div>
           <div>
-            <label htmlFor="projectsSubtitle" className="block text-sm font-medium text-gray-700">Subtitle</label>
+            <label htmlFor="projectsSubtitle" className="block text-sm font-medium text-[#E0E0E0]">Subtitle</label>
             <input
               type="text"
               id="projectsSubtitle"
               name="subtitle"
               value={projectsData.subtitle}
-              onChange={handleProjectsChange}
-              className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
+              onChange={handleChange(setProjectsData)}
+              className="w-full p-2 mt-1 bg-[#2E2E2E] text-[#E0E0E0] border border-[#444444] rounded-md focus:outline-none focus:ring-2 focus:ring-[#e2cd2d] disabled:opacity-50"
               placeholder="e.g., Some of My Work"
+              disabled={saving["Projects"]}
             />
           </div>
           <div>
-            <label htmlFor="projectsButtonText" className="block text-sm font-medium text-gray-700">Button Text</label>
+            <label htmlFor="projectsButtonText" className="block text-sm font-medium text-[#E0E0E0]">Button Text</label>
             <input
               type="text"
               id="projectsButtonText"
               name="buttonText"
               value={projectsData.buttonText}
-              onChange={handleProjectsChange}
-              className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
+              onChange={handleChange(setProjectsData)}
+              className="w-full p-2 mt-1 bg-[#2E2E2E] text-[#E0E0E0] border border-[#444444] rounded-md focus:outline-none focus:ring-2 focus:ring-[#e2cd2d] disabled:opacity-50"
               placeholder="e.g., Show All Projects"
+              disabled={saving["Projects"]}
             />
           </div>
           <div>
-            <label htmlFor="projectsButtonLink" className="block text-sm font-medium text-gray-700">Button Link</label>
+            <label htmlFor="projectsButtonLink" className="block text-sm font-medium text-[#E0E0E0]">Button Link</label>
             <input
               type="text"
               id="projectsButtonLink"
               name="buttonLink"
               value={projectsData.buttonLink}
-              onChange={handleProjectsChange}
-              className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
+              onChange={handleChange(setProjectsData)}
+              className="w-full p-2 mt-1 bg-[#2E2E2E] text-[#E0E0E0] border border-[#444444] rounded-md focus:outline-none focus:ring-2 focus:ring-[#e2cd2d] disabled:opacity-50"
               placeholder="e.g., #projects"
+              disabled={saving["Projects"]}
             />
           </div>
           <button
-            onClick={handleProjectsUpdate}
-            className="w-full py-2 bg-green-600 text-white rounded-md hover:bg-green-700 transition mt-6"
+            onClick={updateSection("homepage/projects", projectsData, "Projects")}
+            className="w-full py-2 bg-[#e2cd2d] text-[#121212] font-semibold rounded-md hover:bg-[#d1bc29] transition mt-6 disabled:bg-[#666666] disabled:cursor-not-allowed"
+            disabled={saving["Projects"]}
           >
-            Update Projects
+            {saving["Projects"] ? "Updating..." : "Update Projects"}
           </button>
         </div>
       </div>
 
       {/* Achievements Section */}
-      <div className="w-full max-w-2xl bg-white p-6 rounded-lg shadow-md mb-8">
-        <h2 className="text-2xl font-semibold text-gray-800 mb-4">Achievements Section</h2>
+      <div className="w-full max-w-2xl bg-[#1E1E1E] p-6 rounded-lg shadow-md mb-8">
+        <h2 className="text-2xl font-semibold text-[#FFFFFF] mb-4">Achievements Section</h2>
         <div className="space-y-4">
           <div>
-            <label htmlFor="achievementsTitle" className="block text-sm font-medium text-gray-700">Title</label>
+            <label htmlFor="achievementsTitle" className="block text-sm font-medium text-[#E0E0E0]">Title</label>
             <input
               type="text"
               id="achievementsTitle"
               name="title"
               value={achievementsData.title}
-              onChange={handleAchievementsChange}
-              className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
+              onChange={handleChange(setAchievementsData)}
+              className="w-full p-2 mt-1 bg-[#2E2E2E] text-[#E0E0E0] border border-[#444444] rounded-md focus:outline-none focus:ring-2 focus:ring-[#e2cd2d] disabled:opacity-50"
               placeholder="e.g., My Achievements"
+              disabled={saving["Achievements"]}
             />
           </div>
           <div>
-            <label htmlFor="achievementsSubtitle" className="block text-sm font-medium text-gray-700">Subtitle</label>
+            <label htmlFor="achievementsSubtitle" className="block text-sm font-medium text-[#E0E0E0]">Subtitle</label>
             <input
               type="text"
               id="achievementsSubtitle"
               name="subtitle"
               value={achievementsData.subtitle}
-              onChange={handleAchievementsChange}
-              className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
+              onChange={handleChange(setAchievementsData)}
+              className="w-full p-2 mt-1 bg-[#2E2E2E] text-[#E0E0E0] border border-[#444444] rounded-md focus:outline-none focus:ring-2 focus:ring-[#e2cd2d] disabled:opacity-50"
               placeholder="e.g., A showcase of my skills..."
+              disabled={saving["Achievements"]}
             />
           </div>
           <div>
-            <label htmlFor="achievementsButtonText" className="block text-sm font-medium text-gray-700">Button Text</label>
+            <label htmlFor="achievementsButtonText" className="block text-sm font-medium text-[#E0E0E0]">Button Text</label>
             <input
               type="text"
               id="achievementsButtonText"
               name="buttonText"
               value={achievementsData.buttonText}
-              onChange={handleAchievementsChange}
-              className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
+              onChange={handleChange(setAchievementsData)}
+              className="w-full p-2 mt-1 bg-[#2E2E2E] text-[#E0E0E0] border border-[#444444] rounded-md focus:outline-none focus:ring-2 focus:ring-[#e2cd2d] disabled:opacity-50"
               placeholder="e.g., Show All Certificates"
+              disabled={saving["Achievements"]}
             />
           </div>
           <div>
-            <label htmlFor="achievementsButtonLink" className="block text-sm font-medium text-gray-700">Button Link</label>
+            <label htmlFor="achievementsButtonLink" className="block text-sm font-medium text-[#E0E0E0]">Button Link</label>
             <input
               type="text"
               id="achievementsButtonLink"
               name="buttonLink"
               value={achievementsData.buttonLink}
-              onChange={handleAchievementsChange}
-              className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
+              onChange={handleChange(setAchievementsData)}
+              className="w-full p-2 mt-1 bg-[#2E2E2E] text-[#E0E0E0] border border-[#444444] rounded-md focus:outline-none focus:ring-2 focus:ring-[#e2cd2d] disabled:opacity-50"
               placeholder="e.g., /certificates-page"
+              disabled={saving["Achievements"]}
             />
           </div>
           <button
-            onClick={handleAchievementsUpdate}
-            className="w-full py-2 bg-green-600 text-white rounded-md hover:bg-green-700 transition mt-6"
+            onClick={updateSection("homepage/achievements", achievementsData, "Achievements")}
+            className="w-full py-2 bg-[#e2cd2d] text-[#121212] font-semibold rounded-md hover:bg-[#d1bc29] transition mt-6 disabled:bg-[#666666] disabled:cursor-not-allowed"
+            disabled={saving["Achievements"]}
           >
-            Update Achievements
+            {saving["Achievements"] ? "Updating..." : "Update Achievements"}
           </button>
         </div>
       </div>
 
       {/* Contact Section */}
-      <div className="w-full max-w-2xl bg-white p-6 rounded-lg shadow-md mb-8">
-        <h2 className="text-2xl font-semibold text-gray-800 mb-4">Contact Section</h2>
+      <div className="w-full max-w-2xl bg-[#1E1E1E] p-6 rounded-lg shadow-md mb-8">
+        <h2 className="text-2xl font-semibold text-[#FFFFFF] mb-4">Contact Section</h2>
         <div className="space-y-4">
           <div>
-            <label htmlFor="contactTitle" className="block text-sm font-medium text-gray-700">Title</label>
+            <label htmlFor="contactTitle" className="block text-sm font-medium text-[#E0E0E0]">Title</label>
             <input
               type="text"
               id="contactTitle"
               name="title"
               value={contactData.title}
-              onChange={handleContactChange}
-              className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
+              onChange={handleChange(setContactData)}
+              className="w-full p-2 mt-1 bg-[#2E2E2E] text-[#E0E0E0] border border-[#444444] rounded-md focus:outline-none focus:ring-2 focus:ring-[#e2cd2d] disabled:opacity-50"
               placeholder="e.g., Get in Touch"
+              disabled={saving["Contact"]}
             />
           </div>
           <div>
-            <label htmlFor="contactSubtitle" className="block text-sm font-medium text-gray-700">Subtitle</label>
+            <label htmlFor="contactSubtitle" className="block text-sm font-medium text-[#E0E0E0]">Subtitle</label>
             <input
               type="text"
               id="contactSubtitle"
               name="subtitle"
               value={contactData.subtitle}
-              onChange={handleContactChange}
-              className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
+              onChange={handleChange(setContactData)}
+              className="w-full p-2 mt-1 bg-[#2E2E2E] text-[#E0E0E0] border border-[#444444] rounded-md focus:outline-none focus:ring-2 focus:ring-[#e2cd2d] disabled:opacity-50"
               placeholder="e.g., Whether you're looking for a commissioned service..."
+              disabled={saving["Contact"]}
             />
           </div>
           <button
-            onClick={handleContactUpdate}
-            className="w-full py-2 bg-green-600 text-white rounded-md hover:bg-green-700 transition mt-6"
+            onClick={updateSection("homepage/contact", contactData, "Contact")}
+            className="w-full py-2 bg-[#e2cd2d] text-[#121212] font-semibold rounded-md hover:bg-[#d1bc29] transition mt-6 disabled:bg-[#666666] disabled:cursor-not-allowed"
+            disabled={saving["Contact"]}
           >
-            Update Contact
+            {saving["Contact"] ? "Updating..." : "Update Contact"}
           </button>
         </div>
       </div>

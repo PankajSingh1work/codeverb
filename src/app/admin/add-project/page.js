@@ -2,13 +2,21 @@
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { auth } from "../../../lib/firebase";
+import { auth, database } from "../../../lib/firebase";
 import { onAuthStateChanged } from "firebase/auth";
-import { database } from "../../../lib/firebase";
 import { ref, set, onValue } from "firebase/database";
+import Link from "next/link";
+
+// export const metadata = {
+//   title: "Add Projects - Pankaj Singh Admin",
+//   description: "Admin panel to add and manage projects for Pankaj Singh's portfolio.",
+//   robots: "noindex, nofollow", // Prevent indexing by search engines
+// };
 
 export default function AddProjectControl() {
   const router = useRouter();
+  const [loading, setLoading] = useState(true);
+  const [saving, setSaving] = useState(false);
 
   const [projects, setProjects] = useState([
     {
@@ -42,18 +50,36 @@ export default function AddProjectControl() {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (!user) {
         router.push("/admin/login");
+      } else {
+        setLoading(false);
       }
     });
     return () => unsubscribe();
   }, [router]);
 
   useEffect(() => {
+    if (loading) return;
+
     const projectsRef = ref(database, "projectspage/projects_list");
-    onValue(projectsRef, (snapshot) => {
-      const data = snapshot.val();
-      if (data) setProjects(data);
-    });
-  }, []);
+    onValue(
+      projectsRef,
+      (snapshot) => {
+        const data = snapshot.val() || [
+          {
+            hero: { backgroundImageLink: "", title: "", description: "", buttons: [{ buttonText: "", iconLink: "", buttonLink: "" }] },
+            details: [{ image: "", description1: "", description2: "", description3: "" }],
+            techStack: { items: [{ techIconLink: "", techName: "" }] },
+            challenges: { cards: [{ iconLink: "", title: "", description: "" }] },
+            features: { cards: [{ iconLink: "", title: "", description: "" }] },
+          },
+        ];
+        setProjects(data);
+      },
+      (error) => {
+        console.error("Error fetching projects:", error);
+      }
+    );
+  }, [loading]);
 
   const handleChange = (projIndex, section, field, value) => {
     setProjects((prev) => {
@@ -136,88 +162,72 @@ export default function AddProjectControl() {
     setProjects((prev) => [
       ...prev,
       {
-        hero: {
-          backgroundImageLink: "",
-          title: "",
-          description: "",
-          buttons: [{ buttonText: "", iconLink: "", buttonLink: "" }],
-        },
-        details: [
-          {
-            image: "",
-            description1: "",
-            description2: "",
-            description3: "",
-          },
-        ],
-        techStack: {
-          items: [{ techIconLink: "", techName: "" }],
-        },
-        challenges: {
-          cards: [{ iconLink: "", title: "", description: "" }],
-        },
-        features: {
-          cards: [{ iconLink: "", title: "", description: "" }],
-        },
+        hero: { backgroundImageLink: "", title: "", description: "", buttons: [{ buttonText: "", iconLink: "", buttonLink: "" }] },
+        details: [{ image: "", description1: "", description2: "", description3: "" }],
+        techStack: { items: [{ techIconLink: "", techName: "" }] },
+        challenges: { cards: [{ iconLink: "", title: "", description: "" }] },
+        features: { cards: [{ iconLink: "", title: "", description: "" }] },
       },
     ]);
   };
 
   const removeProject = (index) => {
-    setProjects((prev) => {
-      const newProjects = prev.filter((_, i) => i !== index);
-      return newProjects.length > 0
-        ? newProjects
-        : [
-            {
-              hero: {
-                backgroundImageLink: "",
-                title: "",
-                description: "",
-                buttons: [{ buttonText: "", iconLink: "", buttonLink: "" }],
+    if (confirm("Are you sure you want to remove this project?")) {
+      setProjects((prev) => {
+        const newProjects = prev.filter((_, i) => i !== index);
+        return newProjects.length > 0
+          ? newProjects
+          : [
+              {
+                hero: { backgroundImageLink: "", title: "", description: "", buttons: [{ buttonText: "", iconLink: "", buttonLink: "" }] },
+                details: [{ image: "", description1: "", description2: "", description3: "" }],
+                techStack: { items: [{ techIconLink: "", techName: "" }] },
+                challenges: { cards: [{ iconLink: "", title: "", description: "" }] },
+                features: { cards: [{ iconLink: "", title: "", description: "" }] },
               },
-              details: [
-                {
-                  image: "",
-                  description1: "",
-                  description2: "",
-                  description3: "",
-                },
-              ],
-              techStack: {
-                items: [{ techIconLink: "", techName: "" }],
-              },
-              challenges: {
-                cards: [{ iconLink: "", title: "", description: "" }],
-              },
-              features: {
-                cards: [{ iconLink: "", title: "", description: "" }],
-              },
-            },
-          ];
-    });
+            ];
+      });
+    }
   };
 
-  const handleUpdate = () => {
-    const projectsRef = ref(database, "projectspage/projects_list");
-    set(projectsRef, projects)
-      .then(() => alert("Projects updated successfully!"))
-      .catch((error) => alert("Error updating projects: " + error.message));
+  const handleUpdate = async () => {
+    setSaving(true);
+    try {
+      const projectsRef = ref(database, "projectspage/projects_list");
+      await set(projectsRef, projects);
+      alert("Projects updated successfully!");
+    } catch (error) {
+      alert(`Error updating projects: ${error.message}`);
+      console.error("Error updating projects:", error);
+    } finally {
+      setSaving(false);
+    }
   };
+
+  if (loading) {
+    return (
+      <div className="flex min-h-screen items-center justify-center bg-[#121212]">
+        <p className="text-[#E0E0E0] text-lg">Loading control panel...</p>
+      </div>
+    );
+  }
 
   return (
-    <div className="flex min-h-screen flex-col items-center bg-gray-100 p-6">
-      <h1 className="text-4xl font-bold text-blue-600 mb-8">Add Projects</h1>
+    <div className="flex min-h-screen flex-col items-center bg-[#121212] p-6">
+      <h1 className="text-4xl font-bold text-[#e2cd2d] mb-8">Add Projects</h1>
+      <Link href="/admin/dashboard" className="mb-6 text-[#e2cd2d] hover:underline">
+        Back to Dashboard
+      </Link>
 
       {projects.map((proj, projIndex) => (
-        <div key={projIndex} className="w-full max-w-2xl bg-white p-6 rounded-lg shadow-md mb-8 relative">
-          <h2 className="text-2xl font-semibold text-gray-800 mb-4">Project {projIndex + 1}</h2>
+        <div key={projIndex} className="w-full max-w-2xl bg-[#1E1E1E] p-6 rounded-lg shadow-md mb-8 relative">
+          <h2 className="text-2xl font-semibold text-[#FFFFFF] mb-4">Project {projIndex + 1}</h2>
 
           {/* Hero Section */}
           <div className="space-y-4 mb-6">
-            <h3 className="text-xl font-medium text-gray-700">Hero Section</h3>
+            <h3 className="text-xl font-medium text-[#E0E0E0]">Hero Section</h3>
             <div>
-              <label htmlFor={`backgroundImageLink-${projIndex}`} className="block text-sm font-medium text-gray-700">
+              <label htmlFor={`backgroundImageLink-${projIndex}`} className="block text-sm font-medium text-[#E0E0E0]">
                 Background Image Link
               </label>
               <input
@@ -226,24 +236,26 @@ export default function AddProjectControl() {
                 name="backgroundImageLink"
                 value={proj.hero.backgroundImageLink}
                 onChange={(e) => handleChange(projIndex, "hero", "backgroundImageLink", e.target.value)}
-                className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
+                className="w-full p-2 mt-1 bg-[#2E2E2E] text-[#E0E0E0] border border-[#444444] rounded-md focus:outline-none focus:ring-2 focus:ring-[#e2cd2d] disabled:opacity-50"
                 placeholder="e.g., /demo_land.jpg"
+                disabled={saving}
               />
             </div>
             <div>
-              <label htmlFor={`heroTitle-${projIndex}`} className="block text-sm font-medium text-gray-700">Title</label>
+              <label htmlFor={`heroTitle-${projIndex}`} className="block text-sm font-medium text-[#E0E0E0]">Title</label>
               <input
                 type="text"
                 id={`heroTitle-${projIndex}`}
                 name="title"
                 value={proj.hero.title}
                 onChange={(e) => handleChange(projIndex, "hero", "title", e.target.value)}
-                className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
+                className="w-full p-2 mt-1 bg-[#2E2E2E] text-[#E0E0E0] border border-[#444444] rounded-md focus:outline-none focus:ring-2 focus:ring-[#e2cd2d] disabled:opacity-50"
                 placeholder="e.g., Smart Home Automation"
+                disabled={saving}
               />
             </div>
             <div>
-              <label htmlFor={`heroDescription-${projIndex}`} className="block text-sm font-medium text-gray-700">
+              <label htmlFor={`heroDescription-${projIndex}`} className="block text-sm font-medium text-[#E0E0E0]">
                 Description
               </label>
               <textarea
@@ -251,21 +263,22 @@ export default function AddProjectControl() {
                 name="description"
                 value={proj.hero.description}
                 onChange={(e) => handleChange(projIndex, "hero", "description", e.target.value)}
-                className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
+                className="w-full p-2 mt-1 bg-[#2E2E2E] text-[#E0E0E0] border border-[#444444] rounded-md focus:outline-none focus:ring-2 focus:ring-[#e2cd2d] disabled:opacity-50"
                 rows="4"
                 placeholder="e.g., Transform your living space with our innovative..."
+                disabled={saving}
               />
             </div>
             <div className="space-y-4">
-              <h4 className="text-lg font-medium text-gray-700">Buttons</h4>
+              <h4 className="text-lg font-medium text-[#E0E0E0]">Buttons</h4>
               {proj.hero.buttons.map((button, btnIndex) => (
-                <div key={btnIndex} className="border-t pt-4 mt-4 relative">
-                  <h5 className="text-md font-medium text-gray-600 mb-2">Button {btnIndex + 1}</h5>
+                <div key={btnIndex} className="border-t border-[#444444] pt-4 mt-4 relative">
+                  <h5 className="text-md font-medium text-[#E0E0E0] mb-2">Button {btnIndex + 1}</h5>
                   <div className="space-y-4">
                     <div>
                       <label
                         htmlFor={`buttonText-${projIndex}-${btnIndex}`}
-                        className="block text-sm font-medium text-gray-700"
+                        className="block text-sm font-medium text-[#E0E0E0]"
                       >
                         Button Text
                       </label>
@@ -274,14 +287,15 @@ export default function AddProjectControl() {
                         id={`buttonText-${projIndex}-${btnIndex}`}
                         value={button.buttonText}
                         onChange={(e) => handleArrayChange(projIndex, "hero", btnIndex, "buttonText", e.target.value)}
-                        className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
+                        className="w-full p-2 mt-1 bg-[#2E2E2E] text-[#E0E0E0] border border-[#444444] rounded-md focus:outline-none focus:ring-2 focus:ring-[#e2cd2d] disabled:opacity-50"
                         placeholder="e.g., View on GitHub"
+                        disabled={saving}
                       />
                     </div>
                     <div>
                       <label
                         htmlFor={`iconLink-${projIndex}-${btnIndex}`}
-                        className="block text-sm font-medium text-gray-700"
+                        className="block text-sm font-medium text-[#E0E0E0]"
                       >
                         Icon Link (Font Awesome Class)
                       </label>
@@ -290,14 +304,15 @@ export default function AddProjectControl() {
                         id={`iconLink-${projIndex}-${btnIndex}`}
                         value={button.iconLink}
                         onChange={(e) => handleArrayChange(projIndex, "hero", btnIndex, "iconLink", e.target.value)}
-                        className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
+                        className="w-full p-2 mt-1 bg-[#2E2E2E] text-[#E0E0E0] border border-[#444444] rounded-md focus:outline-none focus:ring-2 focus:ring-[#e2cd2d] disabled:opacity-50"
                         placeholder="e.g., fab fa-github"
+                        disabled={saving}
                       />
                     </div>
                     <div>
                       <label
                         htmlFor={`buttonLink-${projIndex}-${btnIndex}`}
-                        className="block text-sm font-medium text-gray-700"
+                        className="block text-sm font-medium text-[#E0E0E0]"
                       >
                         Button Link
                       </label>
@@ -306,15 +321,17 @@ export default function AddProjectControl() {
                         id={`buttonLink-${projIndex}-${btnIndex}`}
                         value={button.buttonLink}
                         onChange={(e) => handleArrayChange(projIndex, "hero", btnIndex, "buttonLink", e.target.value)}
-                        className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
+                        className="w-full p-2 mt-1 bg-[#2E2E2E] text-[#E0E0E0] border border-[#444444] rounded-md focus:outline-none focus:ring-2 focus:ring-[#e2cd2d] disabled:opacity-50"
                         placeholder="e.g., https://github.com/demo/smart-home-automation"
+                        disabled={saving}
                       />
                     </div>
                   </div>
                   {proj.hero.buttons.length > 1 && (
                     <button
                       onClick={() => removeItem(projIndex, "buttons", btnIndex)}
-                      className="absolute top-4 right-4 text-red-600 hover:text-red-800 transition"
+                      className="absolute top-4 right-4 text-[#DC2626] hover:text-[#b91c1c] transition disabled:opacity-50"
+                      disabled={saving}
                     >
                       <i className="fa-solid fa-trash text-lg"></i>
                     </button>
@@ -323,7 +340,8 @@ export default function AddProjectControl() {
               ))}
               <button
                 onClick={() => addItem(projIndex, "buttons")}
-                className="w-full py-1 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition flex items-center justify-center"
+                className="w-full py-1 bg-[#2563EB] text-[#FFFFFF] rounded-md hover:bg-[#1e4fc3] transition flex items-center justify-center disabled:bg-[#666666] disabled:cursor-not-allowed"
+                disabled={saving}
               >
                 <i className="fa-solid fa-plus mr-2"></i> Add Button
               </button>
@@ -332,15 +350,15 @@ export default function AddProjectControl() {
 
           {/* Project Details Section */}
           <div className="space-y-4 mb-6">
-            <h3 className="text-xl font-medium text-gray-700">Project Details</h3>
+            <h3 className="text-xl font-medium text-[#E0E0E0]">Project Details</h3>
             {proj.details.map((detail, detailIndex) => (
-              <div key={detailIndex} className="border-t pt-4 mt-4 relative">
-                <h4 className="text-lg font-medium text-gray-700 mb-2">Section {detailIndex + 1}</h4>
+              <div key={detailIndex} className="border-t border-[#444444] pt-4 mt-4 relative">
+                <h4 className="text-lg font-medium text-[#E0E0E0] mb-2">Section {detailIndex + 1}</h4>
                 <div className="space-y-4">
                   <div>
                     <label
                       htmlFor={`detailImage-${projIndex}-${detailIndex}`}
-                      className="block text-sm font-medium text-gray-700"
+                      className="block text-sm font-medium text-[#E0E0E0]"
                     >
                       Image
                     </label>
@@ -349,14 +367,15 @@ export default function AddProjectControl() {
                       id={`detailImage-${projIndex}-${detailIndex}`}
                       value={detail.image}
                       onChange={(e) => handleArrayChange(projIndex, "details", detailIndex, "image", e.target.value)}
-                      className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
+                      className="w-full p-2 mt-1 bg-[#2E2E2E] text-[#E0E0E0] border border-[#444444] rounded-md focus:outline-none focus:ring-2 focus:ring-[#e2cd2d] disabled:opacity-50"
                       placeholder="e.g., /demo_5.webp"
+                      disabled={saving}
                     />
                   </div>
                   <div>
                     <label
                       htmlFor={`description1-${projIndex}-${detailIndex}`}
-                      className="block text-sm font-medium text-gray-700"
+                      className="block text-sm font-medium text-[#E0E0E0]"
                     >
                       Description 1
                     </label>
@@ -364,15 +383,16 @@ export default function AddProjectControl() {
                       id={`description1-${projIndex}-${detailIndex}`}
                       value={detail.description1}
                       onChange={(e) => handleArrayChange(projIndex, "details", detailIndex, "description1", e.target.value)}
-                      className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
+                      className="w-full p-2 mt-1 bg-[#2E2E2E] text-[#E0E0E0] border border-[#444444] rounded-md focus:outline-none focus:ring-2 focus:ring-[#e2cd2d] disabled:opacity-50"
                       rows="4"
                       placeholder="e.g., This Smart Home Automation project allows..."
+                      disabled={saving}
                     />
                   </div>
                   <div>
                     <label
                       htmlFor={`description2-${projIndex}-${detailIndex}`}
-                      className="block text-sm font-medium text-gray-700"
+                      className="block text-sm font-medium text-[#E0E0E0]"
                     >
                       Description 2
                     </label>
@@ -380,15 +400,16 @@ export default function AddProjectControl() {
                       id={`description2-${projIndex}-${detailIndex}`}
                       value={detail.description2}
                       onChange={(e) => handleArrayChange(projIndex, "details", detailIndex, "description2", e.target.value)}
-                      className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
+                      className="w-full p-2 mt-1 bg-[#2E2E2E] text-[#E0E0E0] border border-[#444444] rounded-md focus:outline-none focus:ring-2 focus:ring-[#e2cd2d] disabled:opacity-50"
                       rows="4"
                       placeholder="e.g., The system leverages IoT devices..."
+                      disabled={saving}
                     />
                   </div>
                   <div>
                     <label
                       htmlFor={`description3-${projIndex}-${detailIndex}`}
-                      className="block text-sm font-medium text-gray-700"
+                      className="block text-sm font-medium text-[#E0E0E0]"
                     >
                       Description 3
                     </label>
@@ -396,16 +417,18 @@ export default function AddProjectControl() {
                       id={`description3-${projIndex}-${detailIndex}`}
                       value={detail.description3}
                       onChange={(e) => handleArrayChange(projIndex, "details", detailIndex, "description3", e.target.value)}
-                      className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
+                      className="w-full p-2 mt-1 bg-[#2E2E2E] text-[#E0E0E0] border border-[#444444] rounded-md focus:outline-none focus:ring-2 focus:ring-[#e2cd2d] disabled:opacity-50"
                       rows="4"
                       placeholder="e.g., The project is built with modern technologies..."
+                      disabled={saving}
                     />
                   </div>
                 </div>
                 {proj.details.length > 1 && (
                   <button
                     onClick={() => removeItem(projIndex, "details", detailIndex)}
-                    className="absolute top-4 right-4 text-red-600 hover:text-red-800 transition"
+                    className="absolute top-4 right-4 text-[#DC2626] hover:text-[#b91c1c] transition disabled:opacity-50"
+                    disabled={saving}
                   >
                     <i className="fa-solid fa-trash text-lg"></i>
                   </button>
@@ -414,7 +437,8 @@ export default function AddProjectControl() {
             ))}
             <button
               onClick={() => addItem(projIndex, "details")}
-              className="w-full py-1 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition flex items-center justify-center"
+              className="w-full py-1 bg-[#2563EB] text-[#FFFFFF] rounded-md hover:bg-[#1e4fc3] transition flex items-center justify-center disabled:bg-[#666666] disabled:cursor-not-allowed"
+              disabled={saving}
             >
               <i className="fa-solid fa-plus mr-2"></i> Add Details Section
             </button>
@@ -422,15 +446,15 @@ export default function AddProjectControl() {
 
           {/* Tech Stack Section */}
           <div className="space-y-4 mb-6">
-            <h3 className="text-xl font-medium text-gray-700">Tech Stack</h3>
+            <h3 className="text-xl font-medium text-[#E0E0E0]">Tech Stack</h3>
             {proj.techStack.items.map((item, itemIndex) => (
-              <div key={itemIndex} className="border-t pt-4 mt-4 relative">
-                <h4 className="text-lg font-medium text-gray-700 mb-2">Tech Item {itemIndex + 1}</h4>
+              <div key={itemIndex} className="border-t border-[#444444] pt-4 mt-4 relative">
+                <h4 className="text-lg font-medium text-[#E0E0E0] mb-2">Tech Item {itemIndex + 1}</h4>
                 <div className="space-y-4">
                   <div>
                     <label
                       htmlFor={`techIconLink-${projIndex}-${itemIndex}`}
-                      className="block text-sm font-medium text-gray-700"
+                      className="block text-sm font-medium text-[#E0E0E0]"
                     >
                       Tech Icon Link (Font Awesome Class)
                     </label>
@@ -439,14 +463,15 @@ export default function AddProjectControl() {
                       id={`techIconLink-${projIndex}-${itemIndex}`}
                       value={item.techIconLink}
                       onChange={(e) => handleArrayChange(projIndex, "techStack", itemIndex, "techIconLink", e.target.value)}
-                      className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
+                      className="w-full p-2 mt-1 bg-[#2E2E2E] text-[#E0E0E0] border border-[#444444] rounded-md focus:outline-none focus:ring-2 focus:ring-[#e2cd2d] disabled:opacity-50"
                       placeholder="e.g., fab fa-react"
+                      disabled={saving}
                     />
                   </div>
                   <div>
                     <label
                       htmlFor={`techName-${projIndex}-${itemIndex}`}
-                      className="block text-sm font-medium text-gray-700"
+                      className="block text-sm font-medium text-[#E0E0E0]"
                     >
                       Tech Name
                     </label>
@@ -455,15 +480,17 @@ export default function AddProjectControl() {
                       id={`techName-${projIndex}-${itemIndex}`}
                       value={item.techName}
                       onChange={(e) => handleArrayChange(projIndex, "techStack", itemIndex, "techName", e.target.value)}
-                      className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
+                      className="w-full p-2 mt-1 bg-[#2E2E2E] text-[#E0E0E0] border border-[#444444] rounded-md focus:outline-none focus:ring-2 focus:ring-[#e2cd2d] disabled:opacity-50"
                       placeholder="e.g., React"
+                      disabled={saving}
                     />
                   </div>
                 </div>
                 {proj.techStack.items.length > 1 && (
                   <button
                     onClick={() => removeItem(projIndex, "techStack", itemIndex)}
-                    className="absolute top-4 right-4 text-red-600 hover:text-red-800 transition"
+                    className="absolute top-4 right-4 text-[#DC2626] hover:text-[#b91c1c] transition disabled:opacity-50"
+                    disabled={saving}
                   >
                     <i className="fa-solid fa-trash text-lg"></i>
                   </button>
@@ -472,7 +499,8 @@ export default function AddProjectControl() {
             ))}
             <button
               onClick={() => addItem(projIndex, "techStack")}
-              className="w-full py-1 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition flex items-center justify-center"
+              className="w-full py-1 bg-[#2563EB] text-[#FFFFFF] rounded-md hover:bg-[#1e4fc3] transition flex items-center justify-center disabled:bg-[#666666] disabled:cursor-not-allowed"
+              disabled={saving}
             >
               <i className="fa-solid fa-plus mr-2"></i> Add Tech Item
             </button>
@@ -480,15 +508,15 @@ export default function AddProjectControl() {
 
           {/* Project Challenges Section */}
           <div className="space-y-4 mb-6">
-            <h3 className="text-xl font-medium text-gray-700">Project Challenges</h3>
+            <h3 className="text-xl font-medium text-[#E0E0E0]">Project Challenges</h3>
             {proj.challenges.cards.map((card, cardIndex) => (
-              <div key={cardIndex} className="border-t pt-4 mt-4 relative">
-                <h4 className="text-lg font-medium text-gray-700 mb-2">Challenge {cardIndex + 1}</h4>
+              <div key={cardIndex} className="border-t border-[#444444] pt-4 mt-4 relative">
+                <h4 className="text-lg font-medium text-[#E0E0E0] mb-2">Challenge {cardIndex + 1}</h4>
                 <div className="space-y-4">
                   <div>
                     <label
                       htmlFor={`challengeIconLink-${projIndex}-${cardIndex}`}
-                      className="block text-sm font-medium text-gray-700"
+                      className="block text-sm font-medium text-[#E0E0E0]"
                     >
                       Icon Link (Font Awesome Class)
                     </label>
@@ -497,14 +525,15 @@ export default function AddProjectControl() {
                       id={`challengeIconLink-${projIndex}-${cardIndex}`}
                       value={card.iconLink}
                       onChange={(e) => handleArrayChange(projIndex, "challenges", cardIndex, "iconLink", e.target.value)}
-                      className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
+                      className="w-full p-2 mt-1 bg-[#2E2E2E] text-[#E0E0E0] border border-[#444444] rounded-md focus:outline-none focus:ring-2 focus:ring-[#e2cd2d] disabled:opacity-50"
                       placeholder="e.g., fas fa-code"
+                      disabled={saving}
                     />
                   </div>
                   <div>
                     <label
                       htmlFor={`challengeTitle-${projIndex}-${cardIndex}`}
-                      className="block text-sm font-medium text-gray-700"
+                      className="block text-sm font-medium text-[#E0E0E0]"
                     >
                       Title
                     </label>
@@ -513,14 +542,15 @@ export default function AddProjectControl() {
                       id={`challengeTitle-${projIndex}-${cardIndex}`}
                       value={card.title}
                       onChange={(e) => handleArrayChange(projIndex, "challenges", cardIndex, "title", e.target.value)}
-                      className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
+                      className="w-full p-2 mt-1 bg-[#2E2E2E] text-[#E0E0E0] border border-[#444444] rounded-md focus:outline-none focus:ring-2 focus:ring-[#e2cd2d] disabled:opacity-50"
                       placeholder="e.g., Integration Issues"
+                      disabled={saving}
                     />
                   </div>
                   <div>
                     <label
                       htmlFor={`challengeDescription-${projIndex}-${cardIndex}`}
-                      className="block text-sm font-medium text-gray-700"
+                      className="block text-sm font-medium text-[#E0E0E0]"
                     >
                       Description
                     </label>
@@ -528,16 +558,18 @@ export default function AddProjectControl() {
                       id={`challengeDescription-${projIndex}-${cardIndex}`}
                       value={card.description}
                       onChange={(e) => handleArrayChange(projIndex, "challenges", cardIndex, "description", e.target.value)}
-                      className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
+                      className="w-full p-2 mt-1 bg-[#2E2E2E] text-[#E0E0E0] border border-[#444444] rounded-md focus:outline-none focus:ring-2 focus:ring-[#e2cd2d] disabled:opacity-50"
                       rows="3"
                       placeholder="e.g., Ensuring seamless communication between..."
+                      disabled={saving}
                     />
                   </div>
                 </div>
                 {proj.challenges.cards.length > 1 && (
                   <button
                     onClick={() => removeItem(projIndex, "challenges", cardIndex)}
-                    className="absolute top-4 right-4 text-red-600 hover:text-red-800 transition"
+                    className="absolute top-4 right-4 text-[#DC2626] hover:text-[#b91c1c] transition disabled:opacity-50"
+                    disabled={saving}
                   >
                     <i className="fa-solid fa-trash text-lg"></i>
                   </button>
@@ -546,7 +578,8 @@ export default function AddProjectControl() {
             ))}
             <button
               onClick={() => addItem(projIndex, "challenges")}
-              className="w-full py-1 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition flex items-center justify-center"
+              className="w-full py-1 bg-[#2563EB] text-[#FFFFFF] rounded-md hover:bg-[#1e4fc3] transition flex items-center justify-center disabled:bg-[#666666] disabled:cursor-not-allowed"
+              disabled={saving}
             >
               <i className="fa-solid fa-plus mr-2"></i> Add Challenge
             </button>
@@ -554,15 +587,15 @@ export default function AddProjectControl() {
 
           {/* Key Features Section */}
           <div className="space-y-4 mb-6">
-            <h3 className="text-xl font-medium text-gray-700">Key Features</h3>
+            <h3 className="text-xl font-medium text-[#E0E0E0]">Key Features</h3>
             {proj.features.cards.map((card, cardIndex) => (
-              <div key={cardIndex} className="border-t pt-4 mt-4 relative">
-                <h4 className="text-lg font-medium text-gray-700 mb-2">Feature {cardIndex + 1}</h4>
+              <div key={cardIndex} className="border-t border-[#444444] pt-4 mt-4 relative">
+                <h4 className="text-lg font-medium text-[#E0E0E0] mb-2">Feature {cardIndex + 1}</h4>
                 <div className="space-y-4">
                   <div>
                     <label
                       htmlFor={`featureIconLink-${projIndex}-${cardIndex}`}
-                      className="block text-sm font-medium text-gray-700"
+                      className="block text-sm font-medium text-[#E0E0E0]"
                     >
                       Icon Link (Font Awesome Class)
                     </label>
@@ -571,14 +604,15 @@ export default function AddProjectControl() {
                       id={`featureIconLink-${projIndex}-${cardIndex}`}
                       value={card.iconLink}
                       onChange={(e) => handleArrayChange(projIndex, "features", cardIndex, "iconLink", e.target.value)}
-                      className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
+                      className="w-full p-2 mt-1 bg-[#2E2E2E] text-[#E0E0E0] border border-[#444444] rounded-md focus:outline-none focus:ring-2 focus:ring-[#e2cd2d] disabled:opacity-50"
                       placeholder="e.g., fas fa-bolt"
+                      disabled={saving}
                     />
                   </div>
                   <div>
                     <label
                       htmlFor={`featureTitle-${projIndex}-${cardIndex}`}
-                      className="block text-sm font-medium text-gray-700"
+                      className="block text-sm font-medium text-[#E0E0E0]"
                     >
                       Title
                     </label>
@@ -587,14 +621,15 @@ export default function AddProjectControl() {
                       id={`featureTitle-${projIndex}-${cardIndex}`}
                       value={card.title}
                       onChange={(e) => handleArrayChange(projIndex, "features", cardIndex, "title", e.target.value)}
-                      className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
+                      className="w-full p-2 mt-1 bg-[#2E2E2E] text-[#E0E0E0] border border-[#444444] rounded-md focus:outline-none focus:ring-2 focus:ring-[#e2cd2d] disabled:opacity-50"
                       placeholder="e.g., Instant Control"
+                      disabled={saving}
                     />
                   </div>
                   <div>
                     <label
                       htmlFor={`featureDescription-${projIndex}-${cardIndex}`}
-                      className="block text-sm font-medium text-gray-700"
+                      className="block text-sm font-medium text-[#E0E0E0]"
                     >
                       Description
                     </label>
@@ -602,16 +637,18 @@ export default function AddProjectControl() {
                       id={`featureDescription-${projIndex}-${cardIndex}`}
                       value={card.description}
                       onChange={(e) => handleArrayChange(projIndex, "features", cardIndex, "description", e.target.value)}
-                      className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
+                      className="w-full p-2 mt-1 bg-[#2E2E2E] text-[#E0E0E0] border border-[#444444] rounded-md focus:outline-none focus:ring-2 focus:ring-[#e2cd2d] disabled:opacity-50"
                       rows="3"
                       placeholder="e.g., Manage your devices with a single tap..."
+                      disabled={saving}
                     />
                   </div>
                 </div>
                 {proj.features.cards.length > 1 && (
                   <button
                     onClick={() => removeItem(projIndex, "features", cardIndex)}
-                    className="absolute top-4 right-4 text-red-600 hover:text-red-800 transition"
+                    className="absolute top-4 right-4 text-[#DC2626] hover:text-[#b91c1c] transition disabled:opacity-50"
+                    disabled={saving}
                   >
                     <i className="fa-solid fa-trash text-lg"></i>
                   </button>
@@ -620,7 +657,8 @@ export default function AddProjectControl() {
             ))}
             <button
               onClick={() => addItem(projIndex, "features")}
-              className="w-full py-1 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition flex items-center justify-center"
+              className="w-full py-1 bg-[#2563EB] text-[#FFFFFF] rounded-md hover:bg-[#1e4fc3] transition flex items-center justify-center disabled:bg-[#666666] disabled:cursor-not-allowed"
+              disabled={saving}
             >
               <i className="fa-solid fa-plus mr-2"></i> Add Feature
             </button>
@@ -630,7 +668,8 @@ export default function AddProjectControl() {
           {projects.length > 1 && (
             <button
               onClick={() => removeProject(projIndex)}
-              className="absolute top-4 right-4 bg-red-600 text-white p-2 rounded-full hover:bg-red-800 transition"
+              className="absolute top-4 right-4 bg-[#DC2626] text-[#FFFFFF] p-2 rounded-full hover:bg-[#b91c1c] transition disabled:opacity-50"
+              disabled={saving}
             >
               <i className="fa-solid fa-trash text-lg"></i>
             </button>
@@ -640,16 +679,18 @@ export default function AddProjectControl() {
 
       <button
         onClick={addProject}
-        className="w-full max-w-2xl py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition flex items-center justify-center mb-8"
+        className="w-full max-w-2xl py-2 bg-[#2563EB] text-[#FFFFFF] rounded-md hover:bg-[#1e4fc3] transition flex items-center justify-center mb-8 disabled:bg-[#666666] disabled:cursor-not-allowed"
+        disabled={saving}
       >
         <i className="fa-solid fa-plus mr-2"></i> Add New Project
       </button>
 
       <button
         onClick={handleUpdate}
-        className="w-full max-w-2xl py-2 bg-green-600 text-white rounded-md hover:bg-green-700 transition"
+        className="w-full max-w-2xl py-2 bg-[#e2cd2d] text-[#121212] font-semibold rounded-md hover:bg-[#d1bc29] transition disabled:bg-[#666666] disabled:cursor-not-allowed"
+        disabled={saving}
       >
-        Update Projects
+        {saving ? "Updating..." : "Update Projects"}
       </button>
     </div>
   );

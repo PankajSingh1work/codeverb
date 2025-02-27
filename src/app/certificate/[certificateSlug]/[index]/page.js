@@ -1,19 +1,19 @@
 // src/app/certificate/[certificateSlug]/[index]/page.js
 import Link from "next/link";
 import Image from "next/image";
-import { database } from "../../../../lib/firebase";
-import { ref, get } from "firebase/database";
 import ClientMobileMenu from "../../../../components/ClientMobileMenu";
 
-// Fetch data from Firebase
-async function fetchFirebaseData(path) {
+// Fetch data from API route with ISR
+async function fetchData(path) {
   try {
-    const dataRef = ref(database, path);
-    const snapshot = await get(dataRef);
-    return snapshot.val() || {};
+    const res = await fetch(`http://localhost:3000/api/fetchData?path=${encodeURIComponent(path)}`, {
+      next: { revalidate: 10 },
+    });
+    if (!res.ok) throw new Error(`Failed to fetch ${path}`);
+    return await res.json();
   } catch (error) {
     console.error(`Error fetching ${path}:`, error.message);
-    return {};
+    return path.includes('projects_list') || path.includes('certificates_list') ? [] : {};
   }
 }
 
@@ -84,7 +84,7 @@ export default async function CertificateDetail({ params }) {
     );
   }
 
-  const certificatesPageData = await fetchFirebaseData("certificatespage");
+  const certificatesPageData = await fetchData("certificatespage");
   const certificatesList = Array.isArray(certificatesPageData.certificates_list)
     ? certificatesPageData.certificates_list
     : [];
@@ -237,89 +237,90 @@ export default async function CertificateDetail({ params }) {
         </section>
       </main>
 
-      {/* Footer */}
+      {/* Footer (unchanged) */}
       <footer className="bg-[#101010] py-6 sm:py-8 px-4 sm:px-6" itemScope itemType="https://schema.org/WPFooter">
-  <div className="max-w-6xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-6 sm:gap-0">
-    <div className="text-center sm:text-left" itemScope itemType="https://schema.org/Person">
-      <div className="flex items-center justify-center sm:justify-start space-x-4">
-        <Image
-          src="/Logo_1024w_white.svg"
-          alt="Codeverb Logo - Pankaj Singh's Portfolio"
-          width={36}
-          height={36}
-          className="rounded-none sm:w-10 sm:h-10"
-          loading="lazy"
-        />
-        <div>
-          <p className="text-[#FFFFFF] text-base sm:text-lg font-bold" itemProp="name">
-            Pankaj Singh
-          </p>
-          <p className="text-[#E0E0E0] text-xs sm:text-sm">
-            <a href="mailto:rawatpanku991@gmail.com" aria-label="Email Pankaj Singh - Codeverb" itemProp="email">
-              rawatpanku991@gmail.com
-            </a>
-          </p>
+        <div className="max-w-6xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-6 sm:gap-0">
+          <div className="text-center sm:text-left" itemScope itemType="https://schema.org/Person">
+            <div className="flex items-center justify-center sm:justify-start space-x-4">
+              <Image
+                src="/Logo_1024w_white.svg"
+                alt="Codeverb Logo - Pankaj Singh's Portfolio"
+                width={36}
+                height={36}
+                className="rounded-none sm:w-10 sm:h-10"
+                loading="lazy"
+              />
+              <div>
+                <p className="text-[#FFFFFF] text-base sm:text-lg font-bold" itemProp="name">
+                  Pankaj Singh
+                </p>
+                <p className="text-[#E0E0E0] text-xs sm:text-sm">
+                  <a href="mailto:rawatpanku991@gmail.com" aria-label="Email Pankaj Singh - Codeverb" itemProp="email">
+                    rawatpanku991@gmail.com
+                  </a>
+                </p>
+              </div>
+            </div>
+          </div>
+          <nav className="flex space-x-4 sm:space-x-6" aria-label="Social Media Links" itemScope itemType="https://schema.org/SocialMediaPosting">
+            <Link
+              href="https://www.instagram.com/codeverb.in/"
+              target="_blank"
+              rel="noopener noreferrer nofollow"
+              className="text-[#E0E0E0] hover:text-[#F0F0F0] transition"
+              aria-label="Codeverb on Instagram - Web Development Content"
+              title="Follow Codeverb on Instagram"
+            >
+              <i className="fa-brands fa-instagram text-xl sm:text-2xl"></i>
+            </Link>
+            <Link
+              href="https://www.youtube.com/@codeverb-in"
+              target="_blank"
+              rel="noopener noreferrer nofollow"
+              className="text-[#E0E0E0] hover:text-[#F0F0F0] transition"
+              aria-label="Codeverb on YouTube - Coding Tutorials"
+              title="Subscribe to Codeverb on YouTube"
+            >
+              <i className="fa-brands fa-youtube text-xl sm:text-2xl"></i>
+            </Link>
+            <Link
+              href="https://github.com/PankajSingh1work"
+              target="_blank"
+              rel="noopener noreferrer nofollow"
+              className="text-[#E0E0E0] hover:text-[#F0F0F0] transition"
+              aria-label="Pankaj Singh on GitHub - Open Source Projects"
+              title="View Pankaj Singh's GitHub Repositories"
+            >
+              <i className="fa-brands fa-github text-xl sm:text-2xl"></i>
+            </Link>
+            <Link
+              href="https://www.linkedin.com/in/pankajsingh1work/"
+              target="_blank"
+              rel="noopener noreferrer nofollow"
+              className="text-[#E0E0E0] hover:text-[#F0F0F0] transition"
+              aria-label="Pankaj Singh on LinkedIn - Professional Profile"
+              title="Connect with Pankaj Singh on LinkedIn"
+            >
+              <i className="fa-brands fa-linkedin text-xl sm:text-2xl"></i>
+            </Link>
+          </nav>
+          <div className="text-center sm:text-right text-[#E0E0E0] text-xs sm:text-sm" itemScope itemType="https://schema.org/CreativeWork">
+            <p itemProp="copyrightNotice">
+              © {new Date().getFullYear()} Pankaj Singh. All rights reserved.
+            </p>
+          </div>
         </div>
-      </div>
-    </div>
-    <nav className="flex space-x-4 sm:space-x-6" aria-label="Social Media Links" itemScope itemType="https://schema.org/SocialMediaPosting">
-      <Link
-        href="https://www.instagram.com/codeverb.in/"
-        target="_blank"
-        rel="noopener noreferrer nofollow"
-        className="text-[#E0E0E0] hover:text-[#F0F0F0] transition"
-        aria-label="Codeverb on Instagram - Web Development Content"
-        title="Follow Codeverb on Instagram"
-      >
-        <i className="fa-brands fa-instagram text-xl sm:text-2xl"></i>
-      </Link>
-      <Link
-        href="https://www.youtube.com/@codeverb-in"
-        target="_blank"
-        rel="noopener noreferrer nofollow"
-        className="text-[#E0E0E0] hover:text-[#F0F0F0] transition"
-        aria-label="Codeverb on YouTube - Coding Tutorials"
-        title="Subscribe to Codeverb on YouTube"
-      >
-        <i className="fa-brands fa-youtube text-xl sm:text-2xl"></i>
-      </Link>
-      <Link
-        href="https://github.com/PankajSingh1work"
-        target="_blank"
-        rel="noopener noreferrer nofollow"
-        className="text-[#E0E0E0] hover:text-[#F0F0F0] transition"
-        aria-label="Pankaj Singh on GitHub - Open Source Projects"
-        title="View Pankaj Singh's GitHub Repositories"
-      >
-        <i className="fa-brands fa-github text-xl sm:text-2xl"></i>
-      </Link>
-      <Link
-        href="https://www.linkedin.com/in/pankajsingh1work/"
-        target="_blank"
-        rel="noopener noreferrer nofollow"
-        className="text-[#E0E0E0] hover:text-[#F0F0F0] transition"
-        aria-label="Pankaj Singh on LinkedIn - Professional Profile"
-        title="Connect with Pankaj Singh on LinkedIn"
-      >
-        <i className="fa-brands fa-linkedin text-xl sm:text-2xl"></i>
-      </Link>
-    </nav>
-    <div className="text-center sm:text-right text-[#E0E0E0] text-xs sm:text-sm" itemScope itemType="https://schema.org/CreativeWork">
-      <p itemProp="copyrightNotice">
-        © {new Date().getFullYear()} Pankaj Singh. All rights reserved.
-      </p>
-    </div>
-  </div>
-</footer>
+      </footer>
     </div>
   );
 }
+
 
 // Dynamic metadata for SEO
 export async function generateMetadata({ params }) {
   const { certificateSlug, index } = await params;
   const indexNum = parseInt(index, 10);
-  const certificatesPageData = await fetchFirebaseData("certificatespage");
+  const certificatesPageData = await fetchData("certificatespage");
   const certificatesList = Array.isArray(certificatesPageData.certificates_list) ? certificatesPageData.certificates_list : [];
 
   if (isNaN(indexNum) || indexNum < 0 || indexNum >= certificatesList.length) {
@@ -346,7 +347,7 @@ export async function generateMetadata({ params }) {
   return {
     title: `${certificate.hero?.title || "Certificate"} - Pankaj Singh`,
     description: certificate.hero?.description || "Detailed view of a certificate earned by Pankaj Singh showcasing skills and achievements.",
-    keywords: `${certificate.hero?.title}, Pankaj Singh, certificate, ${skillsKeywords}, ${certificate.hero?.issuedBy}, achievement , Pankaj Singh, mobile app developer, portfolio, app development, projects, services, achievements , Pankaj Singh Rawat , Pankaj Singh Dehradun , Pankaj Singh Kashipur , Pankaj Singh Mobile Application Developer , Software Engineer , Shivalik College of Engineering , Government Polytechnic Kashipur , Codeverb by Pankaj Singh , Codeverb ,Full Stack Developer in India, Web Developer Portfolio, Mobile App Developer in India, Next.js Developer Portfolio, Freelance Web Developer in India, UI/UX Designer & Developer, Best Web Developer in Uttarakhand, Full Stack App Developer in Dehradun, Professional Web Development Services, Hire a Freelance Web Developer, React.js Developer Portfolio, Next.js SEO Optimization Services, Firebase Database Integration, Web App Development Expert, CodeVerb Web Development, UI/UX Designer for Hire, Affordable Website Development India, Frontend Developer in Uttarakhand, Custom Website Development Services, Expert in Mobile App UI/UX, Pankaj Singh Rawat Developer Portfolio, CodeVerb Web & App Development, Hire Pankaj Singh for Web Projects, Best Freelancer Developer in Dehradun, CodeVerb Freelance Services, Pankaj Singh Rawat Full Stack Developer, CodeVerb YouTube Channel, Instagram Web Developer Codever.in, Hire CodeVerb for Custom Web Apps, Dehradun Based App Developer, Web Developer from Shivalik College of Engineering, Dehradun Web & App Development, Uttarakhand Full Stack Developer, Kashipur Website Development Services, Best Developer in Shivalik College, Web & App Solutions in Uttarakhand, Freelancer App Developer Kashipur, Mobile App UI/UX in Uttarakhand, CodeVerb India – Custom Development, Affordable Web Development in Dehradun ,  Certificate page of CODEVERB.IN codeverb.in ,individual certificate landing page codeverb.in , pankaj singh website individual certitifcate page , sections of codeverb.in services achievments projects contact rawatpanku991@gmail.com pankajsingh1work@gmail.com , youtube @codeberb-in , instgram @pankaj_rawat_991 , instagram @codeverb.in linkedin @pankajsingh1work , github @PankajSingh1work , codeverb.in`,
+    keywords: `${certificate.hero?.title}, Pankaj Singh, certificate, ${skillsKeywords}, ${certificate.hero?.issuedBy}, achievement , Pankaj Singh, mobile app developer, portfolio, app development, projects, services, achievements , Pankaj Singh Rawat , Pankaj Singh Dehradun , Pankaj Singh Kashipur , Pankaj Singh Mobile Application Developer , Software Engineer , Shivalik College of Engineering , Government Polytechnic Kashipur , Codeverb by Pankaj Singh , Codeverb ,Full Stack Developer in India, Web Developer Portfolio, Mobile App Developer in India, Next.js Developer Portfolio, Freelance Web Developer in India, UI/UX Designer & Developer, Best Web Developer in Uttarakhand, Full Stack App Developer in Dehradun, Professional Web Development Services, Hire a Freelance Web Developer, React.js Developer Portfolio, Next.js SEO Optimization Services, Firebase Database Integration, Web App Development Expert, CodeVerb Web Development, UI/UX Designer for Hire, Affordable Website Development India, Frontend Developer in Uttarakhand, Custom Website Development Services, Expert in Mobile App UI/UX, Pankaj Singh Rawat Developer Portfolio, CodeVerb Web & App Development, Hire Pankaj Singh for Web Projects, Best Freelancer Developer in Dehradun, CodeVerb Freelance Services, Pankaj Singh Rawat Full Stack Developer, CodeVerb YouTube Channel, Instagram Web Developer Codever.in, Hire CodeVerb for Custom Web Apps, Dehradun Based App Developer, Web Developer from Shivalik College of Engineering, Dehradun Web & App Development, Uttarakhand Full Stack Developer, Kashipur Website Development Services, Best Developer in Shivalik College, Web & App Solutions in Uttarakhand, Freelancer App Developer Kashipur, Mobile App UI/UX in Uttarakhand, CodeVerb India – Custom Development, Affordable Web Development in Dehradun ,  Certificate page of CODEVERB.IN codeverb.in ,individual certificate landing page codeverb.in , pankaj singh website individual certificate page , sections of codeverb.in services achievements projects contact rawatpanku991@gmail.com pankajsingh1work@gmail.com , youtube @codeberb-in , instgram @pankaj_rawat_991 , instagram @codeverb.in linkedin @pankajsingh1work , github @PankajSingh1work , codeverb.in`,
     robots: "index, follow",
     openGraph: {
       title: `${certificate.hero?.title || "Certificate"} - Pankaj Singh`,
