@@ -1,7 +1,7 @@
 // src/lib/sitemapUtils.js
 export async function fetchProjects() {
   try {
-    const res = await fetch(`http://localhost:3000/api/fetchData?path=projectspage/projects_list`, {
+    const res = await fetch(`http://codeverb.in/api/fetchData?path=projectspage/projects_list`, {
       next: { revalidate: 10 },
     });
     if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
@@ -15,7 +15,7 @@ export async function fetchProjects() {
 
 export async function fetchCertificates() {
   try {
-    const res = await fetch(`http://localhost:3000/api/fetchData?path=certificatespage/certificates_list`, {
+    const res = await fetch(`http://codeverb.in/api/fetchData?path=certificatespage/certificates_list`, {
       next: { revalidate: 10 },
     });
     if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);

@@ -7,7 +7,7 @@ import ClientMobileMenu from "../../components/ClientMobileMenu"; // Adjust path
 // Fetch data from API route with ISR
 async function fetchData(path) {
   try {
-    const res = await fetch(`http://localhost:3000/api/fetchData?path=${encodeURIComponent(path)}`, {
+    const res = await fetch(`http://codeverb.in/api/fetchData?path=${encodeURIComponent(path)}`, {
       next: { revalidate: 10 },
     });
     if (!res.ok) throw new Error(`Failed to fetch ${path}`);
