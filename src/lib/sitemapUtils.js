@@ -2,7 +2,7 @@
 export async function fetchProjects() {
   try {
     const res = await fetch(`http://codeverb.in/api/fetchData?path=projectspage/projects_list`, {
-      next: { revalidate: 10 },
+      next: { revalidate: 7200 },
     });
     if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
     const data = await res.json();

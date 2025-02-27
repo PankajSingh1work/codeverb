@@ -7,7 +7,7 @@ import ClientMobileMenu from "../../../../components/ClientMobileMenu";
 async function fetchData(path) {
   try {
     const res = await fetch(`http://codeverb.in/api/fetchData?path=${encodeURIComponent(path)}`, {
-      next: { revalidate: 10 },
+      next: { revalidate: 7200 },
     });
     if (!res.ok) throw new Error(`Failed to fetch ${path}`);
     return await res.json();

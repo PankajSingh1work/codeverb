@@ -43,7 +43,7 @@ export default function ClientMobileMenu() {
     <>
       <button
         onClick={() => setIsOpen(true)}
-        className="md:hidden text-[#E0E0E0] hover:text-[#e2cd2d] focus:outline-none focus:ring-2 focus:ring-[#e2cd2d] rounded p-1"
+        className="md:hidden text-[#E0E0E0] hover:text-[#e2cd2d]  rounded p-1"
         aria-label="Open mobile navigation menu"
         aria-expanded={isOpen}
         aria-controls="mobile-menu"
@@ -78,7 +78,7 @@ export default function ClientMobileMenu() {
           </h2>
           <button
             onClick={() => setIsOpen(false)}
-            className="text-[#E0E0E0] hover:text-[#e2cd2d] focus:outline-none focus:ring-2 focus:ring-[#e2cd2d] rounded p-1"
+            className="text-[#E0E0E0] hover:text-[#e2cd2d]  rounded p-1"
             aria-label="Close mobile navigation menu"
           >
             <svg
@@ -97,7 +97,7 @@ export default function ClientMobileMenu() {
         <nav className="flex flex-col space-y-6" aria-label="Mobile Navigation">
           <Link
             href="/#home"
-            className="text-[#E0E0E0] hover:text-[#e2cd2d] text-base focus:outline-none focus:ring-2 focus:ring-[#e2cd2d] rounded"
+            className="text-[#E0E0E0] hover:text-[#e2cd2d] text-base  rounded"
             onClick={() => setIsOpen(false)}
             prefetch={true}
           >
@@ -105,7 +105,7 @@ export default function ClientMobileMenu() {
           </Link>
           <Link
             href="/#about"
-            className="text-[#E0E0E0] hover:text-[#e2cd2d] text-base focus:outline-none focus:ring-2 focus:ring-[#e2cd2d] rounded"
+            className="text-[#E0E0E0] hover:text-[#e2cd2d] text-base  rounded"
             onClick={() => setIsOpen(false)}
             prefetch={true}
           >
@@ -113,7 +113,7 @@ export default function ClientMobileMenu() {
           </Link>
           <Link
             href="/#services"
-            className="text-[#E0E0E0] hover:text-[#e2cd2d] text-base focus:outline-none focus:ring-2 focus:ring-[#e2cd2d] rounded"
+            className="text-[#E0E0E0] hover:text-[#e2cd2d] text-base  rounded"
             onClick={() => setIsOpen(false)}
             prefetch={true}
           >
@@ -121,7 +121,7 @@ export default function ClientMobileMenu() {
           </Link>
           <Link
             href="/#projects"
-            className="text-[#E0E0E0] hover:text-[#e2cd2d] text-base focus:outline-none focus:ring-2 focus:ring-[#e2cd2d] rounded"
+            className="text-[#E0E0E0] hover:text-[#e2cd2d] text-base  rounded"
             onClick={() => setIsOpen(false)}
             prefetch={true}
           >
@@ -129,7 +129,7 @@ export default function ClientMobileMenu() {
           </Link>
           <Link
             href="/#achievements"
-            className="text-[#E0E0E0] hover:text-[#e2cd2d] text-base focus:outline-none focus:ring-2 focus:ring-[#e2cd2d] rounded"
+            className="text-[#E0E0E0] hover:text-[#e2cd2d] text-base  rounded"
             onClick={() => setIsOpen(false)}
             prefetch={true}
           >
@@ -137,7 +137,7 @@ export default function ClientMobileMenu() {
           </Link>
           <Link
             href="/#contact"
-            className="text-[#E0E0E0] hover:text-[#e2cd2d] text-base focus:outline-none focus:ring-2 focus:ring-[#e2cd2d] rounded"
+            className="text-[#E0E0E0] hover:text-[#e2cd2d] text-base  rounded"
             onClick={() => setIsOpen(false)}
             prefetch={true}
           >
