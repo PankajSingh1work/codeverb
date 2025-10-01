@@ -122,8 +122,10 @@ export function ProjectsSection({ onNavigate }: ProjectsSectionProps) {
                       className="flex-1 group/btn"
                       aria-label={`View live demo of ${project.title} project`}
                     >
-                      <ExternalLink className="h-4 w-4 mr-2 group-hover/btn:scale-110 transition-transform" />
-                      Demo
+                      <a href={project.demoUrl} target="_blank" rel="noopener noreferrer" className="w-full flex items-center justify-center">
+                        <ExternalLink className="h-4 w-4 mr-2 group-hover/btn:scale-110 transition-transform" />
+                        Demo
+                      </a> 
                     </Button>
                     <Button 
                       variant="outline" 
@@ -131,8 +133,10 @@ export function ProjectsSection({ onNavigate }: ProjectsSectionProps) {
                       className="flex-1 group/btn"
                       aria-label={`View source code of ${project.title} project on GitHub`}
                     >
-                      <Github className="h-4 w-4 mr-2 group-hover/btn:scale-110 transition-transform" />
-                      Code
+                      <a href={project.githubUrl} target="_blank" rel="noopener noreferrer" className="w-full flex items-center justify-center">
+                        <Github className="h-4 w-4 mr-2 group-hover/btn:scale-110 transition-transform" />
+                        Code
+                      </a>
                     </Button>
                   </div>
                   

@@ -352,12 +352,16 @@ export function CertificationsPage({ onNavigate }: CertificationsPageProps) {
                       {/* Action buttons */}
                       <div className="flex space-x-2">
                         <Button variant="outline" size="sm" className="flex-1 group/btn" aria-label={`Verify ${cert.title} certification`}>
-                          <ExternalLink className="h-4 w-4 mr-2 group-hover/btn:scale-110 transition-transform" aria-hidden="true" />
-                          Verify
+                          <a href={cert.verificationUrl} target="_blank" rel="noopener noreferrer" className="w-full flex items-center justify-center">
+                            <ExternalLink className="h-4 w-4 mr-2 group-hover/btn:scale-110 transition-transform" aria-hidden="true" />
+                            Verify
+                          </a>
                         </Button>
                         <Button variant="outline" size="sm" className="flex-1 group/btn" aria-label={`Download ${cert.title} certificate`}>
-                          <Download className="h-4 w-4 mr-2 group-hover/btn:scale-110 transition-transform" aria-hidden="true" />
-                          Certificate
+                          <a href={cert.certificateUrl} target="_blank" rel="noopener noreferrer" className="w-full flex items-center justify-center">
+                            <Download className="h-4 w-4 mr-2 group-hover/btn:scale-110 transition-transform" aria-hidden="true" />
+                            Certificate
+                          </a>
                         </Button>
                       </div>
 

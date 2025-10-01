@@ -1,6 +1,6 @@
 
 import { motion } from 'motion/react';
-import { FaInstagram, FaMedium } from 'react-icons/fa';
+import { FaInstagram, FaMedium, FaYoutube } from 'react-icons/fa';
 import { Github, Linkedin, Mail, Heart } from 'lucide-react';
 
 interface FooterProps {
@@ -21,7 +21,8 @@ export function Footer({ onNavigate }: FooterProps) {
     { icon: Linkedin, label: 'LinkedIn', href: 'https://www.linkedin.com/in/pankajsingh1work/', ariaLabel: 'Connect with Pankaj Singh on LinkedIn' },
     { icon: FaMedium, label: 'Medium', href: 'https://medium.com/@rawatpanku991', ariaLabel: 'Read articles by Pankaj Singh on Medium' },
     { icon: FaInstagram, label: 'Instagram', href: 'https://www.instagram.com/codeverb.in/', ariaLabel: 'Follow Pankaj Singh on Instagram' },
-    { icon: Mail, label: 'Email', href: 'mailto:pankajsingh1work@gmail.com', ariaLabel: 'Email Pankaj Singh' }
+    { icon: Mail, label: 'Email', href: 'mailto:pankajsingh1work@gmail.com', ariaLabel: 'Email Pankaj Singh' },
+    { icon: FaYoutube, label: 'YouTube', href: 'https://www.youtube.com/@codeverb-in', ariaLabel: 'Subscribe to Pankaj Singh on YouTube' }
   ];
 
   return (

@@ -8,6 +8,9 @@ import { Textarea } from './ui/textarea';
 import { Label } from './ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './ui/select';
 import { ImageWithFallback } from './figma/ImageWithFallback';
+
+import { FaInstagram, FaMedium, FaYoutube, FaWhatsapp } from 'react-icons/fa';
+
 import { 
   Mail, 
   Phone, 
@@ -41,7 +44,7 @@ const contactMethods = [
     available: 'Mon-Fri, 9AM-6PM IST'
   },
   {
-    icon: MessageCircle,
+    icon: FaWhatsapp,
     label: 'WhatsApp',
     value: '+91 9058253317',
     href: 'https://wa.me/919058253317',
@@ -74,18 +77,25 @@ const socialLinks = [
     description: 'Professional network and career updates'
   },
   {
-    icon: Globe, // Using Globe as placeholder for Medium since no Medium icon in lucide-react
+    icon: FaMedium, 
     label: 'Medium',
     href: 'https://medium.com/@rawatpanku991',
     username: '@rawatpanku991',
     description: 'Tech insights and industry discussions'
   },
   {
-    icon: Globe, // Using Globe as placeholder for Instagram since no Instagram icon in lucide-react
+    icon: FaInstagram, 
     label: 'Instagram',
     href: 'https://www.instagram.com/codeverb.in/',
     username: '@codeverb.in',
     description: 'Visual updates and behind-the-scenes'
+  },
+  {
+    icon: FaYoutube,
+    label: 'YouTube',
+    href: 'https://www.youtube.com/@codeverb-in',
+    username: '@codeverb-in',
+    description: 'Video tutorials and project walkthroughs'
   }
 ];
 

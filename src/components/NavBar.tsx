@@ -45,14 +45,19 @@ export function NavBar({ currentPage, onNavigate, isDarkMode, toggleDarkMode }: 
     { label: 'Contact', page: 'contact' }
   ];
 
+  // Helper to compute scrolled classes, skipping blur when menu is open
+  const getScrolledClasses = () => {
+    if (!isScrolled) return 'bg-transparent';
+    if (isMenuOpen) return 'bg-background/95 shadow-sm'; // No blur to avoid containing block issue
+    return 'bg-background/95 backdrop-blur-sm shadow-sm';
+  };
+
   return (
     <motion.nav
       initial={{ opacity: 0, y: -20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 w-full overflow-x-hidden ${
-        isScrolled ? 'bg-background/95 backdrop-blur-sm shadow-sm' : 'bg-transparent'
-      }`}
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 w-full ${getScrolledClasses()}`} // Removed overflow-x-hidden to prevent clipping
       aria-label="Main navigation"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -128,14 +133,15 @@ export function NavBar({ currentPage, onNavigate, isDarkMode, toggleDarkMode }: 
         <motion.div
           ref={menuRef}
           initial={{ x: '100%' }}
-          animate={{ x: '25%' }}
+          animate={{ x: '15%' }} // Changed to full slide-in (no partial clip)
           exit={{ x: '100%' }}
-          transition={{ duration: 0.5, ease: [0.4, 0, 0.2, 1] }}
-          className="md:hidden fixed top-0 right-0 h-full w-3/4 bg-background border-l border-border z-50 shadow-xl"
+          transition={{ duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] }} // Slightly faster easing for smoother start, cubic-bezier for momentum
+          className="h-full md:hidden fixed top-0 right-0  w-3/4 bg-background border-l border-border z-[60] shadow-xl" // Bumped z-index slightly higher
+          style={{ willChange: 'transform' }} // Hardware accel hint for smoother animation
           role="menu"
           aria-orientation="vertical"
         >
-          <div className="flex flex-col h-full">
+          <div className="flex flex-col h-full ">
             <div className="flex justify-end p-4">
               <button
                 onClick={() => setIsMenuOpen(false)}
@@ -145,7 +151,7 @@ export function NavBar({ currentPage, onNavigate, isDarkMode, toggleDarkMode }: 
                 <X className="h-6 w-6" aria-hidden="true" />
               </button>
             </div>
-            <div className="px-2 pt-2 pb-3 space-y-1 flex-1">
+            <div className="px-2 pt-2 pb-3 space-y-1 flex-1 bg-background h-full">
               {navItems.map((item) => (
                 <button
                   key={item.page}

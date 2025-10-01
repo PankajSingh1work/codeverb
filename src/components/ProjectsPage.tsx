@@ -323,12 +323,16 @@ export function ProjectsPage({ onNavigate }: ProjectsPageProps) {
                       {/* Action buttons */}
                       <div className="flex space-x-2 pt-4">
                         <Button variant="outline" size="sm" className="flex-1 group/btn" aria-label="View demo">
-                          <Eye className="h-4 w-4 mr-2 group-hover/btn:scale-110 transition-transform" aria-hidden="true" />
-                          Demo
+                          <a href={project.demoUrl} target="_blank" rel="noopener noreferrer" className="w-full flex items-center justify-center">
+                            <Eye className="h-4 w-4 mr-2 group-hover/btn:scale-110 transition-transform" aria-hidden="true" />
+                            Demo
+                          </a>
                         </Button>
                         <Button variant="outline" size="sm" className="flex-1 group/btn" aria-label="View code on GitHub">
-                          <Github className="h-4 w-4 mr-2 group-hover/btn:scale-110 transition-transform" aria-hidden="true" />
+                          <a href={project.githubUrl} target="_blank" rel="noopener noreferrer" className="w-full flex items-center justify-center">
+                            <Github className="h-4 w-4 mr-2 group-hover/btn:scale-110 transition-transform" aria-hidden="true" />
                           Code
+                          </a>
                         </Button>
                       </div>
 
