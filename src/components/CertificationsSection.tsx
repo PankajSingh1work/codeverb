@@ -73,7 +73,7 @@ export function CertificationsSection({ onNavigate }: CertificationsSectionProps
                   {/* Header with logo and status */}
                   <div className="flex items-start justify-between">
                     <div className="flex items-center space-x-3">
-                      <div className="w-12 h-12 rounded-lg overflow-hidden bg-muted flex items-center justify-center">
+                      <div className="w-16 h-12 rounded-full overflow-hidden bg-muted flex items-center justify-center">
                         <ImageWithFallback
                           src={cert.logo}
                           alt={`Logo of ${cert.issuer} for ${cert.title} certification`}

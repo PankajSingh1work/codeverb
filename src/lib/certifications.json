@@ -5,7 +5,7 @@
             "title": "AWS Certified Solutions Architect - Professional ",
             "subtitle": "Showcase advanced skills in designing optimized AWS Cloud solutions ",
             "issuer": "AWS",
-            "logo": "https://d1.awsstatic.com/training-and-certification/Certification%20Badges/AWS-Certified-Solutions-Architect-Professional_Badge.3419559dca139b613cec9024b64a0ac048cffa64.png",
+            "logo": "/certLogos/udemyy.jpg",
             "date": "2024",
             "validUntil": "2027",
             "credentialId": "AWS-SAP-123456",
@@ -14,7 +14,7 @@
             "category": "Cloud Computing",
             "featured": true,
             "verificationUrl": "https://www.credly.com/org/amazon-web-services/badge/aws-certified-solutions-architect-professional",
-            "certificateUrl": "https://www.credly.com/org/amazon-web-services/badge/aws-certified-solutions-architect-professional",
+            "certificateUrl": "https://drive.google.com/file/d/1IoeFypkkGSuxdLenxkAMjbZqra2awSiA/view?usp=sharing",
             "description": "AWS Certified Solutions Architect - Professional helps certified individuals showcase advanced knowledge and skills in providing complex solutions to complex problems, optimizing security, cost, and performance, and automating manual processes.",
             "fullDescription": "AWS Certified Solutions Architect - Professional helps certified individuals showcase advanced knowledge and skills in providing complex solutions to complex problems, optimizing security, cost, and performance, and automating manual processes. This certification is a means for organizations to identify and develop talent with these critical skills for implementing cloud initiatives.",
             "skills": [
@@ -166,7 +166,7 @@
             "title": "Microsoft Certified: Azure Solutions Architect Expert",
             "subtitle": "Subject matter expertise in designing cloud and hybrid solutions that run on Azure",
             "issuer": "Microsoft",
-            "logo": "https://learn.microsoft.com/en-us/media/learn/certification/badges/microsoft-certified-expert-badge.svg",
+            "logo": "/certLogos/udemyy.jpg",
             "date": "2023",
             "validUntil": "2026",
             "credentialId": "MS-AZ-789123",
@@ -966,6 +966,167 @@
                 "Invaluable for career advancement in cybersecurity",
                 "Recognized by global IT community",
                 "Valid for 3 years with renewal options"
+            ]
+        },
+        {
+            "id": 7,
+            "title": "Android App Development in 34 Hours: MobDevOps+ Android 15",
+            "subtitle": "Master Kotlin Programming and Build Cutting-Edge Android Apps with MobDevOps Practices",
+            "issuer": "Udemy",
+            "logo": "/certLogos/androi.jpg",
+            "date": "2025",
+            "validUntil": "2030",
+            "credentialId": "UC-7ff6cfbc-6190-45a2-926d-7d69be04bcc8",
+            "status": "Valid",
+            "level": "Intermediate",
+            "category": "Mobile App Development",
+            "featured": true,
+            "verificationUrl": "https://ude.my/UC-7ff6cfbc-6190-45a2-926d-7d69be04bcc8",
+            "certificateUrl": "https://udemy-certificate.s3.amazonaws.com/image/UC-7ff6cfbc-6190-45a2-926d-7d69be04bcc8.jpg?v=1756941583000",
+            "description": "This Udemy certification demonstrates proficiency in Android app development using Kotlin, focusing on MobDevOps principles and the latest Android 15 features. Ideal for aspiring mobile developers seeking to build high-performance apps.",
+            "fullDescription": "The 'Android App Development in 34 Hours: MobDevOps+ Android 15' course from Udemy, offered by OCSALY Academy, provides a comprehensive bootcamp-style learning experience for building professional Android applications. Designed for beginners with no prior programming knowledge, this course teaches Kotlin from scratch and covers essential Android development topics. You'll learn to create amazing apps with hands-on projects, integrating advanced features like GPS, camera access, and push notifications. Emphasizing MobDevOps (Mobile DevOps) for efficient development workflows, the curriculum is updated for Android 15, ensuring you stay ahead in mobile app innovation. With over 83,000 enrolled students and a 4.4 rating, this course equips you with practical skills for a successful career in Android programming.",
+            "skills": [
+                {
+                    "name": "Kotlin Programming",
+                    "proficiency": 90
+                },
+                {
+                    "name": "Android Studio",
+                    "proficiency": 92
+                },
+                {
+                    "name": "User Interface Design",
+                    "proficiency": 88
+                },
+                {
+                    "name": "MobDevOps Practices",
+                    "proficiency": 85
+                },
+                {
+                    "name": "GPS Integration",
+                    "proficiency": 87
+                },
+                {
+                    "name": "Camera Access",
+                    "proficiency": 86
+                },
+                {
+                    "name": "Push Notifications",
+                    "proficiency": 89
+                },
+                {
+                    "name": "Android 15 Features",
+                    "proficiency": 91
+                }
+            ],
+            "examDetails": {
+                "duration": "34.5 hours",
+                "questions": "Over 100 lectures",
+                "format": "On-demand video lectures, hands-on projects, and assignments",
+                "passingScore": "Completion-based",
+                "cost": "Varies (often available with discounts or coupons)",
+                "languages": [
+                    "English"
+                ]
+            },
+            "domains": [
+                {
+                    "name": "Kotlin Fundamentals",
+                    "weight": "25%",
+                    "description": "Learn the basics of Kotlin programming language for Android development",
+                    "topics": [
+                        "Variables and data types",
+                        "Control structures",
+                        "Functions and classes",
+                        "Object-oriented programming concepts"
+                    ]
+                },
+                {
+                    "name": "Android Basics and UI Design",
+                    "weight": "30%",
+                    "description": "Set up Android Studio and build user interfaces",
+                    "topics": [
+                        "Android Studio installation and configuration",
+                        "XML layouts or Jetpack Compose",
+                        "Activities and fragments",
+                        "Navigation and user experience"
+                    ]
+                },
+                {
+                    "name": "Advanced Android Features",
+                    "weight": "25%",
+                    "description": "Integrate device capabilities and data management",
+                    "topics": [
+                        "GPS and location services",
+                        "Camera and media handling",
+                        "Push notifications and background services",
+                        "Data storage with Room or SQLite"
+                    ]
+                },
+                {
+                    "name": "MobDevOps and Deployment",
+                    "weight": "20%",
+                    "description": "Apply Mobile DevOps practices for efficient app development and release",
+                    "topics": [
+                        "CI/CD pipelines for mobile",
+                        "Testing and debugging",
+                        "App optimization and performance",
+                        "Publishing to Google Play Store"
+                    ]
+                }
+            ],
+            "preparationPath": [
+                {
+                    "step": "Prerequisites",
+                    "description": "No programming experience required; basic computer skills and a device with 4GB RAM and 9GB disk space for Android Studio",
+                    "completed": true
+                },
+                {
+                    "step": "Enroll and Setup",
+                    "description": "Sign up for the course on Udemy and install Android Studio",
+                    "completed": true
+                },
+                {
+                    "step": "Core Learning",
+                    "description": "Watch video lectures on Kotlin and Android fundamentals",
+                    "completed": true
+                },
+                {
+                    "step": "Hands-on Practice",
+                    "description": "Complete coding exercises and build real-world app projects",
+                    "completed": true
+                },
+                {
+                    "step": "Completion and Certification",
+                    "description": "Finish all modules and earn the official Udemy certificate",
+                    "completed": true
+                }
+            ],
+            "relatedCertifications": [
+                {
+                    "title": "Google Associate Android Developer",
+                    "status": "Planned",
+                    "description": "Official Google certification for Android development skills"
+                },
+                {
+                    "title": "Udemy Jetpack Compose Masterclass",
+                    "status": "Considering",
+                    "description": "Advanced UI development for Android apps"
+                }
+            ],
+            "projects": [
+                "Build a location-based app using GPS integration",
+                "Create a media app with camera access and photo editing",
+                "Develop a notification-enabled productivity app",
+                "Implement a full-stack mobile app with MobDevOps pipeline"
+            ],
+            "benefits": [
+                "Hands-on experience in building real Android apps",
+                "Lifetime access to course materials and updates",
+                "Official certificate to boost your portfolio and resume",
+                "Skills in high-demand technologies like Kotlin and Android 15",
+                "Community support and expert guidance from OCSALY Academy",
+                "Pathway to a rewarding career in mobile app development"
             ]
         }
     ]

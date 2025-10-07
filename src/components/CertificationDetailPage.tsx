@@ -137,8 +137,8 @@ export function CertificationDetailPage({ onNavigate, certificationId }: Certifi
                     </div>
                     <div className="flex items-center space-x-2">
                       <Shield className="h-4 w-4 text-primary" />
-                      <span className="text-muted-foreground">Credential ID:</span>
-                      <span className="font-medium text-xs">{certification.credentialId}</span>
+                      <span className="text-muted-foreground ">ID:</span>
+                      <span className="font-medium text-xs truncate">{certification.credentialId}</span>
                     </div>
                   </div>
                 </div>
