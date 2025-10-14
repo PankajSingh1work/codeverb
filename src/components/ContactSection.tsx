@@ -107,7 +107,7 @@ export function ContactSection() {
           content="Pankaj Singh, contact, web development, mobile development, UI/UX design, digital consulting, Dehradun, Uttarakhand, React, Flutter, Next.js, developer"
         />
         <meta name="author" content="Pankaj Singh" />
-        <meta property="og:title" content="Contact | Pankaj Singh - Developer in Dehradun" />
+        <meta property="og:title" content="Pankaj Singh - Full Stack & Mobile Developer in Dehradun" />
         <meta
           property="og:description"
           content="Reach out to Pankaj Singh in Dehradun, Uttarakhand, to discuss your next project in web development, mobile apps, UI/UX design, or digital consulting."
@@ -116,7 +116,7 @@ export function ContactSection() {
         <meta property="og:image" content="/PankajSinghProfile.jpg" />
         <meta property="og:url" content="https://www.codeverb.in" />
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Contact | Pankaj Singh - Developer in Dehradun" />
+        <meta name="twitter:title" content="Pankaj Singh - Full Stack & Mobile Developer in Dehradun" />
         <meta
           name="twitter:description"
           content="Contact Pankaj Singh for professional services in web and mobile development, UI/UX design, and digital consulting from Dehradun, Uttarakhand."
