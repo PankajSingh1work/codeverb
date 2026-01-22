@@ -1,0 +1,1133 @@
+{
+    "certifications": [
+        {
+            "id": 1,
+            "title": "AWS Certified Solutions Architect - Professional ",
+            "subtitle": "Showcase advanced skills in designing optimized AWS Cloud solutions ",
+            "issuer": "AWS",
+            "logo": "/certLogos/udemyy.jpg",
+            "date": "2024",
+            "validUntil": "2027",
+            "credentialId": "AWS-SAP-123456",
+            "status": "Valid",
+            "level": "Professional",
+            "category": "Cloud Computing",
+            "featured": true,
+            "verificationUrl": "https://www.credly.com/org/amazon-web-services/badge/aws-certified-solutions-architect-professional",
+            "certificateUrl": "https://drive.google.com/file/d/1IoeFypkkGSuxdLenxkAMjbZqra2awSiA/view?usp=sharing",
+            "description": "AWS Certified Solutions Architect - Professional helps certified individuals showcase advanced knowledge and skills in providing complex solutions to complex problems, optimizing security, cost, and performance, and automating manual processes.",
+            "fullDescription": "AWS Certified Solutions Architect - Professional helps certified individuals showcase advanced knowledge and skills in providing complex solutions to complex problems, optimizing security, cost, and performance, and automating manual processes. This certification is a means for organizations to identify and develop talent with these critical skills for implementing cloud initiatives.",
+            "skills": [
+                {
+                    "name": "Cloud Architecture",
+                    "proficiency": 95
+                },
+                {
+                    "name": "AWS Services",
+                    "proficiency": 90
+                },
+                {
+                    "name": "System Design",
+                    "proficiency": 92
+                },
+                {
+                    "name": "Security",
+                    "proficiency": 88
+                },
+                {
+                    "name": "Cost Optimization",
+                    "proficiency": 85
+                },
+                {
+                    "name": "High Availability",
+                    "proficiency": 93
+                },
+                {
+                    "name": "Disaster Recovery",
+                    "proficiency": 87
+                },
+                {
+                    "name": "Migration Strategies",
+                    "proficiency": 89
+                }
+            ],
+            "examDetails": {
+                "duration": "180 minutes",
+                "questions": "75 questions",
+                "format": "Multiple choice or multiple response",
+                "passingScore": "750/1000",
+                "cost": "$300 USD",
+                "languages": [
+                    "English",
+                    "Japanese",
+                    "Korean",
+                    "Portuguese (Brazil)",
+                    "Simplified Chinese",
+                    "Spanish (Latin America)"
+                ]
+            },
+            "domains": [
+                {
+                    "name": "Design Solutions for Organizational Complexity",
+                    "weight": "20%",
+                    "description": "Design multi-account AWS environments and network connectivity strategies",
+                    "topics": [
+                        "Cross-account authentication and access strategy",
+                        "Multi-account AWS environments",
+                        "Networks (e.g., VPN, AWS Direct Connect, AWS Transit Gateway)"
+                    ]
+                },
+                {
+                    "name": "Design for New Solutions",
+                    "weight": "29%",
+                    "description": "Design reliable, performant, secure, and cost-optimized architectures",
+                    "topics": [
+                        "Architectural design patterns",
+                        "Migration and modernization strategies",
+                        "Deployment strategies for business requirements"
+                    ]
+                },
+                {
+                    "name": "Continuous Design Improvement",
+                    "weight": "26%",
+                    "description": "Improve architectures for performance, reliability, security, and cost",
+                    "topics": [
+                        "Performance optimization",
+                        "Reliability and resilience",
+                        "Security enhancement"
+                    ]
+                },
+                {
+                    "name": "Accelerate Workload Migration and Modernization",
+                    "weight": "25%",
+                    "description": "Select migration tools and strategies for complex architectures",
+                    "topics": [
+                        "Migration strategies (e.g., 7 Rs)",
+                        "Database migration strategies",
+                        "Migration tools and services"
+                    ]
+                }
+            ],
+            "preparationPath": [
+                {
+                    "step": "Prerequisites",
+                    "description": "2 or more years of experience in using AWS services to design and implement cloud solutions",
+                    "completed": true
+                },
+                {
+                    "step": "Study Materials",
+                    "description": "AWS documentation, whitepapers, and training courses on AWS Skill Builder",
+                    "completed": true
+                },
+                {
+                    "step": "Hands-on Practice",
+                    "description": "AWS Builder Labs, AWS Cloud Quest, AWS Jam",
+                    "completed": true
+                },
+                {
+                    "step": "Practice Exams",
+                    "description": "AWS Certification Official Practice Exam and Question Set",
+                    "completed": true
+                },
+                {
+                    "step": "Certification Exam",
+                    "description": "Passed the SAP-C02 exam",
+                    "completed": true
+                }
+            ],
+            "relatedCertifications": [
+                {
+                    "title": "AWS Certified DevOps Engineer - Professional",
+                    "status": "Planned",
+                    "description": "Advanced DevOps practices on AWS"
+                },
+                {
+                    "title": "AWS Certified Security - Specialty",
+                    "status": "Considering",
+                    "description": "Specialized security knowledge for AWS"
+                }
+            ],
+            "projects": [
+                "Multi-region application architecture for DataTech Solutions",
+                "Cloud migration strategy for e-commerce platform",
+                "Disaster recovery implementation for financial services client"
+            ],
+            "benefits": [
+                "Top-paying certification",
+                "Increased confidence and credibility",
+                "Valid for 3 years with recertification options",
+                "50% discount on next AWS Certification exam",
+                "Industry recognition for cloud expertise",
+                "Enhanced career opportunities"
+            ]
+        },
+        {
+            "id": 2,
+            "title": "Microsoft Certified: Azure Solutions Architect Expert",
+            "subtitle": "Subject matter expertise in designing cloud and hybrid solutions that run on Azure",
+            "issuer": "Microsoft",
+            "logo": "/certLogos/udemyy.jpg",
+            "date": "2023",
+            "validUntil": "2026",
+            "credentialId": "MS-AZ-789123",
+            "status": "Valid",
+            "level": "Expert",
+            "category": "Cloud Computing",
+            "featured": true,
+            "verificationUrl": "https://learn.microsoft.com/en-us/credentials/certifications/azure-solutions-architect/",
+            "certificateUrl": "#",
+            "description": "This certification is for candidates with advanced experience and knowledge of IT operations, including networking, virtualization, identity, security, business continuity, disaster recovery, data platforms, and governance.",
+            "fullDescription": "As a Microsoft Azure solutions architect, you have subject matter expertise in designing cloud and hybrid solutions that run on Azure, including compute, network, storage, monitoring, and security. Your responsibilities include advising stakeholders and translating business requirements into designs for Azure solutions that align with the Azure Well-Architected Framework and Cloud Adoption Framework for Azure. In this role, you implement solutions on Azure by partnering with various other job roles, including developers, administrators, security engineers, and data engineers. Candidates should have advanced experience and knowledge of IT operations, including networking, virtualization, identity, security, business continuity, disaster recovery, data platforms, and governance, and manage how decisions in each area affect an overall solution. Additionally, candidates should have experience with Azure administration, Azure development, and DevOps processes. The English language version of this certification was updated on October 18, 2024.",
+            "skills": [
+                {
+                    "name": "Azure Architecture",
+                    "proficiency": 92
+                },
+                {
+                    "name": "Cloud Security",
+                    "proficiency": 89
+                },
+                {
+                    "name": "Cost Management",
+                    "proficiency": 87
+                },
+                {
+                    "name": "Networking",
+                    "proficiency": 90
+                },
+                {
+                    "name": "Storage Solutions",
+                    "proficiency": 88
+                },
+                {
+                    "name": "Application Design",
+                    "proficiency": 91
+                }
+            ],
+            "examDetails": {
+                "duration": "Not specified",
+                "questions": "Not specified",
+                "format": "Technical tasks (performance-based or scenario-based)",
+                "passingScore": "700/1000",
+                "cost": "Price based on country or region",
+                "languages": [
+                    "English",
+                    "Japanese",
+                    "Chinese (Simplified)",
+                    "Korean",
+                    "German",
+                    "French",
+                    "Spanish",
+                    "Portuguese (Brazil)",
+                    "Chinese (Traditional)",
+                    "Italian"
+                ]
+            },
+            "domains": [
+                {
+                    "name": "Design identity, governance, and monitoring solutions",
+                    "weight": "Not specified",
+                    "description": "Design solutions for identity management, governance, and monitoring",
+                    "topics": [
+                        "Identity management",
+                        "Governance strategies",
+                        "Monitoring solutions"
+                    ]
+                },
+                {
+                    "name": "Design data storage solutions",
+                    "weight": "Not specified",
+                    "description": "Design solutions for data storage and management",
+                    "topics": [
+                        "Data storage options",
+                        "Data management"
+                    ]
+                },
+                {
+                    "name": "Design business continuity solutions",
+                    "weight": "Not specified",
+                    "description": "Design solutions for business continuity and disaster recovery",
+                    "topics": [
+                        "Backup and recovery",
+                        "High availability"
+                    ]
+                },
+                {
+                    "name": "Design infrastructure solutions",
+                    "weight": "Not specified",
+                    "description": "Design infrastructure solutions for compute, network, and storage",
+                    "topics": [
+                        "Compute solutions",
+                        "Network architecture",
+                        "Storage infrastructure"
+                    ]
+                }
+            ],
+            "preparationPath": [
+                {
+                    "step": "Prerequisites",
+                    "description": "Microsoft Certified: Azure Administrator Associate certification",
+                    "completed": true
+                },
+                {
+                    "step": "Study Materials",
+                    "description": "Learning paths or modules on Microsoft Learn",
+                    "completed": true
+                },
+                {
+                    "step": "Hands-on Practice",
+                    "description": "Experience with Azure administration, development, and DevOps",
+                    "completed": true
+                },
+                {
+                    "step": "Practice Exams",
+                    "description": "Online assessments on Microsoft Learn",
+                    "completed": true
+                },
+                {
+                    "step": "Certification Exam",
+                    "description": "Passed AZ-305 exam",
+                    "completed": true
+                }
+            ],
+            "relatedCertifications": [
+                {
+                    "title": "Microsoft Certified: Azure Administrator Associate",
+                    "status": "Completed",
+                    "description": "Foundational Azure administration skills"
+                },
+                {
+                    "title": "Microsoft Certified: Azure DevOps Engineer Expert",
+                    "status": "Planned",
+                    "description": "Advanced DevOps on Azure"
+                }
+            ],
+            "projects": [
+                "Azure-based hybrid cloud solution for enterprise client",
+                "Security architecture for data platform",
+                "Cost-optimized infrastructure design"
+            ],
+            "benefits": [
+                "Skills for Solution Architect role",
+                "Free renewal by passing online assessment",
+                "Shareable certification badges",
+                "Expertise in designing Azure solutions",
+                "Alignment with Azure Well-Architected Framework"
+            ]
+        },
+        {
+            "id": 3,
+            "title": "Cisco Certified Network Professional (CCNP) Enterprise",
+            "subtitle": "Expertise in enterprise infrastructure, assurance, security, and more",
+            "issuer": "Cisco",
+            "logo": "https://www.cisco.com/content/dam/global/en_us/training/certifications/professional/ccnp-enterprise-badge.png",
+            "date": "2023",
+            "validUntil": "2026",
+            "credentialId": "CSCO-CCNP-ENT-456789",
+            "status": "Valid",
+            "level": "Professional",
+            "category": "Networking",
+            "featured": true,
+            "verificationUrl": "https://www.cisco.com/c/en/us/training-events/training-certifications/certifications/professional/ccnp-enterprise.html",
+            "certificateUrl": "#",
+            "description": "Configure, troubleshoot, and manage the networks of the largest companies in the world with the Cisco Certified Network Professional (CCNP) Enterprise certification.",
+            "fullDescription": "Demonstrate your expertise in enterprise infrastructure, assurance, security, and more. Configure, troubleshoot, and manage the networks of the largest companies in the world with the Cisco Certified Network Professional (CCNP) Enterprise certification. To earn CCNP Enterprise, pass the core exam (350-401 ENCOR) and one concentration exam.",
+            "skills": [
+                {
+                    "name": "Enterprise Networking",
+                    "proficiency": 90
+                },
+                {
+                    "name": "Security",
+                    "proficiency": 88
+                },
+                {
+                    "name": "Automation",
+                    "proficiency": 85
+                },
+                {
+                    "name": "Wireless",
+                    "proficiency": 87
+                },
+                {
+                    "name": "SD-WAN",
+                    "proficiency": 86
+                }
+            ],
+            "examDetails": {
+                "duration": "120 minutes (core exam)",
+                "questions": "90-110 questions (core exam)",
+                "format": "Multiple choice, drag and drop, simulation",
+                "passingScore": "Variable (750-850/1000 approximate)",
+                "cost": "$400 USD (core), $300 USD (concentration)",
+                "languages": [
+                    "English"
+                ]
+            },
+            "domains": [
+                {
+                    "name": "Architecture",
+                    "weight": "15%",
+                    "description": "Explain enterprise network design principles",
+                    "topics": [
+                        "Enterprise network design",
+                        "High availability techniques",
+                        "Wireless design principles"
+                    ]
+                },
+                {
+                    "name": "Virtualization",
+                    "weight": "10%",
+                    "description": "Describe device virtualization technologies",
+                    "topics": [
+                        "Hypervisor types",
+                        "Virtual switching",
+                        "Virtual machine"
+                    ]
+                },
+                {
+                    "name": "Infrastructure",
+                    "weight": "30%",
+                    "description": "Configure and verify infrastructure components",
+                    "topics": [
+                        "Layer 2/3 technologies",
+                        "Wireless",
+                        "IP services"
+                    ]
+                },
+                {
+                    "name": "Network Assurance",
+                    "weight": "10%",
+                    "description": "Diagnose network problems using tools",
+                    "topics": [
+                        "Syslog",
+                        "NetFlow",
+                        "SPAN/RSPAN/ERSPAN"
+                    ]
+                },
+                {
+                    "name": "Security",
+                    "weight": "20%",
+                    "description": "Configure and verify device access control and infrastructure security features",
+                    "topics": [
+                        "Access control",
+                        "Wireless security",
+                        "Multicast security"
+                    ]
+                },
+                {
+                    "name": "Automation",
+                    "weight": "15%",
+                    "description": "Interpret basic Python components and scripts",
+                    "topics": [
+                        "REST APIs",
+                        "EEM",
+                        "JSON, XML, YAML"
+                    ]
+                }
+            ],
+            "preparationPath": [
+                {
+                    "step": "Prerequisites",
+                    "description": "CCNA or equivalent knowledge",
+                    "completed": true
+                },
+                {
+                    "step": "Study Materials",
+                    "description": "Cisco Learning Network resources and official guides",
+                    "completed": true
+                },
+                {
+                    "step": "Hands-on Practice",
+                    "description": "Lab experience with enterprise networking",
+                    "completed": true
+                },
+                {
+                    "step": "Practice Exams",
+                    "description": "Cisco practice tests",
+                    "completed": true
+                },
+                {
+                    "step": "Certification Exam",
+                    "description": "Passed ENCOR 350-401 and concentration exam",
+                    "completed": true
+                }
+            ],
+            "relatedCertifications": [
+                {
+                    "title": "CCNA",
+                    "status": "Completed",
+                    "description": "Foundational networking certification"
+                },
+                {
+                    "title": "CCIE Enterprise Infrastructure",
+                    "status": "Planned",
+                    "description": "Expert-level enterprise networking"
+                }
+            ],
+            "projects": [
+                "Enterprise network design for large corporation",
+                "SD-WAN implementation",
+                "Wireless network security upgrade"
+            ],
+            "benefits": [
+                "Demonstrates expertise in enterprise networking",
+                "Valid for 3 years",
+                "Recognized by Cisco and industry",
+                "Career advancement in networking roles"
+            ]
+        },
+        {
+            "id": 4,
+            "title": "Certified Kubernetes Administrator (CKA)",
+            "subtitle": "Competence in Kubernetes administration in a hands-on environment",
+            "issuer": "CNCF",
+            "logo": "https://www.cncf.io/wp-content/uploads/2022/05/cka-1.png",
+            "date": "2024",
+            "validUntil": "2027",
+            "credentialId": "CNCF-CKA-789456",
+            "status": "Valid",
+            "level": "Professional",
+            "category": "Container Orchestration",
+            "featured": false,
+            "verificationUrl": "https://www.cncf.io/certification/cka/",
+            "certificateUrl": "#",
+            "description": "The CKA program provides assurance that Certified Kubernetes Administrators have the skills, knowledge, and competency to perform the responsibilities of Kubernetes administrators.",
+            "fullDescription": "The Certified Kubernetes Administrator (CKA) program, created by the Cloud Native Computing Foundation (CNCF) in collaboration with The Linux Foundation, aims to develop the Kubernetes ecosystem by certifying administrators. It is an online, proctored, performance-based test requiring solving multiple issues from a command line, separate from the Kubernetes Certified Service Provider (KCSP) program. CNCF has open-sourced the curriculum for training companies, and offers wholesale pricing on exams for bulk purchases by training partners.",
+            "skills": [
+                {
+                    "name": "Kubernetes Administration",
+                    "proficiency": 92
+                },
+                {
+                    "name": "Cluster Management",
+                    "proficiency": 90
+                },
+                {
+                    "name": "Networking",
+                    "proficiency": 88
+                },
+                {
+                    "name": "Storage",
+                    "proficiency": 85
+                },
+                {
+                    "name": "Troubleshooting",
+                    "proficiency": 95
+                }
+            ],
+            "examDetails": {
+                "duration": "2 hours",
+                "questions": "Performance-based items (problems) to be solved in a command line",
+                "format": "Online, proctored, performance-based test",
+                "passingScore": "66%",
+                "cost": "$445 USD",
+                "languages": [
+                    "English"
+                ]
+            },
+            "domains": [
+                {
+                    "name": "Cluster Architecture, Installation & Configuration",
+                    "weight": "25%",
+                    "description": "Manage Kubernetes cluster architecture, installation, and configuration",
+                    "topics": [
+                        "Manage role based access control (RBAC)",
+                        "Use Kubeadm to install a basic cluster",
+                        "Manage a highly-available Kubernetes cluster"
+                    ]
+                },
+                {
+                    "name": "Workloads & Scheduling",
+                    "weight": "15%",
+                    "description": "Manage workloads and scheduling in Kubernetes",
+                    "topics": [
+                        "Understand deployments and how to perform rolling update and rollbacks",
+                        "Use ConfigMaps and Secrets to configure applications",
+                        "Know how to scale applications"
+                    ]
+                },
+                {
+                    "name": "Services & Networking",
+                    "weight": "20%",
+                    "description": "Manage services and networking",
+                    "topics": [
+                        "Understand host networking configuration on the node",
+                        "Understand connectivity between Pods",
+                        "Understand ClusterIP, NodePort, LoadBalancer service types"
+                    ]
+                },
+                {
+                    "name": "Storage",
+                    "weight": "10%",
+                    "description": "Manage storage in Kubernetes",
+                    "topics": [
+                        "Understand storage classes, persistent volumes",
+                        "Understand volume mode, access modes and reclaim policies for volumes",
+                        "Understand persistent volume claims primitive"
+                    ]
+                },
+                {
+                    "name": "Troubleshooting",
+                    "weight": "30%",
+                    "description": "Troubleshoot Kubernetes clusters",
+                    "topics": [
+                        "Evaluate cluster and node logging",
+                        "Understand how to monitor applications",
+                        "Manage container stdout & stderr logs"
+                    ]
+                }
+            ],
+            "preparationPath": [
+                {
+                    "step": "Prerequisites",
+                    "description": "Familiarity with Kubernetes concepts",
+                    "completed": true
+                },
+                {
+                    "step": "Study Materials",
+                    "description": "CNCF curriculum and Kubernetes documentation",
+                    "completed": true
+                },
+                {
+                    "step": "Hands-on Practice",
+                    "description": "Practice with Kubernetes clusters",
+                    "completed": true
+                },
+                {
+                    "step": "Practice Exams",
+                    "description": "Killer.sh simulator or similar",
+                    "completed": true
+                },
+                {
+                    "step": "Certification Exam",
+                    "description": "Passed CKA exam",
+                    "completed": true
+                }
+            ],
+            "relatedCertifications": [
+                {
+                    "title": "Certified Kubernetes Application Developer (CKAD)",
+                    "status": "Planned",
+                    "description": "Kubernetes application development"
+                },
+                {
+                    "title": "Kubernetes Certified Service Provider (KCSP)",
+                    "status": "Considering",
+                    "description": "For companies with multiple CKAs"
+                }
+            ],
+            "projects": [
+                "Kubernetes cluster setup for production environment",
+                "Container orchestration for microservices",
+                "Troubleshooting high-availability clusters"
+            ],
+            "benefits": [
+                "Establishes credibility in Kubernetes administration",
+                "Enables companies to hire high-quality teams",
+                "Quarterly exam updates to match Kubernetes releases",
+                "Value in the job market",
+                "Develops the Kubernetes ecosystem"
+            ]
+        },
+        {
+            "id": 5,
+            "title": "Google Cloud Professional Cloud Architect",
+            "subtitle": "Enable organizations to leverage Google Cloud technologies",
+            "issuer": "Google Cloud",
+            "logo": "https://cloud.google.com/static/learn/images/certification/professional-cloud-architect.svg",
+            "date": "2024",
+            "validUntil": "2026",
+            "credentialId": "GCP-PCA-123789",
+            "status": "Valid",
+            "level": "Professional",
+            "category": "Cloud Computing",
+            "featured": false,
+            "verificationUrl": "https://www.credential.net/profile/google-cloud-professional-cloud-architect",
+            "certificateUrl": "#",
+            "description": "The Professional Cloud Architect certification assesses the ability to design, develop, and manage robust, secure, scalable, efficient, cost-effective, highly available, and flexible cloud solutions to drive business objectives.",
+            "fullDescription": "Professional Cloud Architects enable organizations to leverage Google Cloud technologies. With a thorough understanding of cloud architecture and Google Cloud, they design, develop, and manage robust, secure, scalable, efficient, cost-effective, highly available, and flexible solutions to drive business objectives. The certification exam assesses the ability to: design and plan a cloud solution architecture; manage and provision the cloud solution infrastructure; design for security and compliance; analyze and optimize technical and business processes; manage implementations of cloud architecture; ensure solution and operations reliability. The upcoming version of the exam, live in English on October 30, highlights the Google Cloud Well-Architected Framework and includes new case studies focusing on generative AI technology.",
+            "skills": [
+                {
+                    "name": "Cloud Solution Architecture",
+                    "proficiency": 93
+                },
+                {
+                    "name": "Infrastructure Management",
+                    "proficiency": 90
+                },
+                {
+                    "name": "Security and Compliance",
+                    "proficiency": 88
+                },
+                {
+                    "name": "Optimization",
+                    "proficiency": 87
+                },
+                {
+                    "name": "Implementation Management",
+                    "proficiency": 89
+                },
+                {
+                    "name": "Reliability",
+                    "proficiency": 91
+                }
+            ],
+            "examDetails": {
+                "duration": "2 hours",
+                "questions": "50-60 questions",
+                "format": "Multiple choice and multiple select",
+                "passingScore": "Not specified",
+                "cost": "$200 USD",
+                "languages": [
+                    "English",
+                    "Japanese"
+                ]
+            },
+            "domains": [
+                {
+                    "name": "Design and plan a cloud solution architecture",
+                    "weight": "Not specified",
+                    "description": "Design and plan cloud solution architecture",
+                    "topics": [
+                        "Business requirements analysis",
+                        "Technical requirements planning",
+                        "Solution design"
+                    ]
+                },
+                {
+                    "name": "Manage and provision the cloud solution infrastructure",
+                    "weight": "Not specified",
+                    "description": "Manage and provision infrastructure",
+                    "topics": [
+                        "Compute Engine",
+                        "Kubernetes Engine",
+                        "Storage solutions"
+                    ]
+                },
+                {
+                    "name": "Design for security and compliance",
+                    "weight": "Not specified",
+                    "description": "Design secure and compliant architectures",
+                    "topics": [
+                        "Identity and Access Management (IAM)",
+                        "Data encryption",
+                        "Compliance requirements"
+                    ]
+                },
+                {
+                    "name": "Analyze and optimize technical and business processes",
+                    "weight": "Not specified",
+                    "description": "Analyze and optimize processes",
+                    "topics": [
+                        "Cost optimization strategies",
+                        "Monitoring and logging",
+                        "Performance tuning"
+                    ]
+                },
+                {
+                    "name": "Manage implementations of cloud architecture",
+                    "weight": "Not specified",
+                    "description": "Manage cloud architecture implementations",
+                    "topics": [
+                        "Deployment strategies",
+                        "Migration planning"
+                    ]
+                },
+                {
+                    "name": "Ensure solution and operations reliability",
+                    "weight": "Not specified",
+                    "description": "Ensure reliability of solutions and operations",
+                    "topics": [
+                        "High availability",
+                        "Disaster recovery",
+                        "Monitoring"
+                    ]
+                }
+            ],
+            "preparationPath": [
+                {
+                    "step": "Prerequisites",
+                    "description": "3+ years of industry experience including 1+ years designing and managing solutions using Google Cloud",
+                    "completed": true
+                },
+                {
+                    "step": "Study Materials",
+                    "description": "Google Cloud documentation and training",
+                    "completed": true
+                },
+                {
+                    "step": "Hands-on Practice",
+                    "description": "Qwiklabs and Cloud Skills Boost",
+                    "completed": true
+                },
+                {
+                    "step": "Practice Exams",
+                    "description": "Sample questions and practice tests",
+                    "completed": true
+                },
+                {
+                    "step": "Certification Exam",
+                    "description": "Passed Professional Cloud Architect exam",
+                    "completed": true
+                }
+            ],
+            "relatedCertifications": [
+                {
+                    "title": "Google Cloud Associate Cloud Engineer",
+                    "status": "Completed",
+                    "description": "Foundational GCP administration skills"
+                },
+                {
+                    "title": "Google Cloud Professional Data Engineer",
+                    "status": "Planned",
+                    "description": "Advanced data engineering on GCP"
+                }
+            ],
+            "projects": [
+                "GCP-based analytics platform for DataTech Solutions",
+                "Kubernetes deployment for e-commerce platform",
+                "BigQuery integration for real-time analytics"
+            ],
+            "benefits": [
+                "Enables leveraging Google Cloud technologies",
+                "Valid for 2 years with renewal options",
+                "Includes case studies on generative AI",
+                "Assesses ability to drive business objectives",
+                "Recommended for cloud architects"
+            ]
+        },
+        {
+            "id": 6,
+            "title": "CompTIA Security+",
+            "subtitle": "Premier global certification for core security functions",
+            "issuer": "CompTIA",
+            "logo": "https://www.comptia.org/images/default-source/certifications/security-plus-logo.png",
+            "date": "2022",
+            "validUntil": "2025",
+            "credentialId": "COMP-SEC-456123",
+            "status": "Valid",
+            "level": "Intermediate",
+            "category": "Cybersecurity",
+            "featured": false,
+            "verificationUrl": "https://www.comptia.org/certifications/security",
+            "certificateUrl": "#",
+            "description": "CompTIA Security+ is the premier global certification that establishes the essential skills required for core security functions and a career in IT security.",
+            "fullDescription": "CompTIA Security+ is the most widely recognized credential, invaluable for advancing in the dynamic field of cybersecurity. It establishes essential skills for core security functions, focusing on securing networks, applications, and devices, and ensuring data integrity, confidentiality, and availability through practical, hands-on skills.",
+            "skills": [
+                {
+                    "name": "Network Security",
+                    "proficiency": 88
+                },
+                {
+                    "name": "Threat Management",
+                    "proficiency": 85
+                },
+                {
+                    "name": "Cryptography",
+                    "proficiency": 86
+                },
+                {
+                    "name": "Risk Mitigation",
+                    "proficiency": 87
+                },
+                {
+                    "name": "Identity Management",
+                    "proficiency": 84
+                }
+            ],
+            "examDetails": {
+                "duration": "90 minutes",
+                "questions": "Maximum of 90",
+                "format": "Multiple-choice and performance-based",
+                "passingScore": "750 (on a scale of 100-900)",
+                "cost": "$381 USD",
+                "languages": [
+                    "English",
+                    "Japanese",
+                    "Portuguese",
+                    "Spanish",
+                    "Thai"
+                ]
+            },
+            "domains": [
+                {
+                    "name": "General Security Concepts",
+                    "weight": "12%",
+                    "description": "Covers security controls, fundamental concepts, change management, and cryptographic solutions",
+                    "topics": [
+                        "Comparing technical, preventive, managerial, deterrent, operational, detective, physical, corrective, compensating, and directive controls",
+                        "Summarizing confidentiality, integrity, and availability (CIA), non-repudiation, authentication, authorization, and accounting (AAA), zero trust, and deception/disruption technology",
+                        "Explaining business processes, technical implications, documentation, and version control",
+                        "Using public key infrastructure (PKI), encryption, obfuscation, hashing, digital signatures, and blockchain"
+                    ]
+                },
+                {
+                    "name": "Threats, Vulnerabilities, and Mitigations",
+                    "weight": "22%",
+                    "description": "Focuses on threat actors, vectors, attack surfaces, vulnerabilities, malicious activity, and mitigation techniques",
+                    "topics": [
+                        "Comparing nation-states, unskilled attackers, hacktivists, insider threats, organized crime, shadow IT, and motivations like data exfiltration, espionage, and financial gain",
+                        "Explaining message-based, unsecure networks, social engineering, file-based, voice call, supply chain, and vulnerable software vectors",
+                        "Explaining application, hardware, mobile device, virtualization, operating system (OS)-based, cloud-specific, web-based, and supply chain vulnerabilities",
+                        "Analyzing malware attacks, password attacks, application attacks, physical attacks, network attacks, and cryptographic attacks",
+                        "Using segmentation, access control, configuration enforcement, hardening, isolation, and patching"
+                    ]
+                },
+                {
+                    "name": "Security Architecture",
+                    "weight": "18%",
+                    "description": "Covers architecture models, enterprise infrastructure, data protection, and resilience and recovery",
+                    "topics": [
+                        "Comparing on-premises, cloud, virtualization, Internet of Things (IoT), industrial control systems (ICS), and infrastructure as code (IaC)",
+                        "Applying security principles to infrastructure considerations, control selection, and secure communication/access",
+                        "Comparing data types, securing methods, general considerations, and classifications",
+                        "Explaining high availability, site considerations, testing, power, platform diversity, backups, and continuity of operations"
+                    ]
+                },
+                {
+                    "name": "Security Operations",
+                    "weight": "28%",
+                    "description": "Includes computing resources, asset management, vulnerability management, alerting and monitoring, enterprise security, identity and access management, automation and orchestration, incident response, and data sources",
+                    "topics": [
+                        "Applying secure baselines, mobile solutions, hardening, wireless security, application security, sandboxing, and monitoring",
+                        "Explaining acquisition, disposal, assignment, and monitoring/tracking of hardware, software, and data assets",
+                        "Identifying, analyzing, remediating, validating, and reporting vulnerabilities",
+                        "Explaining monitoring tools and computing resource activities",
+                        "Modifying firewalls, IDS/IPS, DNS filtering, DLP, NAC, and EDR/XDR",
+                        "Implementing provisioning, SSO, MFA, and privileged access tools",
+                        "Explaining automation use cases, scripting benefits, and considerations",
+                        "Implementing processes, training, testing, root cause analysis, threat hunting, and digital forensics",
+                        "Using log data and other sources to support investigations"
+                    ]
+                },
+                {
+                    "name": "Security Program Management and Oversight",
+                    "weight": "20%",
+                    "description": "Covers security governance, risk management, third-party risk, security compliance, audits and assessments, and security awareness",
+                    "topics": [
+                        "Summarizing guidelines, policies, standards, procedures, external considerations, monitoring, governance structures, and cybersecurity supply chain risk management",
+                        "Explaining risk identification, calculation, prioritization, and reporting",
+                        "Applying risk treatment, transfer, acceptance, and avoidance strategies",
+                        "Explaining vendor assessment, supply chain assessment, and hardware/software validation",
+                        "Summarizing data types, classifications, and protection strategies",
+                        "Explaining compliance frameworks, reporting, and audits/assessments",
+                        "Implementing security awareness practices and training programs"
+                    ]
+                }
+            ],
+            "preparationPath": [
+                {
+                    "step": "Prerequisites",
+                    "description": "Basic IT and networking knowledge",
+                    "completed": true
+                },
+                {
+                    "step": "Study Materials",
+                    "description": "CompTIA Security+ study guides and practice tests",
+                    "completed": true
+                },
+                {
+                    "step": "Hands-on Practice",
+                    "description": "Experience with network security tools",
+                    "completed": true
+                },
+                {
+                    "step": "Practice Exams",
+                    "description": "Completed Security+ practice exams",
+                    "completed": true
+                },
+                {
+                    "step": "Certification Exam",
+                    "description": "Passed SY0-701 exam",
+                    "completed": true
+                }
+            ],
+            "relatedCertifications": [
+                {
+                    "title": "CompTIA Network+",
+                    "status": "Completed",
+                    "description": "Foundational networking skills"
+                },
+                {
+                    "title": "Certified Information Systems Security Professional (CISSP)",
+                    "status": "Planned",
+                    "description": "Advanced cybersecurity expertise"
+                }
+            ],
+            "projects": [
+                "Security audit for e-commerce platform",
+                "Firewall configuration for analytics dashboard",
+                "Incident response plan for SaaS application"
+            ],
+            "benefits": [
+                "Most widely recognized cybersecurity credential",
+                "Validates foundational and practical skills",
+                "Invaluable for career advancement in cybersecurity",
+                "Recognized by global IT community",
+                "Valid for 3 years with renewal options"
+            ]
+        },
+        {
+            "id": 7,
+            "title": "Android App Development in 34 Hours: MobDevOps+ Android 15",
+            "subtitle": "Master Kotlin Programming and Build Cutting-Edge Android Apps with MobDevOps Practices",
+            "issuer": "Udemy",
+            "logo": "/certLogos/androi.jpg",
+            "date": "2025",
+            "validUntil": "2030",
+            "credentialId": "UC-7ff6cfbc-6190-45a2-926d-7d69be04bcc8",
+            "status": "Valid",
+            "level": "Intermediate",
+            "category": "Mobile App Development",
+            "featured": true,
+            "verificationUrl": "https://ude.my/UC-7ff6cfbc-6190-45a2-926d-7d69be04bcc8",
+            "certificateUrl": "https://udemy-certificate.s3.amazonaws.com/image/UC-7ff6cfbc-6190-45a2-926d-7d69be04bcc8.jpg?v=1756941583000",
+            "description": "This Udemy certification demonstrates proficiency in Android app development using Kotlin, focusing on MobDevOps principles and the latest Android 15 features. Ideal for aspiring mobile developers seeking to build high-performance apps.",
+            "fullDescription": "The 'Android App Development in 34 Hours: MobDevOps+ Android 15' course from Udemy, offered by OCSALY Academy, provides a comprehensive bootcamp-style learning experience for building professional Android applications. Designed for beginners with no prior programming knowledge, this course teaches Kotlin from scratch and covers essential Android development topics. You'll learn to create amazing apps with hands-on projects, integrating advanced features like GPS, camera access, and push notifications. Emphasizing MobDevOps (Mobile DevOps) for efficient development workflows, the curriculum is updated for Android 15, ensuring you stay ahead in mobile app innovation. With over 83,000 enrolled students and a 4.4 rating, this course equips you with practical skills for a successful career in Android programming.",
+            "skills": [
+                {
+                    "name": "Kotlin Programming",
+                    "proficiency": 90
+                },
+                {
+                    "name": "Android Studio",
+                    "proficiency": 92
+                },
+                {
+                    "name": "User Interface Design",
+                    "proficiency": 88
+                },
+                {
+                    "name": "MobDevOps Practices",
+                    "proficiency": 85
+                },
+                {
+                    "name": "GPS Integration",
+                    "proficiency": 87
+                },
+                {
+                    "name": "Camera Access",
+                    "proficiency": 86
+                },
+                {
+                    "name": "Push Notifications",
+                    "proficiency": 89
+                },
+                {
+                    "name": "Android 15 Features",
+                    "proficiency": 91
+                }
+            ],
+            "examDetails": {
+                "duration": "34.5 hours",
+                "questions": "Over 100 lectures",
+                "format": "On-demand video lectures, hands-on projects, and assignments",
+                "passingScore": "Completion-based",
+                "cost": "Varies (often available with discounts or coupons)",
+                "languages": [
+                    "English"
+                ]
+            },
+            "domains": [
+                {
+                    "name": "Kotlin Fundamentals",
+                    "weight": "25%",
+                    "description": "Learn the basics of Kotlin programming language for Android development",
+                    "topics": [
+                        "Variables and data types",
+                        "Control structures",
+                        "Functions and classes",
+                        "Object-oriented programming concepts"
+                    ]
+                },
+                {
+                    "name": "Android Basics and UI Design",
+                    "weight": "30%",
+                    "description": "Set up Android Studio and build user interfaces",
+                    "topics": [
+                        "Android Studio installation and configuration",
+                        "XML layouts or Jetpack Compose",
+                        "Activities and fragments",
+                        "Navigation and user experience"
+                    ]
+                },
+                {
+                    "name": "Advanced Android Features",
+                    "weight": "25%",
+                    "description": "Integrate device capabilities and data management",
+                    "topics": [
+                        "GPS and location services",
+                        "Camera and media handling",
+                        "Push notifications and background services",
+                        "Data storage with Room or SQLite"
+                    ]
+                },
+                {
+                    "name": "MobDevOps and Deployment",
+                    "weight": "20%",
+                    "description": "Apply Mobile DevOps practices for efficient app development and release",
+                    "topics": [
+                        "CI/CD pipelines for mobile",
+                        "Testing and debugging",
+                        "App optimization and performance",
+                        "Publishing to Google Play Store"
+                    ]
+                }
+            ],
+            "preparationPath": [
+                {
+                    "step": "Prerequisites",
+                    "description": "No programming experience required; basic computer skills and a device with 4GB RAM and 9GB disk space for Android Studio",
+                    "completed": true
+                },
+                {
+                    "step": "Enroll and Setup",
+                    "description": "Sign up for the course on Udemy and install Android Studio",
+                    "completed": true
+                },
+                {
+                    "step": "Core Learning",
+                    "description": "Watch video lectures on Kotlin and Android fundamentals",
+                    "completed": true
+                },
+                {
+                    "step": "Hands-on Practice",
+                    "description": "Complete coding exercises and build real-world app projects",
+                    "completed": true
+                },
+                {
+                    "step": "Completion and Certification",
+                    "description": "Finish all modules and earn the official Udemy certificate",
+                    "completed": true
+                }
+            ],
+            "relatedCertifications": [
+                {
+                    "title": "Google Associate Android Developer",
+                    "status": "Planned",
+                    "description": "Official Google certification for Android development skills"
+                },
+                {
+                    "title": "Udemy Jetpack Compose Masterclass",
+                    "status": "Considering",
+                    "description": "Advanced UI development for Android apps"
+                }
+            ],
+            "projects": [
+                "Build a location-based app using GPS integration",
+                "Create a media app with camera access and photo editing",
+                "Develop a notification-enabled productivity app",
+                "Implement a full-stack mobile app with MobDevOps pipeline"
+            ],
+            "benefits": [
+                "Hands-on experience in building real Android apps",
+                "Lifetime access to course materials and updates",
+                "Official certificate to boost your portfolio and resume",
+                "Skills in high-demand technologies like Kotlin and Android 15",
+                "Community support and expert guidance from OCSALY Academy",
+                "Pathway to a rewarding career in mobile app development"
+            ]
+        }
+    ]
+}

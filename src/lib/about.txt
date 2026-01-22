@@ -1,0 +1,124 @@
+
+const skills = [
+  { 
+    name: 'React & Next.js', 
+    category: 'Frontend', 
+    icon: Code, 
+    level: 95,
+    description: 'Expert-level proficiency in building modern React applications with Next.js for SSR/SSG.'
+  },
+  { 
+    name: 'TypeScript', 
+    category: 'Language', 
+    icon: Code, 
+    level: 90,
+    description: 'Strong typing and advanced TypeScript patterns for robust application development.'
+  },
+  { 
+    name: 'Node.js & Express', 
+    category: 'Backend', 
+    icon: Server, 
+    level: 88,
+    description: 'Full-stack server development with RESTful APIs and microservices architecture.'
+  },
+  { 
+    name: 'UI/UX Design', 
+    category: 'Design', 
+    icon: Palette, 
+    level: 85,
+    description: 'User-centered design approach with Figma, prototyping, and design systems.'
+  },
+  { 
+    name: 'Cloud & DevOps', 
+    category: 'Infrastructure', 
+    icon: Database, 
+    level: 80,
+    description: 'AWS, Docker, Kubernetes, and CI/CD pipeline management.'
+  },
+  { 
+    name: 'Mobile Development', 
+    category: 'Mobile', 
+    icon: Smartphone, 
+    level: 75,
+    description: 'Cross-platform development with React Native and Flutter.'
+  }
+];
+
+const experiences = [
+  {
+    title: 'Senior Full-Stack Developer',
+    company: 'TechCorp Solutions',
+    period: '2022 - Present',
+    location: 'San Francisco, CA',
+    description: 'Leading development of enterprise web applications serving 100k+ users. Architected microservices infrastructure and mentored junior developers.',
+    achievements: [
+      'Improved application performance by 40% through optimization',
+      'Led team of 5 developers on major product redesign',
+      'Implemented CI/CD pipeline reducing deployment time by 60%',
+      'Introduced TypeScript reducing bugs by 30%'
+    ],
+    technologies: ['React', 'Next.js', 'Node.js', 'AWS', 'PostgreSQL', 'Docker']
+  },
+  {
+    title: 'Frontend Developer',
+    company: 'StartupXYZ',
+    period: '2020 - 2022',
+    location: 'Remote',
+    description: 'Built responsive web applications and mobile apps for early-stage startup. Collaborated closely with design team to implement pixel-perfect interfaces.',
+    achievements: [
+      'Developed mobile app with 50k+ downloads',
+      'Created reusable component library',
+      'Implemented real-time features with WebSocket',
+      'Optimized SEO resulting in 200% traffic increase'
+    ],
+    technologies: ['React', 'React Native', 'Firebase', 'Tailwind CSS', 'GraphQL']
+  },
+  {
+    title: 'Junior Web Developer',
+    company: 'Digital Agency Pro',
+    period: '2019 - 2020',
+    location: 'Los Angeles, CA',
+    description: 'Developed client websites and e-commerce solutions. Gained experience in various CMS platforms and payment integrations.',
+    achievements: [
+      'Delivered 25+ client projects on time',
+      'Integrated Stripe payment processing',
+      'Optimized websites for Core Web Vitals',
+      'Maintained 98% client satisfaction rating'
+    ],
+    technologies: ['JavaScript', 'WordPress', 'Shopify', 'PHP', 'MySQL']
+  }
+];
+
+const education = [
+  {
+    degree: 'Bachelor of Science in Computer Science',
+    institution: 'University of California, Berkeley',
+    period: '2015 - 2019',
+    gpa: '3.8/4.0',
+    honors: 'Magna Cum Laude',
+    description: 'Focused on software engineering, algorithms, and web technologies. Active in computer science club and hackathons.',
+    coursework: [
+      'Data Structures & Algorithms',
+      'Software Engineering',
+      'Database Systems',
+      'Web Development',
+      'Computer Networks',
+      'Human-Computer Interaction'
+    ]
+  },
+  {
+    degree: 'Full-Stack Web Development Bootcamp',
+    institution: 'General Assembly',
+    period: '2019',
+    certification: 'Certificate of Completion',
+    description: 'Intensive 12-week program covering modern web development technologies and best practices.',
+    coursework: [
+      'JavaScript ES6+',
+      'React & Redux',
+      'Node.js & Express',
+      'MongoDB',
+      'Git & GitHub',
+      'Agile Development'
+    ]
+  }
+]
