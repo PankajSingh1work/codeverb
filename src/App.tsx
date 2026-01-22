@@ -1,5 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
+import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'motion/react';
 import { NavBar } from './components/NavBar';
 import { Footer } from './components/Footer';
@@ -12,12 +13,14 @@ import { ContactPage } from './components/ContactPage';
 import { ProjectDetailPage } from './components/ProjectDetailPage';
 import { CertificationDetailPage } from './components/CertificationDetailPage';
 import { Toaster } from './components/ui/sonner';
-
-type Page = 'home' | 'about' | 'services' | 'projects' | 'certifications' | 'contact' | 'project-detail' | 'certification-detail' | string;
+import { SEOWrapper } from './components/SEOWrapper';
+import { ScrollToTop } from './components/ScrollToTop';
+import { DynamicFavicon } from './components/DynamicFavicon';
 
 export default function App() {
-  const [currentPage, setCurrentPage] = useState<Page>('home');
   const [isDarkMode, setIsDarkMode] = useState(false);
+  const location = useLocation();
+  const navigate = useNavigate();
 
   // Initialize dark mode from localStorage or system preference
   useEffect(() => {
@@ -43,47 +46,27 @@ export default function App() {
     }
   };
 
-  const handleNavigation = (page: Page) => {
-    setCurrentPage(page);
-    // Scroll to top when navigating
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+  const handleNavigation = (page: string) => {
+    navigate(`/${page === 'home' ? '' : page}`);
+    // Note: ScrollToTop component handles the scrolling automatically
   };
 
-  const renderPage = () => {
-    if (currentPage.startsWith('project-detail/')) {
-      const id = parseInt(currentPage.split('/')[1]);
-      if (!isNaN(id)) {
-        return <ProjectDetailPage onNavigate={handleNavigation} projectId={id} />;
-      }
-    } else if (currentPage.startsWith('certification-detail/')) {
-      const id = parseInt(currentPage.split('/')[1]);
-      if (!isNaN(id)) {
-        return <CertificationDetailPage onNavigate={handleNavigation} certificationId={id} />;
-      }
-    }
-
-    switch (currentPage) {
-      case 'home':
-        return <HomePage onNavigate={handleNavigation} />;
-      case 'about':
-        return <AboutPage />;
-      case 'services':
-        return <ServicesPage onNavigate={handleNavigation} />;
-      case 'projects':
-        return <ProjectsPage onNavigate={handleNavigation} />;
-      case 'certifications':
-        return <CertificationsPage onNavigate={handleNavigation} />;
-      case 'contact':
-        return <ContactPage />;
-      default:
-        return <HomePage onNavigate={handleNavigation} />;
-    }
+  // Get current page from location
+  const getCurrentPage = () => {
+    const path = location.pathname;
+    if (path === '/') return 'home';
+    if (path.startsWith('/project/')) return 'project-detail';
+    if (path.startsWith('/certification/')) return 'certification-detail';
+    return path.substring(1); // Remove leading slash
   };
 
   return (
     <div className="min-h-screen bg-background text-foreground overflow-x-hidden w-full">
+      <ScrollToTop />
+      <DynamicFavicon isDarkMode={isDarkMode} />
+      
       <NavBar
-        currentPage={currentPage}
+        currentPage={getCurrentPage()}
         onNavigate={handleNavigation}
         isDarkMode={isDarkMode}
         toggleDarkMode={toggleDarkMode}
@@ -91,7 +74,7 @@ export default function App() {
 
       <AnimatePresence mode="wait">
         <motion.main
-          key={currentPage}
+          key={location.pathname}
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -20 }}
@@ -99,8 +82,83 @@ export default function App() {
           className="w-full overflow-x-hidden"
           role="main"
           aria-label="Main content"
+          tabIndex={-1}
         >
-          {renderPage()}
+          <Routes>
+            <Route 
+              path="/" 
+              element={
+                <SEOWrapper>
+                  <HomePage onNavigate={handleNavigation} />
+                </SEOWrapper>
+              } 
+            />
+            <Route 
+              path="/about" 
+              element={
+                <SEOWrapper>
+                  <AboutPage />
+                </SEOWrapper>
+              } 
+            />
+            <Route 
+              path="/services" 
+              element={
+                <SEOWrapper>
+                  <ServicesPage onNavigate={handleNavigation} />
+                </SEOWrapper>
+              } 
+            />
+            <Route 
+              path="/project/:id/:slug?" 
+              element={
+                <SEOWrapper>
+                  <ProjectDetailPage onNavigate={handleNavigation} />
+                </SEOWrapper>
+              } 
+            />
+            <Route 
+              path="/projects" 
+              element={
+                <SEOWrapper>
+                  <ProjectsPage onNavigate={handleNavigation} />
+                </SEOWrapper>
+              } 
+            />
+            <Route 
+              path="/certification/:id/:slug?" 
+              element={
+                <SEOWrapper>
+                  <CertificationDetailPage onNavigate={handleNavigation} />
+                </SEOWrapper>
+              } 
+            />
+            <Route 
+              path="/certifications" 
+              element={
+                <SEOWrapper>
+                  <CertificationsPage onNavigate={handleNavigation} />
+                </SEOWrapper>
+              } 
+            />
+            <Route 
+              path="/contact" 
+              element={
+                <SEOWrapper>
+                  <ContactPage />
+                </SEOWrapper>
+              } 
+            />
+            {/* Redirect any unknown routes to home */}
+            <Route 
+              path="*" 
+              element={
+                <SEOWrapper>
+                  <HomePage onNavigate={handleNavigation} />
+                </SEOWrapper>
+              } 
+            />
+          </Routes>
         </motion.main>
       </AnimatePresence>
 

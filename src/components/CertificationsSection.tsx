@@ -1,4 +1,5 @@
 import { motion } from 'motion/react';
+import { useNavigate } from 'react-router-dom';
 import { Card, CardContent } from './ui/card';
 import { Button } from './ui/button';
 import { Badge } from './ui/badge';
@@ -6,12 +7,14 @@ import { ImageWithFallback } from './figma/ImageWithFallback';
 import { ExternalLink, Calendar, Award, ArrowRight } from 'lucide-react';
 import { Helmet } from 'react-helmet-async';
 import certificationsData from '../lib/certifications.json';
+import { generateCertificationUrl } from '../utils/slugify';
 
 interface CertificationsSectionProps {
   onNavigate: (page: string) => void;
 }
 
 export function CertificationsSection({ onNavigate }: CertificationsSectionProps) {
+  const navigate = useNavigate();
   const featuredCertifications = certificationsData.certifications.filter(cert => cert.featured).slice(0, 3);
 
   return (
@@ -134,7 +137,7 @@ export function CertificationsSection({ onNavigate }: CertificationsSectionProps
                     variant="outline"
                     size="sm"
                     className="w-full group/btn"
-                    onClick={() => onNavigate(`certification-detail/${cert.id}`)}
+                    onClick={() => navigate(generateCertificationUrl(cert.id, cert.title))}
                     aria-label={`View details of ${cert.title} certification by ${cert.issuer}`}
                   >
                     <ExternalLink className="h-4 w-4 mr-2 group-hover/btn:scale-110 transition-transform" />

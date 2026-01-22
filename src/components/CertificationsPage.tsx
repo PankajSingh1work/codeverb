@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { motion } from 'motion/react';
 import { Card, CardContent } from './ui/card';
 import { Button } from './ui/button';
@@ -21,12 +22,14 @@ import {
 } from 'lucide-react';
 import certificationsData from '../lib/certifications.json';
 import { Helmet } from 'react-helmet-async';
+import { generateCertificationUrl } from '../utils/slugify';
 
 interface CertificationsPageProps {
   onNavigate: (page: string) => void;
 }
 
 export function CertificationsPage({ onNavigate }: CertificationsPageProps) {
+  const navigate = useNavigate();
   const allCertifications = certificationsData.certifications;
 
   const categories = ['All', ...new Set(allCertifications.map(cert => cert.category))].sort();
@@ -370,7 +373,7 @@ export function CertificationsPage({ onNavigate }: CertificationsPageProps) {
                         variant="ghost"
                         size="sm"
                         className="w-full group/btn"
-                        onClick={() => onNavigate(`certification-detail/${cert.id}`)}
+                        onClick={() => navigate(generateCertificationUrl(cert.id, cert.title))}
                         aria-label={`View details for ${cert.title} certification`}
                       >
                         View Details

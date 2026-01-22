@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import { motion } from 'motion/react';
 import { Button } from './ui/button';
 import { Switch } from './ui/switch';
@@ -15,6 +16,7 @@ export function NavBar({ currentPage, onNavigate, isDarkMode, toggleDarkMode }: 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
+  const location = useLocation();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -37,12 +39,12 @@ export function NavBar({ currentPage, onNavigate, isDarkMode, toggleDarkMode }: 
   }, []);
 
   const navItems = [
-    { label: 'Home', page: 'home' },
-    { label: 'About', page: 'about' },
-    { label: 'Services', page: 'services' },
-    { label: 'Projects', page: 'projects' },
-    { label: 'Certifications', page: 'certifications' },
-    { label: 'Contact', page: 'contact' }
+    { label: 'Home', page: 'home', path: '/' },
+    { label: 'About', page: 'about', path: '/about' },
+    { label: 'Services', page: 'services', path: '/services' },
+    { label: 'Projects', page: 'projects', path: '/projects' },
+    { label: 'Certifications', page: 'certifications', path: '/certifications' },
+    { label: 'Contact', page: 'contact', path: '/contact' }
   ];
 
   // Helper to compute scrolled classes, skipping blur when menu is open
@@ -50,6 +52,13 @@ export function NavBar({ currentPage, onNavigate, isDarkMode, toggleDarkMode }: 
     if (!isScrolled) return 'bg-transparent';
     if (isMenuOpen) return 'bg-background/95 shadow-sm'; // No blur to avoid containing block issue
     return 'bg-background/95 backdrop-blur-sm shadow-sm';
+  };
+
+  const isActivePage = (page: string, path: string) => {
+    if (page === 'home') {
+      return location.pathname === '/';
+    }
+    return location.pathname === path;
   };
 
   return (
@@ -66,15 +75,16 @@ export function NavBar({ currentPage, onNavigate, isDarkMode, toggleDarkMode }: 
           <motion.div
             whileHover={{ scale: 1.05 }}
             className="cursor-pointer flex items-center space-x-2"
-            onClick={() => onNavigate('home')}
             aria-label="Go to home page"
           >
-            <img 
-              src={isDarkMode ? '/logo/logoDark.jpg' : '/logo/logoLight.jpg'} 
-              alt="Pankaj Singh Logo"
-              className="h-12 w-12 object-contain"
-            />
-            <h2 className="text-white-900">Pankaj Singh</h2>
+            <Link to="/" className="flex items-center space-x-2">
+              <img 
+                src={isDarkMode ? '/logo/logoDark.jpg' : '/logo/logoLight.jpg'} 
+                alt="Pankaj Singh Logo"
+                className="h-12 w-12 object-contain"
+              />
+              <h2 className="text-white-900">Pankaj Singh</h2>
+            </Link>
           </motion.div>
 
           {/* Desktop Navigation */}
@@ -84,24 +94,25 @@ export function NavBar({ currentPage, onNavigate, isDarkMode, toggleDarkMode }: 
                 key={item.page}
                 className="relative flex flex-col"
               >
-                <motion.button
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  onClick={() => onNavigate(item.page)}
-                  className={`relative transition-colors hover:text-primary pb-1 ${
-                    currentPage === item.page ? 'text-primary' : 'text-foreground'
-                  }`}
-                  aria-current={currentPage === item.page ? 'page' : undefined}
-                  aria-label={`Navigate to ${item.label} page`}
-                >
-                  {item.label}
-                  <motion.div
-                    className="absolute bottom-0 left-0 h-[2px] bg-primary"
-                    initial={{ scaleX: 0, originX: 0 }}
-                    whileHover={{ scaleX: 1 }}
-                    transition={{ duration: 0.3, ease: 'easeInOut' }}
-                  />
-                </motion.button>
+                <Link to={item.path}>
+                  <motion.button
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    className={`relative transition-colors hover:text-primary pb-1 ${
+                      isActivePage(item.page, item.path) ? 'text-primary' : 'text-foreground'
+                    }`}
+                    aria-current={isActivePage(item.page, item.path) ? 'page' : undefined}
+                    aria-label={`Navigate to ${item.label} page`}
+                  >
+                    {item.label}
+                    <motion.div
+                      className="absolute bottom-0 left-0 h-[2px] bg-primary"
+                      initial={{ scaleX: 0, originX: 0 }}
+                      whileHover={{ scaleX: 1 }}
+                      transition={{ duration: 0.3, ease: 'easeInOut' }}
+                    />
+                  </motion.button>
+                </Link>
               </motion.div>
             ))}
           </div>
@@ -153,22 +164,20 @@ export function NavBar({ currentPage, onNavigate, isDarkMode, toggleDarkMode }: 
             </div>
             <div className="px-2 pt-2 pb-3 space-y-1 flex-1 bg-background h-full">
               {navItems.map((item) => (
-                <button
-                  key={item.page}
-                  onClick={() => {
-                    onNavigate(item.page);
-                    setIsMenuOpen(false);
-                  }}
-                  className={`block w-full text-left px-3 py-2 rounded-md transition-colors ${
-                    currentPage === item.page
-                      ? 'bg-primary text-primary-foreground'
-                      : 'hover:bg-muted'
-                  }`}
-                  aria-current={currentPage === item.page ? 'page' : undefined}
-                  aria-label={`Navigate to ${item.label} page`}
-                >
-                  {item.label}
-                </button>
+                <Link key={item.page} to={item.path}>
+                  <button
+                    onClick={() => setIsMenuOpen(false)}
+                    className={`block w-full text-left px-3 py-2 rounded-md transition-colors ${
+                      isActivePage(item.page, item.path)
+                        ? 'bg-primary text-primary-foreground'
+                        : 'hover:bg-muted'
+                    }`}
+                    aria-current={isActivePage(item.page, item.path) ? 'page' : undefined}
+                    aria-label={`Navigate to ${item.label} page`}
+                  >
+                    {item.label}
+                  </button>
+                </Link>
               ))}
             </div>
           </div>

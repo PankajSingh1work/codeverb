@@ -1,4 +1,5 @@
 import { motion } from 'motion/react';
+import { useNavigate } from 'react-router-dom';
 import { Card, CardContent } from './ui/card';
 import { Button } from './ui/button';
 import { Badge } from './ui/badge';
@@ -6,12 +7,14 @@ import { ImageWithFallback } from './figma/ImageWithFallback';
 import { ExternalLink, Github, ArrowRight } from 'lucide-react';
 import { Helmet } from 'react-helmet-async';
 import projectsData from '../lib/projects.json';
+import { generateProjectUrl } from '../utils/slugify';
 
 interface ProjectsSectionProps {
   onNavigate: (page: string) => void;
 }
 
 export function ProjectsSection({ onNavigate }: ProjectsSectionProps) {
+  const navigate = useNavigate();
   const featuredProjects = projectsData.projects.filter(project => project.featured);
 
   return (
@@ -144,7 +147,7 @@ export function ProjectsSection({ onNavigate }: ProjectsSectionProps) {
                     variant="ghost"
                     size="sm"
                     className="w-full group/btn"
-                    onClick={() => onNavigate(`project-detail/${project.id}`)}
+                    onClick={() => navigate(generateProjectUrl(project.id, project.title))}
                     aria-label={`View detailed information about ${project.title} project`}
                   >
                     View Details

@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { motion } from 'motion/react';
 import { Card, CardContent } from './ui/card';
 import { Button } from './ui/button';
@@ -18,6 +19,7 @@ import {
   ArrowRight
 } from 'lucide-react';
 import projectsData from '../lib/projects.json';
+import { generateProjectUrl } from '../utils/slugify';
 import { Helmet } from 'react-helmet-async';
 
 interface ProjectsPageProps {
@@ -25,6 +27,7 @@ interface ProjectsPageProps {
 }
 
 export function ProjectsPage({ onNavigate }: ProjectsPageProps) {
+  const navigate = useNavigate();
   const allProjects = projectsData.projects;
 
   const categories = ['All', ...new Set(allProjects.map(project => project.category))].sort();
@@ -340,7 +343,7 @@ export function ProjectsPage({ onNavigate }: ProjectsPageProps) {
                         variant="ghost"
                         size="sm"
                         className="w-full group/btn"
-                        onClick={() => onNavigate(`project-detail/${project.id}`)}
+                        onClick={() => navigate(generateProjectUrl(project.id, project.title))}
                         aria-label={`View details for ${project.title}`}
                       >
                         View Details

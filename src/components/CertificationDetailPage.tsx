@@ -1,3 +1,5 @@
+import { useParams, useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
 import { motion } from 'motion/react';
 import { Card, CardContent } from './ui/card';
 import { Button } from './ui/button';
@@ -22,21 +24,37 @@ import {
 } from 'lucide-react';
 
 import certificationsData from '../lib/certifications.json';
-import { Helmet } from 'react-helmet-async';
+import { generateCertificationUrl, slugify } from '../utils/slugify';
 
 interface CertificationDetailPageProps {
   onNavigate: (page: string) => void;
-  certificationId: number;
 }
 
-export function CertificationDetailPage({ onNavigate, certificationId }: CertificationDetailPageProps) {
+export function CertificationDetailPage({ onNavigate }: CertificationDetailPageProps) {
+  const { id, slug } = useParams<{ id: string; slug?: string }>();
+  const navigate = useNavigate();
+  const certificationId = id ? parseInt(id) : null;
+  
   const certification = certificationsData.certifications.find(c => c.id === certificationId);
 
-  if (!certification) {
+  // Redirect to SEO-friendly URL if slug is missing or incorrect
+  useEffect(() => {
+    if (certification && certificationId) {
+      const correctSlug = slugify(certification.title);
+      const currentPath = `/certification/${certificationId}/${slug || ''}`;
+      const correctPath = generateCertificationUrl(certificationId, certification.title);
+      
+      if (!slug || slug !== correctSlug) {
+        navigate(correctPath, { replace: true });
+      }
+    }
+  }, [certification, certificationId, slug, navigate]);
+
+  if (!certification || !certificationId) {
     return (
       <div className="pt-20 text-center">
         <h1 className="text-primary mb-4">Certification Not Found</h1>
-        <Button onClick={() => onNavigate('certifications')}>
+        <Button onClick={() => navigate('/certifications')}>
           Back to Certifications
         </Button>
       </div>
@@ -45,35 +63,6 @@ export function CertificationDetailPage({ onNavigate, certificationId }: Certifi
 
   return (
     <div className="pt-20">
-      <Helmet>
-        <title>{certification.title} | Pankaj Singh - Developer in Dehradun</title>
-        <meta
-          name="description"
-          content={`Explore ${certification.title}, a ${certification.category} certification by Pankaj Singh, a developer based in Dehradun, Uttarakhand. ${certification.subtitle}. Demonstrates expertise in cloud computing, architecture, and related skills. Services include web development, mobile app development, UI/UX design, and digital consulting.`}
-        />
-        <meta
-          name="keywords"
-          content={`${certification.title}, Pankaj Singh, ${certification.category}, ${certification.issuer}, certification, cloud computing, AWS, developer, Dehradun, Uttarakhand, React, Flutter, Next.js, ${certification.skills.map(skill => skill.name).join(', ')}`}
-        />
-        <meta name="author" content="Pankaj Singh" />
-        <meta property="og:title" content={`${certification.title} | Pankaj Singh - Developer in Dehradun`} />
-        <meta
-          property="og:description"
-          content={`Discover details about ${certification.title}, earned by Pankaj Singh in Dehradun, Uttarakhand. ${certification.description}. Expertise in web and mobile development, UI/UX design, and digital consulting.`}
-        />
-        <meta property="og:type" content="website" />
-        <meta property="og:image" content={certification.logo || "/PankajSinghProfile.jpg"} />
-        <meta property="og:url" content={`https://www.codeverb.in`} />
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content={`${certification.title} | Pankaj Singh - Developer in Dehradun`} />
-        <meta
-          name="twitter:description"
-          content={`View ${certification.title} certification by Pankaj Singh, offering professional services in web and mobile development, UI/UX design, and digital consulting from Dehradun, Uttarakhand.`}
-        />
-        <meta name="twitter:image" content={certification.logo || "/PankajSinghProfile.jpg"} />
-        <link rel="canonical" href={`https://www.codeverb.in`} />
-      </Helmet>
-
       {/* Hero Section */}
       <section className="py-20 bg-gradient-to-br from-primary/5 via-secondary/5 to-accent/5" aria-label="Certification Hero Section">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -85,7 +74,7 @@ export function CertificationDetailPage({ onNavigate, certificationId }: Certifi
             {/* Back button */}
             <Button
               variant="ghost"
-              onClick={() => onNavigate('certifications')}
+              onClick={() => navigate('/certifications')}
               className="mb-8 group"
               aria-label="Go back to certifications list"
             >
@@ -481,7 +470,7 @@ export function CertificationDetailPage({ onNavigate, certificationId }: Certifi
           <div className="text-center">
             <Button 
               size="lg"
-              onClick={() => onNavigate('certifications')}
+              onClick={() => navigate('/certifications')}
               className="group"
               aria-label="View all certifications by Pankaj Singh"
             >

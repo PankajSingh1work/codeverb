@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 import { motion } from 'motion/react';
 import { Card, CardContent } from './ui/card';
 import { Button } from './ui/button';
@@ -33,7 +34,7 @@ import {
   HelpCircle
 } from 'lucide-react';
 import projectsData from '../lib/projects.json';
-import { Helmet } from 'react-helmet-async';
+import { generateProjectUrl, slugify } from '../utils/slugify';
 
 const iconMap = {
   Code: Code,
@@ -55,17 +56,33 @@ const iconMap = {
 
 interface ProjectDetailPageProps {
   onNavigate: (page: string) => void;
-  projectId: number;
 }
 
-export function ProjectDetailPage({ onNavigate, projectId }: ProjectDetailPageProps) {
+export function ProjectDetailPage({ onNavigate }: ProjectDetailPageProps) {
+  const { id, slug } = useParams<{ id: string; slug?: string }>();
+  const navigate = useNavigate();
+  const projectId = id ? parseInt(id) : null;
+  
   const project = projectsData.projects.find(p => p.id === projectId);
 
-  if (!project) {
+  // Redirect to SEO-friendly URL if slug is missing or incorrect
+  useEffect(() => {
+    if (project && projectId) {
+      const correctSlug = slugify(project.title);
+      const currentPath = `/project/${projectId}/${slug || ''}`;
+      const correctPath = generateProjectUrl(projectId, project.title);
+      
+      if (!slug || slug !== correctSlug) {
+        navigate(correctPath, { replace: true });
+      }
+    }
+  }, [project, projectId, slug, navigate]);
+
+  if (!project || !projectId) {
     return (
       <div className="pt-20 text-center">
         <h1 className="text-primary mb-4">Project Not Found</h1>
-        <Button onClick={() => onNavigate('projects')}>
+        <Button onClick={() => navigate('/projects')}>
           Back to Projects
         </Button>
       </div>
@@ -74,35 +91,6 @@ export function ProjectDetailPage({ onNavigate, projectId }: ProjectDetailPagePr
 
   return (
     <div className="pt-20">
-      <Helmet>
-        <title>{project.title} | Pankaj Singh - Developer in Dehradun</title>
-        <meta
-          name="description"
-          content={`Explore ${project.title}, a ${project.category} project by Pankaj Singh, a developer based in Dehradun, Uttarakhand. ${project.subtitle}. Services include web development, mobile app development, UI/UX design, and digital consulting.`}
-        />
-        <meta
-          name="keywords"
-          content={`${project.title}, Pankaj Singh, ${project.category}, web development, mobile development, UI/UX design, digital consulting, Dehradun, Uttarakhand, React, Flutter, Next.js, developer, ${project.techStack.map(tech => tech.name).join(', ')}`}
-        />
-        <meta name="author" content="Pankaj Singh" />
-        <meta property="og:title" content={`${project.title} | Pankaj Singh - Developer in Dehradun`} />
-        <meta
-          property="og:description"
-          content={`Discover details about ${project.title}, developed by Pankaj Singh in Dehradun, Uttarakhand. ${project.description}. Expertise in web and mobile development, UI/UX design, and digital consulting.`}
-        />
-        <meta property="og:type" content="website" />
-        <meta property="og:image" content={project.images[0]?.url || "/PankajSinghProfile.jpg"} />
-        <meta property="og:url" content={`https://www.codeverb.in`} />
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content={`${project.title} | Pankaj Singh - Developer in Dehradun`} />
-        <meta
-          name="twitter:description"
-          content={`View ${project.title} project by Pankaj Singh, offering professional services in web and mobile development, UI/UX design, and digital consulting from Dehradun, Uttarakhand.`}
-        />
-        <meta name="twitter:image" content={project.images[0]?.url || "/PankajSinghProfile.jpg"} />
-        <link rel="canonical" href={`https://www.codeverb.in`} />
-      </Helmet>
-
       {/* Hero Section */}
       <section className="py-20 bg-gradient-to-br from-primary/5 via-secondary/5 to-accent/5" aria-label="Project Hero Section">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -114,7 +102,7 @@ export function ProjectDetailPage({ onNavigate, projectId }: ProjectDetailPagePr
             {/* Back button */}
             <Button
               variant="ghost"
-              onClick={() => onNavigate('projects')}
+              onClick={() => navigate('/projects')}
               className="mb-8 group"
               aria-label="Go back to projects list"
             >
@@ -438,7 +426,7 @@ export function ProjectDetailPage({ onNavigate, projectId }: ProjectDetailPagePr
           <div className="text-center">
             <Button 
               size="lg"
-              onClick={() => onNavigate('projects')}
+              onClick={() => navigate('/projects')}
               className="group"
               aria-label="View all projects by Pankaj Singh"
             >
