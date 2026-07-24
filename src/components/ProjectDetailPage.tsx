@@ -280,32 +280,34 @@ export function ProjectDetailPage({ onNavigate }: ProjectDetailPageProps) {
               </motion.div>
 
               {/* Client Testimonial */}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.6 }}
-              >
-                <Card className="bg-primary/5">
-                  <CardContent className="p-8 text-center">
-                    <blockquote className="text-lg text-muted-foreground italic mb-6">
-                      "{project.testimonial.content}"
-                    </blockquote>
-                    <div className="flex items-center justify-center space-x-4">
-                      <div className="w-12 h-12 rounded-full overflow-hidden">
-                        <ImageWithFallback
-                          src={project.testimonial.image}
-                          alt={`Profile image of ${project.testimonial.author}, client for ${project.title} project by Pankaj Singh`}
-                          className="w-full h-full object-cover"
-                        />
+              {project.testimonial && (
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: 0.6 }}
+                >
+                  <Card className="bg-primary/5">
+                    <CardContent className="p-8 text-center">
+                      <blockquote className="text-lg text-muted-foreground italic mb-6">
+                        "{project.testimonial.content}"
+                      </blockquote>
+                      <div className="flex items-center justify-center space-x-4">
+                        <div className="w-12 h-12 rounded-full overflow-hidden">
+                          <ImageWithFallback
+                            src={project.testimonial.image}
+                            alt={`Profile image of ${project.testimonial.author}, client for ${project.title} project by Pankaj Singh`}
+                            className="w-full h-full object-cover"
+                          />
+                        </div>
+                        <div>
+                          <p className="font-medium text-primary">{project.testimonial.author}</p>
+                          <p className="text-sm text-muted-foreground">{project.testimonial.role}</p>
+                        </div>
                       </div>
-                      <div>
-                        <p className="font-medium text-primary">{project.testimonial.author}</p>
-                        <p className="text-sm text-muted-foreground">{project.testimonial.role}</p>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              </motion.div>
+                    </CardContent>
+                  </Card>
+                </motion.div>
+              )}
             </TabsContent>
 
             {/* Features Tab */}

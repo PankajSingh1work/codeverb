@@ -2,414 +2,231 @@
   "projects": [
     {
       "id": 1,
-      "title": "Analytics Dashboard  ",
-      "subtitle": "Real-time Data Visualization Platform",
-      "description": "A comprehensive analytics dashboard built with React and D3.js, featuring real-time data visualization, interactive charts, and customizable reporting capabilities for enterprise clients.",
-      "fullDescription": "This analytics dashboard was designed to provide enterprise clients with powerful insights into their business data. The platform processes millions of data points in real-time and presents them through intuitive visualizations. The project required careful consideration of performance optimization, as the dashboard needed to handle large datasets without compromising user experience. I implemented efficient data streaming techniques and optimized rendering to ensure smooth interactions even with complex visualizations. The dashboard features a modular architecture that allows for easy customization and extension. Each widget can be configured independently, and the layout is fully responsive across all device sizes.",
+      "title": "AI Document Assistant",
+      "subtitle": "Grounded Document Question Answering with RAG",
+      "description": "A local retrieval-augmented generation application that lets users upload documents and ask questions answered only from the retrieved content.",
+      "fullDescription": "AI Document Assistant is a full-stack RAG application for searching private documents with natural language. Users can upload PDF, DOCX, TXT, and Markdown files through a Streamlit interface. A FastAPI backend extracts and chunks the content, creates OpenAI embeddings, and stores them in a local FAISS vector index. When a question is asked, the app retrieves relevant chunks and returns a grounded answer with source excerpts and page information where available.",
       "images": [
         {
-          "url": "https://images.unsplash.com/photo-1665470909939-959569b20021?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx3ZWIlMjBhcHBsaWNhdGlvbiUyMGRhc2hib2FyZCUyMGludGVyZmFjZXxlbnwxfHx8fDE3NTY2MzkzMTZ8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
-          "caption": "Main dashboard overview with key metrics"
+          "url": "https://images.unsplash.com/photo-1456324504439-367cee3b3c32?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=1080",
+          "caption": "Document upload and question-answering workspace"
         },
         {
-          "url": "https://images.unsplash.com/photo-1551288049-bebda4e38f71?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=1080",
-          "caption": "Interactive chart components"
-        },
-        {
-          "url": "https://images.unsplash.com/photo-1460925895917-afdab827c52f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=1080",
-          "caption": "Data analysis and reporting interface"
+          "url": "https://images.unsplash.com/photo-1516321318423-f06f85e756b6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=1080",
+          "caption": "Grounded answers with source citations"
         }
       ],
-      "client": "DataTech Solutions",
-      "duration": "3 months",
-      "year": "2024",
+      "client": "Personal Project",
+      "duration": "Self-directed",
+      "year": "2026",
       "status": "Completed",
-      "category": "Web Application",
+      "category": "AI Solution",
       "featured": true,
-      "demoUrl": "https://dashboard-demo.example.com",
-      "githubUrl": "https://github.com/johndoe/analytics-dashboard",
+      "demoUrl": "https://github.com/PankajSingh1work/ai-document-assistant",
+      "githubUrl": "https://github.com/PankajSingh1work/ai-document-assistant",
       "techStack": [
-        { "name": "React", "category": "Frontend", "icon": "Code" },
-        { "name": "TypeScript", "category": "Language", "icon": "Code" },
-        { "name": "D3.js", "category": "Visualization", "icon": "Palette" },
-        { "name": "Node.js", "category": "Backend", "icon": "Database" },
-        { "name": "PostgreSQL", "category": "Database", "icon": "Database" },
-        { "name": "Redis", "category": "Cache", "icon": "Database" },
-        { "name": "Socket.io", "category": "Real-time", "icon": "Code" },
-        { "name": "AWS", "category": "Cloud", "icon": "Database" }
+        { "name": "Python", "category": "Language", "icon": "Code" },
+        { "name": "FastAPI", "category": "Backend", "icon": "Database" },
+        { "name": "Streamlit", "category": "Frontend", "icon": "Code" },
+        { "name": "LangChain", "category": "AI/ML", "icon": "Brain" },
+        { "name": "OpenAI API", "category": "AI/ML", "icon": "Brain" },
+        { "name": "FAISS", "category": "Vector Search", "icon": "Database" },
+        { "name": "Docker", "category": "Deployment", "icon": "Cloud" }
       ],
       "features": [
-        {
-          "title": "Real-time Data Processing",
-          "description": "Process and visualize data streams in real-time with minimal latency",
-          "icon": "Target"
-        },
-        {
-          "title": "Interactive Visualizations",
-          "description": "Custom D3.js charts with zoom, pan, and filter capabilities",
-          "icon": "Palette"
-        },
-        {
-          "title": "Customizable Dashboards",
-          "description": "Drag-and-drop interface for creating personalized dashboard layouts",
-          "icon": "Code"
-        },
-        {
-          "title": "Export & Reporting",
-          "description": "Generate PDF reports and export data in multiple formats",
-          "icon": "Database"
-        }
+        { "title": "Multi-format Uploads", "description": "Ingest PDF, DOCX, TXT, and Markdown documents.", "icon": "Code" },
+        { "title": "Grounded RAG Answers", "description": "Answers are generated from retrieved document context and decline unsupported questions.", "icon": "Brain" },
+        { "title": "Source Citations", "description": "Shows the source document, page when available, and an excerpt for each answer.", "icon": "Search" },
+        { "title": "Local Vector Search", "description": "Persists embeddings and document metadata locally with FAISS.", "icon": "Database" }
       ],
       "challenges": [
-        {
-          "title": "Performance Optimization",
-          "description": "Handling large datasets (1M+ records) without UI lag",
-          "solution": "Implemented virtualization, data pagination, and efficient rendering techniques"
-        },
-        {
-          "title": "Real-time Updates",
-          "description": "Maintaining data consistency across multiple concurrent users",
-          "solution": "Used WebSockets with Redis for real-time synchronization and conflict resolution"
-        },
-        {
-          "title": "Complex Visualizations",
-          "description": "Creating interactive charts that remain performant with dynamic data",
-          "solution": "Custom D3.js components with optimized update patterns and canvas rendering for large datasets"
-        }
+        { "title": "Reliable Retrieval", "description": "Finding relevant context across varied document formats.", "solution": "Used recursive chunking, OpenAI embeddings, and FAISS similarity search." },
+        { "title": "Answer Grounding", "description": "Reducing unsupported answers when relevant context is missing.", "solution": "Applied a strict prompt and surfaced retrieved sources alongside responses." }
       ],
-      "results": [
-        "Improved data analysis efficiency by 65%",
-        "Reduced report generation time from hours to minutes",
-        "Increased user engagement by 40%",
-        "Successfully handling 99.9% uptime in production"
-      ],
-      "testimonial": {
-        "content": "John delivered an exceptional analytics platform that transformed how our team works with data. The real-time capabilities and intuitive interface exceeded our expectations.",
-        "author": "Sarah Johnson",
-        "role": "CTO, DataTech Solutions",
-        "image": "https://images.unsplash.com/photo-1494790108755-2616b612c8e5?w=100&h=100&fit=crop&crop=face"
-      },
-      "stats": {
-        "views": 2156,
-        "likes": 89,
-        "shares": 23
-      }
+      "results": ["Supports four common document formats", "Provides cited, document-grounded responses", "Includes API, chat UI, tests, and Docker setup"],
+      "stats": { "views": 0, "likes": 0, "shares": 0 }
     },
     {
       "id": 2,
-      "title": "E-Commerce Platform",
-      "subtitle": "Scalable Online Retail Solution",
-      "description": "A full-featured e-commerce platform built with Next.js and Stripe, offering a seamless shopping experience with advanced product filtering, secure payments, and order management.",
-      "fullDescription": "This e-commerce platform was developed to provide a robust and scalable solution for online retailers. Built with Next.js for server-side rendering and optimal SEO, the platform integrates with Stripe for secure payment processing and supports a wide range of products. The project focused on delivering a user-friendly interface with advanced filtering and search capabilities, ensuring customers can easily find products. The admin panel allows for efficient inventory and order management, with real-time updates and analytics.",
+      "title": "MatchWise",
+      "subtitle": "AI Resume Screener & Job-Match Ranking System",
+      "description": "A Flask application that ranks uploaded resumes against a job description and explains each candidate's matched skills and gaps.",
+      "fullDescription": "MatchWise is an assistive resume-screening application designed to make job-match analysis transparent. It accepts multiple PDF, DOCX, and TXT resumes, extracts structured information about skills, experience, and education, then ranks candidates against a supplied job description. The scoring combines skill coverage with semantic relevance using Sentence-Transformers, with a TF-IDF fallback when the embedding model is unavailable. It presents matched skills and gaps to support human review rather than automated hiring decisions.",
       "images": [
         {
-          "url": "https://images.unsplash.com/photo-1557825835-70d97d8f9328?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=1080",
-          "caption": "Product listing page with advanced filters"
+          "url": "https://images.unsplash.com/photo-1551836022-d5d88e9218df?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=1080",
+          "caption": "Resume screening and candidate ranking interface"
         },
         {
-          "url": "https://images.unsplash.com/photo-1563013544-824ae1b704d3?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=1080",
-          "caption": "Checkout and payment interface"
-        },
-        {
-          "url": "https://images.unsplash.com/photo-1516321318423-f06f85e756b6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=1080",
-          "caption": "Admin panel for order management"
+          "url": "https://images.unsplash.com/photo-1521737711867-e3b97375f902?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=1080",
+          "caption": "Job-match analysis and skill-gap feedback"
         }
       ],
-      "client": "RetailRiser",
-      "duration": "4 months",
-      "year": "2024",
+      "client": "Personal Project",
+      "duration": "Self-directed",
+      "year": "2026",
       "status": "Completed",
-      "category": "E-Commerce",
+      "category": "AI Solution",
       "featured": true,
-      "demoUrl": "https://ecommerce-demo.example.com",
-      "githubUrl": "https://github.com/johndoe/ecommerce-platform",
+      "demoUrl": "https://github.com/PankajSingh1work/ai-resume-screener-job-match",
+      "githubUrl": "https://github.com/PankajSingh1work/ai-resume-screener-job-match",
       "techStack": [
-        { "name": "Next.js", "category": "Frontend", "icon": "Code" },
-        { "name": "TypeScript", "category": "Language", "icon": "Code" },
-        { "name": "Stripe", "category": "Payments", "icon": "Database" },
-        { "name": "MongoDB", "category": "Database", "icon": "Database" },
-        { "name": "Node.js", "category": "Backend", "icon": "Database" },
-        { "name": "Vercel", "category": "Deployment", "icon": "Cloud" }
+        { "name": "Python", "category": "Language", "icon": "Code" },
+        { "name": "Flask", "category": "Backend", "icon": "Database" },
+        { "name": "Sentence-Transformers", "category": "AI/ML", "icon": "Brain" },
+        { "name": "scikit-learn", "category": "Machine Learning", "icon": "Brain" },
+        { "name": "spaCy", "category": "NLP", "icon": "Brain" },
+        { "name": "TF-IDF", "category": "NLP", "icon": "Search" }
       ],
       "features": [
-        {
-          "title": "Advanced Product Filtering",
-          "description": "Filter products by category, price, and attributes with instant results",
-          "icon": "Filter"
-        },
-        {
-          "title": "Secure Payments",
-          "description": "Integrated Stripe for secure and fast payment processing",
-          "icon": "Lock"
-        },
-        {
-          "title": "Order Management",
-          "description": "Admin panel for tracking and managing orders in real-time",
-          "icon": "Database"
-        },
-        {
-          "title": "SEO Optimization",
-          "description": "Server-side rendering for improved search engine visibility",
-          "icon": "Search"
-        }
+        { "title": "Multi-resume Ranking", "description": "Upload and rank multiple candidate resumes against one job description.", "icon": "Target" },
+        { "title": "Explainable Scores", "description": "Combines skill coverage and semantic relevance in a transparent weighted score.", "icon": "Search" },
+        { "title": "Skill-Gap Feedback", "description": "Highlights matched skills and missing requirements for each candidate.", "icon": "Brain" },
+        { "title": "Resilient Matching", "description": "Falls back to TF-IDF matching when semantic embeddings are unavailable.", "icon": "Sync" }
       ],
       "challenges": [
-        {
-          "title": "Scalability",
-          "description": "Supporting high traffic during sales events",
-          "solution": "Implemented serverless architecture with Vercel and MongoDB Atlas"
-        },
-        {
-          "title": "Payment Security",
-          "description": "Ensuring PCI compliance and secure transactions",
-          "solution": "Leveraged Stripe’s secure APIs and added two-factor authentication"
-        }
+        { "title": "Mixed Resume Formats", "description": "Extracting useful text from PDF, DOCX, and plain-text resumes.", "solution": "Implemented dedicated extraction paths for every supported format." },
+        { "title": "Fair, Understandable Matching", "description": "Making ranking results interpretable for human reviewers.", "solution": "Exposed matched skills, gaps, and the components of the weighted match score." }
       ],
-      "results": [
-        "Increased conversion rates by 30%",
-        "Processed 10,000+ transactions without issues",
-        "Improved page load time by 50%",
-        "Achieved 99.8% uptime during peak traffic"
-      ],
-      "testimonial": {
-        "content": "The platform transformed our online store, making it faster and easier for customers to shop. The team delivered a top-notch solution on time.",
-        "author": "Michael Brown",
-        "role": "CEO, RetailRiser",
-        "image": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop&crop=face"
-      },
-      "stats": {
-        "views": 3200,
-        "likes": 120,
-        "shares": 45
-      }
+      "results": ["Ranks candidates with an explainable weighted score", "Supports PDF, DOCX, and TXT resumes", "Keeps a human reviewer in the decision loop"],
+      "stats": { "views": 0, "likes": 0, "shares": 0 }
     },
     {
       "id": 3,
-      "title": "Task Management App",
-      "subtitle": "Collaborative Productivity Tool",
-      "description": "A task management application built with Vue.js and Firebase, designed for teams to collaborate, track tasks, and manage projects with real-time updates.",
-      "fullDescription": "This task management app was created to streamline team collaboration and project management. Built with Vue.js for a reactive frontend and Firebase for real-time data syncing, the app allows teams to create, assign, and track tasks efficiently. Features include Kanban boards, task prioritization, and real-time notifications. The app is optimized for both desktop and mobile devices, ensuring accessibility for remote teams.",
+      "title": "Customer Churn Prediction Engine",
+      "subtitle": "End-to-End Customer Retention Intelligence",
+      "description": "An end-to-end machine-learning application that trains churn models, exposes predictions through FastAPI, and visualizes at-risk customer segments in Streamlit.",
+      "fullDescription": "Customer Churn Prediction Engine is a complete customer-retention analytics workflow. It generates synthetic customer data for immediate experimentation, engineers behavioural and account features, and compares Logistic Regression, Random Forest, and XGBoost with five-fold stratified evaluation. The best model is persisted for FastAPI predictions, while a Streamlit dashboard supports individual scoring and exploration of at-risk customer segments. The project can also be trained with real CSV data that follows the expected schema.",
       "images": [
         {
-          "url": "https://images.unsplash.com/photo-1553484771-371a605b060b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=1080",
-          "caption": "Kanban board for task tracking"
+          "url": "https://images.unsplash.com/photo-1551288049-bebda4e38f71?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=1080",
+          "caption": "Customer churn analytics dashboard"
         },
         {
-          "url": "https://images.unsplash.com/photo-1516321497487-e288fb19713f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=1080",
-          "caption": "Task assignment and details view"
+          "url": "https://images.unsplash.com/photo-1460925895917-afdab827c52f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=1080",
+          "caption": "At-risk customer segments and model insights"
         }
       ],
-      "client": "TeamSync Solutions",
-      "duration": "2 months",
-      "year": "2023",
+      "client": "Personal Project",
+      "duration": "Self-directed",
+      "year": "2026",
       "status": "Completed",
-      "category": "Web Application",
-      "featured": false,
-      "demoUrl": "https://taskapp-demo.example.com",
-      "githubUrl": "https://github.com/johndoe/task-management-app",
+      "category": "Machine Learning",
+      "featured": true,
+      "demoUrl": "https://github.com/PankajSingh1work/customer-churn-prediction-engine",
+      "githubUrl": "https://github.com/PankajSingh1work/customer-churn-prediction-engine",
       "techStack": [
-        { "name": "Vue.js", "category": "Frontend", "icon": "Code" },
-        { "name": "JavaScript", "category": "Language", "icon": "Code" },
-        { "name": "Firebase", "category": "Backend", "icon": "Database" },
-        { "name": "Tailwind CSS", "category": "Styling", "icon": "Palette" }
+        { "name": "Python", "category": "Language", "icon": "Code" },
+        { "name": "Pandas", "category": "Data Analysis", "icon": "Database" },
+        { "name": "scikit-learn", "category": "Machine Learning", "icon": "Brain" },
+        { "name": "XGBoost", "category": "Machine Learning", "icon": "Brain" },
+        { "name": "FastAPI", "category": "Backend", "icon": "Database" },
+        { "name": "Streamlit", "category": "Frontend", "icon": "Code" }
       ],
       "features": [
-        {
-          "title": "Real-time Collaboration",
-          "description": "Sync tasks across team members instantly",
-          "icon": "Sync"
-        },
-        {
-          "title": "Kanban Boards",
-          "description": "Visualize workflows with drag-and-drop task management",
-          "icon": "Board"
-        },
-        {
-          "title": "Notifications",
-          "description": "Real-time alerts for task updates and deadlines",
-          "icon": "Bell"
-        }
+        { "title": "Feature Engineering", "description": "Builds churn signals from recency, usage, engagement, support, payment, spend, tenure, and contracts.", "icon": "Code" },
+        { "title": "Model Comparison", "description": "Evaluates Logistic Regression, Random Forest, and XGBoost with stratified cross-validation.", "icon": "Brain" },
+        { "title": "Prediction API", "description": "Serves persisted-model churn predictions through a FastAPI endpoint.", "icon": "Database" },
+        { "title": "Risk Dashboard", "description": "Provides individual scoring and at-risk segment exploration in Streamlit.", "icon": "Palette" }
       ],
       "challenges": [
-        {
-          "title": "Real-time Sync",
-          "description": "Ensuring seamless task updates across devices",
-          "solution": "Used Firebase Realtime Database for low-latency syncing"
-        },
-        {
-          "title": "Mobile Optimization",
-          "description": "Delivering a smooth experience on mobile devices",
-          "solution": "Implemented responsive design with Tailwind CSS"
-        }
+        { "title": "Reproducible Training", "description": "Making the project runnable without private production data.", "solution": "Included a synthetic data generator and a documented CSV training workflow." },
+        { "title": "Balanced Model Evaluation", "description": "Comparing candidate models beyond a single accuracy metric.", "solution": "Used five-fold stratified evaluation with ROC-AUC, average precision, precision, and recall." }
       ],
-      "results": [
-        "Improved team productivity by 25%",
-        "Reduced task completion time by 15%",
-        "Achieved 100% user satisfaction in beta testing"
-      ],
-      "testimonial": {
-        "content": "This app has made our team’s workflow so much smoother. The real-time updates and intuitive design are game-changers.",
-        "author": "Emily Davis",
-        "role": "Project Manager, TeamSync Solutions",
-        "image": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&h=100&fit=crop&crop=face"
-      },
-      "stats": {
-        "views": 1800,
-        "likes": 65,
-        "shares": 30
-      }
+      "results": ["Includes synthetic-data generation for immediate use", "Compares three churn-model families", "Delivers predictions through an API and interactive dashboard"],
+      "stats": { "views": 0, "likes": 0, "shares": 0 }
     },
     {
       "id": 4,
-      "title": "Fitness Tracker Mobile App",
-      "subtitle": "Health and Wellness Companion",
-      "description": "A mobile fitness tracking app built with Flutter, integrating wearable device data, workout plans, and nutrition tracking for a holistic health experience.",
-      "fullDescription": "This fitness tracker app was developed to help users achieve their health and wellness goals. Built with Flutter for cross-platform compatibility, the app integrates with wearable devices like Fitbit and Apple Watch to track activity, sleep, and heart rate. It includes personalized workout plans, nutrition logging, and progress analytics. The app emphasizes user engagement with gamified challenges and social sharing features.",
+      "title": "Real-Time Object Detection & Tracking",
+      "subtitle": "Live Multi-Object Detection, Tracking & Footfall Counting",
+      "description": "A CPU-friendly computer-vision application that detects and tracks objects in live video streams and counts directional crossings over a virtual line.",
+      "fullDescription": "Real-Time Object Detection & Tracking combines YOLOv8 object detection with class-aware IoU and centroid tracking to maintain persistent object IDs across video frames. It supports webcam, video-file, and RTSP sources, overlays annotations on the feed, and counts directional crossings over a configurable virtual line for footfall analytics. A lightweight Flask application exposes a live MJPEG stream alongside health, status, and detection JSON endpoints. CPU-conscious defaults such as frame resizing and optional frame skipping make the system practical for local use.",
       "images": [
         {
-          "url": "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=1080",
-          "caption": "Workout tracking interface"
+          "url": "https://images.unsplash.com/photo-1558008258-3256797b43f3?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=1080",
+          "caption": "Live object detection and tracking feed"
         },
         {
-          "url": "https://images.unsplash.com/photo-1502945015378-0e2845d7b74a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=1080",
-          "caption": "Nutrition logging screen"
+          "url": "https://images.unsplash.com/photo-1518770660439-4636190af475?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=1080",
+          "caption": "Computer-vision monitoring and analytics"
         }
       ],
-      "client": "FitLife Innovations",
-      "duration": "5 months",
-      "year": "2024",
-      "status": "In Progress",
-      "category": "Mobile Application",
+      "client": "Personal Project",
+      "duration": "Self-directed",
+      "year": "2026",
+      "status": "Completed",
+      "category": "Computer Vision",
       "featured": true,
-      "demoUrl": "https://fitness-demo.example.com",
-      "githubUrl": "https://github.com/johndoe/fitness-tracker",
+      "demoUrl": "https://github.com/PankajSingh1work/real-time-object-detection-tracking",
+      "githubUrl": "https://github.com/PankajSingh1work/real-time-object-detection-tracking",
       "techStack": [
-        { "name": "Flutter", "category": "Mobile", "icon": "Code" },
-        { "name": "Dart", "category": "Language", "icon": "Code" },
-        { "name": "Firebase", "category": "Backend", "icon": "Database" },
-        { "name": "Fitbit API", "category": "Integration", "icon": "Database" }
+        { "name": "Python", "category": "Language", "icon": "Code" },
+        { "name": "YOLOv8", "category": "Computer Vision", "icon": "Brain" },
+        { "name": "Ultralytics", "category": "Computer Vision", "icon": "Brain" },
+        { "name": "OpenCV", "category": "Computer Vision", "icon": "Palette" },
+        { "name": "Flask", "category": "Backend", "icon": "Database" },
+        { "name": "NumPy", "category": "Data Processing", "icon": "Code" }
       ],
       "features": [
-        {
-          "title": "Wearable Integration",
-          "description": "Syncs with Fitbit and Apple Watch for real-time health data",
-          "icon": "Watch"
-        },
-        {
-          "title": "Workout Plans",
-          "description": "Personalized plans based on user goals and fitness levels",
-          "icon": "Dumbbell"
-        },
-        {
-          "title": "Nutrition Tracking",
-          "description": "Log meals and track calorie intake with barcode scanning",
-          "icon": "Apple"
-        }
+        { "title": "Live Object Detection", "description": "Runs YOLOv8 detection from webcams, video files, or RTSP streams.", "icon": "Target" },
+        { "title": "Persistent ID Tracking", "description": "Uses class-aware IoU and centroid tracking to follow objects between frames.", "icon": "Sync" },
+        { "title": "Directional Footfall Counts", "description": "Counts objects crossing a configurable virtual line in either direction.", "icon": "Database" },
+        { "title": "Streaming API", "description": "Offers an annotated MJPEG feed plus JSON status and detection endpoints.", "icon": "Code" }
       ],
       "challenges": [
-        {
-          "title": "Cross-Platform Performance",
-          "description": "Ensuring consistent performance on iOS and Android",
-          "solution": "Optimized Flutter code with platform-specific tweaks"
-        },
-        {
-          "title": "API Integration",
-          "description": "Handling inconsistent data from wearable devices",
-          "solution": "Built a robust data normalization layer for API responses"
-        }
+        { "title": "Real-Time CPU Performance", "description": "Maintaining responsive processing without requiring dedicated hardware.", "solution": "Added configurable frame resizing, confidence thresholds, and frame skipping." },
+        { "title": "Stable Object Identity", "description": "Keeping IDs consistent while objects move through the scene.", "solution": "Combined class-aware IoU matching with centroid-based tracking." }
       ],
-      "results": [
-        "Increased user retention by 35%",
-        "Supported 5,000+ active users in beta",
-        "Improved workout adherence by 20%"
-      ],
-      "testimonial": {
-        "content": "The app is intuitive and motivating, helping our users stay committed to their fitness goals.",
-        "author": "Lisa Carter",
-        "role": "Founder, FitLife Innovations",
-        "image": "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=100&h=100&fit=crop&crop=face"
-      },
-      "stats": {
-        "views": 2500,
-        "likes": 95,
-        "shares": 50
-      }
+      "results": ["Supports webcam, video, and RTSP sources", "Tracks objects with persistent IDs", "Provides live streaming and machine-readable status endpoints"],
+      "stats": { "views": 0, "likes": 0, "shares": 0 }
     },
     {
       "id": 5,
-      "title": "AI-Powered Chatbot",
-      "subtitle": "Intelligent Customer Support Automation",
-      "description": "An AI-powered chatbot built with Python and TensorFlow, integrated into a website to provide 24/7 customer support with natural language understanding.",
-      "fullDescription": "This AI-powered chatbot was developed to automate customer support for a SaaS company. Built with Python and TensorFlow, the chatbot uses natural language processing to understand and respond to user queries. It integrates with a company’s website and CRM system, providing personalized responses and escalating complex issues to human agents. The project focused on training the model with industry-specific data to improve response accuracy.",
+      "title": "Codeverb",
+      "subtitle": "Personal Portfolio & Professional Showcase",
+      "description": "A modern, SEO-optimized personal portfolio website that presents projects, services, skills, certifications, and contact information through a polished responsive interface.",
+      "fullDescription": "Codeverb is my personal portfolio website, created to showcase my development work and make it easy for visitors to explore project case studies, services, skills, and certifications. The site is built with React, TypeScript, and Vite, with a responsive Tailwind CSS interface and accessible Radix UI components. It includes client-side routing with SEO-friendly project URLs, dynamic metadata, structured data, sitemap generation, social sharing tags, dark and light modes, and smooth page transitions.",
       "images": [
         {
-          "url": "https://images.unsplash.com/photo-1516321318423-f06f85e756b6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=1080",
-          "caption": "Chatbot interface on website"
+          "url": "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=1080",
+          "caption": "Modern portfolio website interface"
         },
         {
-          "url": "https://images.unsplash.com/photo-1516321497487-e288fb19713f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=1080",
-          "caption": "CRM integration dashboard"
+          "url": "https://images.unsplash.com/photo-1555066931-4365d14bab8c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=1080",
+          "caption": "Responsive web development and portfolio showcase"
         }
       ],
-      "client": "SupportGenix",
-      "duration": "3 months",
-      "year": "2023",
-      "status": "Completed",
-      "category": "AI Solution",
-      "featured": false,
-      "demoUrl": "https://chatbot-demo.example.com",
-      "githubUrl": "https://github.com/johndoe/ai-chatbot",
+      "client": "Personal Project",
+      "duration": "Ongoing",
+      "year": "2026",
+      "status": "In Progress",
+      "category": "Web Application",
+      "featured": true,
+      "demoUrl": "https://codeverb.in",
+      "githubUrl": "https://github.com/PankajSingh1work/codeverb",
       "techStack": [
-        { "name": "Python", "category": "Language", "icon": "Code" },
-        { "name": "TensorFlow", "category": "AI/ML", "icon": "Brain" },
-        { "name": "Flask", "category": "Backend", "icon": "Database" },
-        { "name": "PostgreSQL", "category": "Database", "icon": "Database" }
+        { "name": "React", "category": "Frontend", "icon": "Code" },
+        { "name": "TypeScript", "category": "Language", "icon": "Code" },
+        { "name": "Vite", "category": "Build Tool", "icon": "Code" },
+        { "name": "Tailwind CSS", "category": "Styling", "icon": "Palette" },
+        { "name": "React Router", "category": "Routing", "icon": "Sync" },
+        { "name": "React Helmet Async", "category": "SEO", "icon": "Search" },
+        { "name": "Radix UI", "category": "UI Components", "icon": "Palette" },
+        { "name": "Motion", "category": "Animation", "icon": "Palette" }
       ],
       "features": [
-        {
-          "title": "Natural Language Processing",
-          "description": "Understands and responds to complex user queries",
-          "icon": "Brain"
-        },
-        {
-          "title": "CRM Integration",
-          "description": "Syncs with CRM for personalized customer interactions",
-          "icon": "Database"
-        },
-        {
-          "title": "Escalation System",
-          "description": "Routes complex queries to human agents seamlessly",
-          "icon": "Support"
-        }
+        { "title": "Project Case Studies", "description": "Displays detailed, SEO-friendly pages for each portfolio project.", "icon": "Code" },
+        { "title": "SEO Foundation", "description": "Uses dynamic meta tags, JSON-LD structured data, canonical URLs, and sitemap generation.", "icon": "Search" },
+        { "title": "Responsive Theming", "description": "Provides a mobile-first layout with dark and light mode support.", "icon": "Palette" },
+        { "title": "Accessible Navigation", "description": "Includes clear routing, focus management, and accessible component primitives.", "icon": "Target" }
       ],
       "challenges": [
-        {
-          "title": "Response Accuracy",
-          "description": "Improving chatbot’s understanding of industry-specific queries",
-          "solution": "Trained model with curated dataset and fine-tuned with user feedback"
-        },
-        {
-          "title": "Scalability",
-          "description": "Handling thousands of concurrent users",
-          "solution": "Deployed on scalable cloud infrastructure with load balancing"
-        }
+        { "title": "Discoverable Project Pages", "description": "Creating shareable portfolio routes that are understandable to both visitors and search engines.", "solution": "Implemented descriptive project slugs, dynamic metadata, canonical URLs, and structured data." },
+        { "title": "Consistent Cross-Device Experience", "description": "Keeping navigation, content, and visual design usable on all screen sizes.", "solution": "Built a responsive Tailwind-based interface with reusable accessible UI components." }
       ],
-      "results": [
-        "Reduced customer support response time by 70%",
-        "Handled 80% of queries without human intervention",
-        "Improved customer satisfaction by 25%"
-      ],
-      "testimonial": {
-        "content": "The chatbot has significantly reduced our support team’s workload while maintaining high customer satisfaction.",
-        "author": "David Lee",
-        "role": "Head of Support, SupportGenix",
-        "image": "https://images.unsplash.com/photo-1506794778202-6d8d61e0e3f2?w=100&h=100&fit=crop&crop=face"
-      },
-      "stats": {
-        "views": 1500,
-        "likes": 70,
-        "shares": 20
-      }
+      "results": ["Live portfolio available at codeverb.in", "Includes SEO-friendly routing and generated sitemap files", "Showcases projects, services, skills, and certifications in one place"],
+      "stats": { "views": 0, "likes": 0, "shares": 0 }
     }
   ]
 }
