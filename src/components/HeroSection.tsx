@@ -99,7 +99,7 @@ export function HeroSection({ onNavigate }: HeroSectionProps) {
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.6, delay: 0.4 }}
-              className="mx-auto w-32 h-32 rounded-full overflow-hidden border-0 border-primary/20"
+              className="mx-auto w-32 h-32  overflow-hidden border-2 border-primary/20"
             >
               <ImageWithFallback
                 src="/PankajSinghProfile.jpg"
